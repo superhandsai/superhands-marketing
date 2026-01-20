@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -21,6 +21,14 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 export default function LandingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-svh w-full bg-background" />}>
+      <LandingPageContent />
+    </Suspense>
+  );
+}
+
+function LandingPageContent() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
@@ -158,6 +166,9 @@ export default function LandingPage() {
                 <div className="flex flex-col sm:flex-row gap-3">
                   <div className="flex-1">
                     <Input
+                      {...form.register("email", {
+                        onBlur: () => setFocusedField(null),
+                      })}
                       id="email"
                       type="email"
                       placeholder="Enter your email"
@@ -181,7 +192,6 @@ export default function LandingPage() {
                         fontSize: "16px",
                       }}
                       onFocus={() => setFocusedField("email")}
-                      onBlur={() => setFocusedField(null)}
                       onMouseEnter={(e) => {
                         setHoveredField("email");
                         if (focusedField !== "email" && !form.watch("email")) {
@@ -194,7 +204,6 @@ export default function LandingPage() {
                           e.currentTarget.style.color = "#9CA3AF";
                         }
                       }}
-                      {...form.register("email")}
                     />
                     {form.formState.errors.email && (
                       <p className="text-sm text-red-400 mt-2 flex items-center">
