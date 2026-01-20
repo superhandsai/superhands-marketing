@@ -1,13 +1,13 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
@@ -32,7 +32,40 @@ function LandingPageContent() {
   const [loading, setLoading] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [hoveredField, setHoveredField] = useState<string | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
+
+  const togglePlayPause = () => {
+    if (videoRef.current) {
+      if (videoRef.current.paused) {
+        videoRef.current.play();
+        setIsPlaying(true);
+      } else {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (videoContainerRef.current) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen();
+      } else {
+        videoContainerRef.current.requestFullscreen();
+      }
+    }
+  };
 
   // Allow theme override via URL parameter for previewing
   useEffect(() => {
@@ -237,9 +270,14 @@ function LandingPageContent() {
 
         {/* Video Section */}
         <div className="w-full animate-fade-in-up animation-delay-400 relative">
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[120%] h-64 bg-gradient-to-b from-primary/10 via-primary/5 to-transparent blur-3xl pointer-events-none animate-subtle-pulse" />
-          <div className="relative bg-card rounded-[18px] border border-border shadow-lg overflow-hidden">
+          <div className="absolute inset-0 left-[50%] -translate-x-1/2 w-screen bg-gradient-to-t from-primary/15 via-primary/5 to-transparent blur-3xl pointer-events-none" />
+          <div 
+            ref={videoContainerRef}
+            className="relative bg-card rounded-[18px] border border-border shadow-lg overflow-hidden group cursor-pointer"
+            onClick={togglePlayPause}
+          >
             <video
+              ref={videoRef}
               className="w-full h-auto"
               autoPlay
               muted
@@ -250,6 +288,47 @@ function LandingPageContent() {
               <source src="/demo.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+            
+            {/* Center Play/Pause Button - visual only, clicks pass through to container */}
+            <div 
+              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+            >
+              <div
+                className="p-7 bg-black/60 backdrop-blur-sm rounded-2xl text-white transition-all"
+                aria-label={isPlaying ? "Pause video" : "Play video"}
+              >
+                {isPlaying ? (
+                  <Pause className="w-14 h-14" fill="currentColor" />
+                ) : (
+                  <Play className="w-14 h-14" fill="currentColor" />
+                )}
+              </div>
+            </div>
+
+            {/* Other Video Controls */}
+            <div 
+              className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={toggleMute}
+                className="p-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg text-white transition-all hover:scale-105 active:scale-95"
+                aria-label={isMuted ? "Unmute video" : "Mute video"}
+              >
+                {isMuted ? (
+                  <VolumeX className="w-5 h-5" />
+                ) : (
+                  <Volume2 className="w-5 h-5" />
+                )}
+              </button>
+              <button
+                onClick={toggleFullscreen}
+                className="p-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg text-white transition-all hover:scale-105 active:scale-95"
+                aria-label="Toggle fullscreen"
+              >
+                <Maximize className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
