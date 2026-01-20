@@ -81,14 +81,14 @@ function LandingPageContent() {
       if (insertError) {
         if (insertError.code === "23505") {
           sessionStorage.setItem("waitlist_email", data.email);
-          router.push("/waitlist");
+          window.location.href = "https://app.superhands.ai/waitlist";
           return;
         }
         throw new Error(insertError.message);
       }
 
       sessionStorage.setItem("waitlist_email", data.email);
-      router.push("/waitlist");
+      window.location.href = "https://app.superhands.ai/waitlist";
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message || "An error occurred");
