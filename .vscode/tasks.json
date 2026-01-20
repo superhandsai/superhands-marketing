@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Open Preview",
+      "type": "shell",
+      "command": "true ${input:openSimpleBrowser}",
+      "problemMatcher": [],
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "dedicated",
+        "close": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "openSimpleBrowser",
+      "type": "command",
+      "command": "simpleBrowser.api.open",
+      "args": "http://127.0.0.1:43821/preview?previewUrl=https%3A%2F%2Fta-01kfepde5v1fzc00ptakryt02c-3000.wo-f357evsi0n0iw6w9ikr8bmdwd.w.modal.host&deploymentId=2554e0fb-b646-4b85-99ff-f044ca194703&prototypeId=b6f776ba-7c4f-49ba-a75d-2b06e393e199&branch=superhands-marketing-branch-0120-2202&owner=Ion-ev&repo=superhands-marketing&shareUrl=https%3A%2F%2Fapp.superhands.ai%2Fview%2F2554e0fb-b646-4b85-99ff-f044ca194703&userId=311b7814-d5ca-4896-82d7-b9371fcc49fc&userEmail=grant%40superhands.ai&userName=grant&title=superhands-marketing+-+Branch+0120-2202"
+    }
+  ]
+}

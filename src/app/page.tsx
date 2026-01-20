@@ -34,9 +34,22 @@ function LandingPageContent() {
   const [hoveredField, setHoveredField] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
+
+  // Track mouse position for the glow effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   const togglePlayPause = () => {
     if (videoRef.current) {
@@ -131,8 +144,16 @@ function LandingPageContent() {
   };
 
   return (
-    <div className="min-h-svh w-full bg-dot-pattern bg-background">
-      <div className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-8">
+    <div className="min-h-svh w-full bg-dot-pattern bg-background relative overflow-hidden">
+      {/* Mouse-following orange glow */}
+      <div
+        className="pointer-events-none fixed w-[600px] h-[600px] rounded-full bg-primary/20 blur-[120px] transition-transform duration-150 ease-out"
+        style={{
+          left: mousePosition.x - 300,
+          top: mousePosition.y - 300,
+        }}
+      />
+      <div className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-12 animate-fade-in-up">
           <div className="flex items-center">
