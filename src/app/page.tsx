@@ -8,8 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
+import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   email: z
@@ -33,7 +32,6 @@ function LandingPageContent() {
   const [loading, setLoading] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [hoveredField, setHoveredField] = useState<string | null>(null);
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   // Allow theme override via URL parameter for previewing
@@ -72,19 +70,18 @@ function LandingPageContent() {
     setError(null);
     setLoading(true);
     try {
-      const supabase = createClient();
+      const response = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: data.email }),
+      });
 
-      const { error: insertError } = await supabase
-        .from("waitlist")
-        .insert({ email: data.email });
+      const result = await response.json();
 
-      if (insertError) {
-        if (insertError.code === "23505") {
-          sessionStorage.setItem("waitlist_email", data.email);
-          window.location.href = "https://app.superhands.ai/waitlist";
-          return;
-        }
-        throw new Error(insertError.message);
+      if (!response.ok) {
+        throw new Error(result.error || "An error occurred");
       }
 
       sessionStorage.setItem("waitlist_email", data.email);
