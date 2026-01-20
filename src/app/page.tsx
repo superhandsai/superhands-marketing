@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useEffect, useState, useRef } from "react";
+import { Suspense, useEffect, useState, useRef, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -9,6 +9,106 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Volume2, VolumeX, Maximize, Play, Pause } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+
+// Floating gradient blob component that follows mouse
+function FloatingGradient() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isFollowingMouse, setIsFollowingMouse] = useState(false);
+  const [floatOffset, setFloatOffset] = useState({ x: 0, y: 0 });
+  const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const floatTimeRef = useRef(0);
+  const lastMousePosRef = useRef({ x: 0, y: 0 });
+
+  // Initialize position to center of screen
+  useEffect(() => {
+    setPosition({
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    });
+  }, []);
+
+  // Handle mouse movement
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    lastMousePosRef.current = { x: e.clientX, y: e.clientY };
+    setIsFollowingMouse(true);
+    setPosition({ x: e.clientX, y: e.clientY });
+
+    // Clear existing timeout
+    if (mouseTimeoutRef.current) {
+      clearTimeout(mouseTimeoutRef.current);
+    }
+
+    // Set timeout to stop following mouse after 0.8 seconds of no movement
+    mouseTimeoutRef.current = setTimeout(() => {
+      setIsFollowingMouse(false);
+    }, 800);
+  }, []);
+
+  // Floating animation when not following mouse
+  useEffect(() => {
+    if (isFollowingMouse) {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+      return;
+    }
+
+    const animate = () => {
+      floatTimeRef.current += 0.008;
+      const t = floatTimeRef.current;
+      
+      // Create smooth, organic floating motion using multiple sine waves
+      const newOffsetX = Math.sin(t * 0.7) * 120 + Math.sin(t * 1.3) * 60;
+      const newOffsetY = Math.cos(t * 0.5) * 100 + Math.cos(t * 1.1) * 50;
+      
+      setFloatOffset({ x: newOffsetX, y: newOffsetY });
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [isFollowingMouse]);
+
+  // Add mouse move listener
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      if (mouseTimeoutRef.current) {
+        clearTimeout(mouseTimeoutRef.current);
+      }
+    };
+  }, [handleMouseMove]);
+
+  // Calculate final position
+  const finalX = isFollowingMouse ? position.x : position.x + floatOffset.x;
+  const finalY = isFollowingMouse ? position.y : position.y + floatOffset.y;
+
+  return (
+    <div
+      className="fixed pointer-events-none z-0"
+      style={{
+        left: finalX,
+        top: finalY,
+        transform: "translate(-50%, -50%)",
+        transition: isFollowingMouse ? "left 0.15s ease-out, top 0.15s ease-out" : "left 0.5s ease-out, top 0.5s ease-out",
+      }}
+    >
+      <div
+        className="w-[600px] h-[600px] rounded-full bg-gradient-radial from-primary/25 via-primary/10 to-transparent blur-3xl"
+        style={{
+          background: "radial-gradient(circle, rgba(238, 96, 1, 0.2) 0%, rgba(238, 96, 1, 0.08) 40%, transparent 70%)",
+        }}
+      />
+    </div>
+  );
+}
 
 const formSchema = z.object({
   email: z
@@ -131,8 +231,9 @@ function LandingPageContent() {
   };
 
   return (
-    <div className="min-h-svh w-full bg-dot-pattern bg-background">
-      <div className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-8">
+    <div className="min-h-svh w-full bg-dot-pattern bg-background overflow-hidden relative">
+      <FloatingGradient />
+      <div className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-12 animate-fade-in-up">
           <div className="flex items-center">
