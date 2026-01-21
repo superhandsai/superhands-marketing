@@ -178,11 +178,11 @@ function FloatingGradient() {
           transformStyle: "preserve-3d",
         }}
       >
-        {/* Deep shadow layer - creates depth underneath */}
+        {/* Deep shadow layer - creates depth underneath (hollow center) */}
         <div
           className="absolute w-[700px] h-[700px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0.03) 30%, transparent 60%)",
+            background: "radial-gradient(circle, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.04) 40%, rgba(0, 0, 0, 0.02) 50%, transparent 65%)",
             filter: "blur(60px)",
             transform: "translateZ(-100px) translateY(40px)",
             left: "-50px",
@@ -194,7 +194,7 @@ function FloatingGradient() {
         <div
           className="absolute w-[800px] h-[800px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(238, 96, 1, 0.06) 0%, rgba(238, 96, 1, 0.02) 40%, transparent 65%)",
+            background: "radial-gradient(circle, rgba(238, 96, 1, 0.08) 0%, rgba(238, 96, 1, 0.03) 40%, transparent 65%)",
             filter: "blur(80px)",
             transform: "translateZ(-50px)",
             left: "-100px",
@@ -206,7 +206,7 @@ function FloatingGradient() {
         <div
           className="w-[600px] h-[600px] rounded-full relative"
           style={{
-            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(238, 96, 1, 0.22) 0%, rgba(238, 96, 1, 0.12) 35%, rgba(238, 96, 1, 0.04) 55%, transparent 70%)",
+            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(238, 96, 1, 0.25) 0%, rgba(238, 96, 1, 0.14) 35%, rgba(238, 96, 1, 0.05) 55%, transparent 70%)",
             filter: "blur(40px)",
             transform: "translateZ(0px)",
           }}
@@ -214,13 +214,13 @@ function FloatingGradient() {
         
         {/* Inner core - brighter center for depth */}
         <div
-          className="absolute w-[300px] h-[300px] rounded-full"
+          className="absolute w-[350px] h-[350px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(238, 96, 1, 0.18) 0%, rgba(238, 96, 1, 0.06) 50%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255, 130, 50, 0.22) 0%, rgba(238, 96, 1, 0.1) 45%, transparent 70%)",
             filter: "blur(25px)",
             transform: "translateZ(20px)",
-            left: "150px",
-            top: "150px",
+            left: "125px",
+            top: "125px",
           }}
         />
         
