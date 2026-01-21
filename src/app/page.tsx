@@ -17,8 +17,22 @@ function FloatingGradient() {
   const [floatOffset, setFloatOffset] = useState({ x: 0, y: 0 });
   const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const randomDirectionRef = useRef({ angle: 0, speed: 0 });
-  const floatStartTimeRef = useRef(0);
+  
+  // Random drift state
+  const currentOffsetRef = useRef({ x: 0, y: 0 });
+  const targetOffsetRef = useRef({ x: 0, y: 0 });
+  const lastDirectionChangeRef = useRef(0);
+
+  // Pick a new random target to drift towards
+  const pickNewTarget = useCallback(() => {
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 100 + Math.random() * 150; // Random distance 100-250px
+    targetOffsetRef.current = {
+      x: currentOffsetRef.current.x + Math.cos(angle) * distance,
+      y: currentOffsetRef.current.y + Math.sin(angle) * distance,
+    };
+    lastDirectionChangeRef.current = performance.now();
+  }, []);
 
   // Initialize position to center of screen
   useEffect(() => {
@@ -34,23 +48,20 @@ function FloatingGradient() {
     setPosition({ x: e.clientX, y: e.clientY });
     // Reset float offset when mouse moves
     setFloatOffset({ x: 0, y: 0 });
+    currentOffsetRef.current = { x: 0, y: 0 };
+    targetOffsetRef.current = { x: 0, y: 0 };
 
     // Clear existing timeout
     if (mouseTimeoutRef.current) {
       clearTimeout(mouseTimeoutRef.current);
     }
 
-    // Set timeout to stop following mouse after 1 second of no movement
+    // Set timeout to stop following mouse after 250ms of no movement
     mouseTimeoutRef.current = setTimeout(() => {
-      // Pick a random direction and speed when starting to float
-      randomDirectionRef.current = {
-        angle: Math.random() * Math.PI * 2, // Random angle 0-360 degrees
-        speed: 0.3 + Math.random() * 0.4, // Random speed between 0.3 and 0.7
-      };
-      floatStartTimeRef.current = performance.now();
+      pickNewTarget();
       setIsFollowingMouse(false);
-    }, 1000);
-  }, []);
+    }, 250);
+  }, [pickNewTarget]);
 
   // Floating animation when not following mouse
   useEffect(() => {
@@ -62,20 +73,30 @@ function FloatingGradient() {
     }
 
     const animate = () => {
-      const elapsed = (performance.now() - floatStartTimeRef.current) / 1000;
-      const { angle, speed } = randomDirectionRef.current;
+      const now = performance.now();
+      const timeSinceChange = now - lastDirectionChangeRef.current;
       
-      // Float in the random direction with some gentle wavering
-      const baseX = Math.cos(angle) * elapsed * speed * 100;
-      const baseY = Math.sin(angle) * elapsed * speed * 100;
+      // Pick a new random direction every 2-4 seconds
+      const changeInterval = 2000 + Math.random() * 2000;
+      if (timeSinceChange > changeInterval) {
+        pickNewTarget();
+      }
       
-      // Add subtle organic wobble
-      const wobbleX = Math.sin(elapsed * 1.5) * 20;
-      const wobbleY = Math.cos(elapsed * 1.2) * 15;
+      // Smoothly lerp towards the target
+      const lerpFactor = 0.015;
+      currentOffsetRef.current = {
+        x: currentOffsetRef.current.x + (targetOffsetRef.current.x - currentOffsetRef.current.x) * lerpFactor,
+        y: currentOffsetRef.current.y + (targetOffsetRef.current.y - currentOffsetRef.current.y) * lerpFactor,
+      };
+      
+      // Add subtle organic wobble on top
+      const wobbleTime = now / 1000;
+      const wobbleX = Math.sin(wobbleTime * 1.5) * 15;
+      const wobbleY = Math.cos(wobbleTime * 1.2) * 12;
       
       setFloatOffset({ 
-        x: baseX + wobbleX, 
-        y: baseY + wobbleY 
+        x: currentOffsetRef.current.x + wobbleX, 
+        y: currentOffsetRef.current.y + wobbleY 
       });
       animationFrameRef.current = requestAnimationFrame(animate);
     };
@@ -87,7 +108,7 @@ function FloatingGradient() {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isFollowingMouse]);
+  }, [isFollowingMouse, pickNewTarget]);
 
   // Add mouse move listener
   useEffect(() => {
