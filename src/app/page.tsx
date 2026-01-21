@@ -72,18 +72,25 @@ function FloatingGradient() {
       return;
     }
 
+    // Pick initial target when starting to float
+    if (lastDirectionChangeRef.current === 0) {
+      pickNewTarget();
+    }
+    
+    // Store the next change time
+    let nextChangeTime = performance.now() + 2000 + Math.random() * 2000;
+
     const animate = () => {
       const now = performance.now();
-      const timeSinceChange = now - lastDirectionChangeRef.current;
       
       // Pick a new random direction every 2-4 seconds
-      const changeInterval = 2000 + Math.random() * 2000;
-      if (timeSinceChange > changeInterval) {
+      if (now > nextChangeTime) {
         pickNewTarget();
+        nextChangeTime = now + 2000 + Math.random() * 2000;
       }
       
-      // Smoothly lerp towards the target
-      const lerpFactor = 0.015;
+      // Smoothly lerp towards the target (increased speed)
+      const lerpFactor = 0.04;
       currentOffsetRef.current = {
         x: currentOffsetRef.current.x + (targetOffsetRef.current.x - currentOffsetRef.current.x) * lerpFactor,
         y: currentOffsetRef.current.y + (targetOffsetRef.current.y - currentOffsetRef.current.y) * lerpFactor,
