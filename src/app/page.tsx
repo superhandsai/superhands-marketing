@@ -17,8 +17,8 @@ function FloatingGradient() {
   const [floatOffset, setFloatOffset] = useState({ x: 0, y: 0 });
   const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const floatTimeRef = useRef(0);
-  const lastMousePosRef = useRef({ x: 0, y: 0 });
+  const randomDirectionRef = useRef({ angle: 0, speed: 0 });
+  const floatStartTimeRef = useRef(0);
 
   // Initialize position to center of screen
   useEffect(() => {
@@ -30,19 +30,26 @@ function FloatingGradient() {
 
   // Handle mouse movement
   const handleMouseMove = useCallback((e: MouseEvent) => {
-    lastMousePosRef.current = { x: e.clientX, y: e.clientY };
     setIsFollowingMouse(true);
     setPosition({ x: e.clientX, y: e.clientY });
+    // Reset float offset when mouse moves
+    setFloatOffset({ x: 0, y: 0 });
 
     // Clear existing timeout
     if (mouseTimeoutRef.current) {
       clearTimeout(mouseTimeoutRef.current);
     }
 
-    // Set timeout to stop following mouse after 0.8 seconds of no movement
+    // Set timeout to stop following mouse after 1 second of no movement
     mouseTimeoutRef.current = setTimeout(() => {
+      // Pick a random direction and speed when starting to float
+      randomDirectionRef.current = {
+        angle: Math.random() * Math.PI * 2, // Random angle 0-360 degrees
+        speed: 0.3 + Math.random() * 0.4, // Random speed between 0.3 and 0.7
+      };
+      floatStartTimeRef.current = performance.now();
       setIsFollowingMouse(false);
-    }, 800);
+    }, 1000);
   }, []);
 
   // Floating animation when not following mouse
@@ -55,14 +62,21 @@ function FloatingGradient() {
     }
 
     const animate = () => {
-      floatTimeRef.current += 0.008;
-      const t = floatTimeRef.current;
+      const elapsed = (performance.now() - floatStartTimeRef.current) / 1000;
+      const { angle, speed } = randomDirectionRef.current;
       
-      // Create smooth, organic floating motion using multiple sine waves
-      const newOffsetX = Math.sin(t * 0.7) * 120 + Math.sin(t * 1.3) * 60;
-      const newOffsetY = Math.cos(t * 0.5) * 100 + Math.cos(t * 1.1) * 50;
+      // Float in the random direction with some gentle wavering
+      const baseX = Math.cos(angle) * elapsed * speed * 100;
+      const baseY = Math.sin(angle) * elapsed * speed * 100;
       
-      setFloatOffset({ x: newOffsetX, y: newOffsetY });
+      // Add subtle organic wobble
+      const wobbleX = Math.sin(elapsed * 1.5) * 20;
+      const wobbleY = Math.cos(elapsed * 1.2) * 15;
+      
+      setFloatOffset({ 
+        x: baseX + wobbleX, 
+        y: baseY + wobbleY 
+      });
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
