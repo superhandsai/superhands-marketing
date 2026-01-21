@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 // Floating gradient blob component that follows mouse
@@ -177,9 +177,29 @@ function LandingPageContent() {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
+
+  const faqItems = [
+    {
+      question: "What is SuperHands?",
+      answer: "SuperHands is a platform that makes it easy to build and share prototypes directly in Cursor. It removes the technical complexity of local development, GitHub, and version control, so you can focus on creating and iterating on your ideas.",
+    },
+    {
+      question: "Do I need to know how to code?",
+      answer: "No coding experience is required! SuperHands is designed to be beginner-friendly. Cursor's AI-powered editor helps you build prototypes by simply describing what you want. SuperHands handles all the technical setup behind the scenes.",
+    },
+    {
+      question: "How do I share my prototypes?",
+      answer: "Every project you create in SuperHands gets a unique shareable link. You can send this link to anyone - they'll be able to view and interact with your prototype instantly in their browser, no account or installation required.",
+    },
+    {
+      question: "Is there a free tier available?",
+      answer: "Yes! We're launching with a generous free tier that includes everything you need to get started. Join our waitlist to be among the first to access SuperHands when we launch and lock in early adopter benefits.",
+    },
+  ];
 
   const togglePlayPause = () => {
     if (videoRef.current) {
@@ -550,6 +570,42 @@ function LandingPageContent() {
                 <Maximize className="w-5 h-5" />
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="w-full mt-16 animate-fade-in-up animation-delay-500">
+          <h3 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-8">
+            Frequently Asked Questions
+          </h3>
+          <div className="max-w-2xl mx-auto space-y-3">
+            {faqItems.map((item, index) => (
+              <div
+                key={index}
+                className="bg-card rounded-xl border border-border overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer hover:bg-secondary/50 transition-colors"
+                >
+                  <span className="font-medium text-foreground pr-4">{item.question}</span>
+                  <ChevronDown 
+                    className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${
+                      openFaq === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-200 ${
+                    openFaq === index ? "max-h-96" : "max-h-0"
+                  }`}
+                >
+                  <div className="px-6 pb-4 text-muted-foreground">
+                    {item.answer}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
