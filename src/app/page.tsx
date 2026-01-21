@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 // Floating gradient blob component that follows mouse
@@ -177,6 +177,7 @@ function LandingPageContent() {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -550,6 +551,63 @@ function LandingPageContent() {
                 <Maximize className="w-5 h-5" />
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="w-full mt-20 animate-fade-in-up animation-delay-500">
+          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
+            Frequently Asked Questions
+          </h3>
+          <div className="max-w-3xl mx-auto space-y-3">
+            {[
+              {
+                question: "What is SuperHands?",
+                answer: "SuperHands is a platform that makes it easy to build and share prototypes directly in Cursor. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
+              },
+              {
+                question: "Do I need coding experience to use SuperHands?",
+                answer: "No coding experience is required! SuperHands is designed to be beginner-friendly. Combined with Cursor's AI capabilities, you can build functional prototypes just by describing what you want to create."
+              },
+              {
+                question: "How do I share my prototypes with others?",
+                answer: "SuperHands generates a shareable link for every prototype you create. Simply copy the link and share it with anyone — they can view and interact with your prototype instantly in their browser, no setup required."
+              },
+              {
+                question: "Is SuperHands free to use?",
+                answer: "We'll be launching with a free tier that includes everything you need to get started. Premium plans with advanced features will be available for teams and power users."
+              },
+              {
+                question: "When will SuperHands be available?",
+                answer: "We're currently in early access. Join the waitlist to be among the first to try SuperHands and help shape the product with your feedback!"
+              }
+            ].map((faq, index) => (
+              <div
+                key={index}
+                className="border border-border rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer hover:bg-secondary/50 transition-colors"
+                >
+                  <span className="font-medium text-foreground pr-4">{faq.question}</span>
+                  <ChevronDown 
+                    className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${
+                      openFaq === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div 
+                  className={`overflow-hidden transition-all duration-200 ease-in-out ${
+                    openFaq === index ? "max-h-96" : "max-h-0"
+                  }`}
+                >
+                  <p className="px-6 pb-4 text-muted-foreground">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
