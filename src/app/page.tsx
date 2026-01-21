@@ -10,13 +10,16 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-// Floating gradient blob component that follows mouse
+// Floating gradient blob component that follows mouse with 3D effect
 function FloatingGradient() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [isFollowingMouse, setIsFollowingMouse] = useState(false);
   const [floatOffset, setFloatOffset] = useState({ x: 0, y: 0 });
+  const [pulsePhase, setPulsePhase] = useState(0);
   const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const animationFrameRef = useRef<number | null>(null);
+  const lastPositionRef = useRef({ x: 0, y: 0 });
   
   // Random drift state
   const currentOffsetRef = useRef({ x: 0, y: 0 });
@@ -36,15 +39,28 @@ function FloatingGradient() {
 
   // Initialize position to center of screen
   useEffect(() => {
-    setPosition({
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-    });
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    setPosition({ x: centerX, y: centerY });
+    lastPositionRef.current = { x: centerX, y: centerY };
   }, []);
 
   // Handle mouse movement
   const handleMouseMove = useCallback((e: MouseEvent) => {
     setIsFollowingMouse(true);
+    
+    // Calculate velocity for 3D tilt effect
+    const newVelocity = {
+      x: (e.clientX - lastPositionRef.current.x) * 0.1,
+      y: (e.clientY - lastPositionRef.current.y) * 0.1,
+    };
+    // Clamp velocity
+    setVelocity({
+      x: Math.max(-15, Math.min(15, newVelocity.x)),
+      y: Math.max(-15, Math.min(15, newVelocity.y)),
+    });
+    
+    lastPositionRef.current = { x: e.clientX, y: e.clientY };
     setPosition({ x: e.clientX, y: e.clientY });
     // Reset float offset when mouse moves
     setFloatOffset({ x: 0, y: 0 });
@@ -60,6 +76,7 @@ function FloatingGradient() {
     mouseTimeoutRef.current = setTimeout(() => {
       pickNewTarget();
       setIsFollowingMouse(false);
+      setVelocity({ x: 0, y: 0 });
     }, 250);
   }, [pickNewTarget]);
 
@@ -101,6 +118,9 @@ function FloatingGradient() {
       const wobbleX = Math.sin(wobbleTime * 1.5) * 15;
       const wobbleY = Math.cos(wobbleTime * 1.2) * 12;
       
+      // Update pulse phase for breathing effect
+      setPulsePhase(wobbleTime);
+      
       setFloatOffset({ 
         x: currentOffsetRef.current.x + wobbleX, 
         y: currentOffsetRef.current.y + wobbleY 
@@ -131,6 +151,13 @@ function FloatingGradient() {
   // Calculate final position
   const finalX = isFollowingMouse ? position.x : position.x + floatOffset.x;
   const finalY = isFollowingMouse ? position.y : position.y + floatOffset.y;
+  
+  // 3D effects based on velocity and phase
+  const tiltX = velocity.y * 2; // Tilt based on Y movement
+  const tiltY = -velocity.x * 2; // Tilt based on X movement
+  const breathingScale = 1 + Math.sin(pulsePhase * 0.8) * 0.03;
+  const highlightOffsetX = -velocity.x * 3 + Math.sin(pulsePhase * 0.5) * 10;
+  const highlightOffsetY = -velocity.y * 3 + Math.cos(pulsePhase * 0.4) * 8;
 
   return (
     <div
@@ -140,14 +167,89 @@ function FloatingGradient() {
         top: finalY,
         transform: "translate(-50%, -50%)",
         transition: isFollowingMouse ? "left 0.15s ease-out, top 0.15s ease-out" : "left 0.5s ease-out, top 0.5s ease-out",
+        perspective: "1000px",
       }}
     >
+      {/* Main container with 3D transform */}
       <div
-        className="w-[600px] h-[600px] rounded-full bg-gradient-radial from-primary/25 via-primary/10 to-transparent blur-3xl"
         style={{
-          background: "radial-gradient(circle, rgba(238, 96, 1, 0.2) 0%, rgba(238, 96, 1, 0.08) 40%, transparent 70%)",
+          transform: `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${breathingScale})`,
+          transition: "transform 0.2s ease-out",
+          transformStyle: "preserve-3d",
         }}
-      />
+      >
+        {/* Deep shadow layer - creates depth underneath (hollow center) */}
+        <div
+          className="absolute w-[700px] h-[700px] rounded-full"
+          style={{
+            background: "radial-gradient(circle, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.04) 40%, rgba(0, 0, 0, 0.02) 50%, transparent 65%)",
+            filter: "blur(60px)",
+            transform: "translateZ(-100px) translateY(40px)",
+            left: "-50px",
+            top: "-50px",
+          }}
+        />
+        
+        {/* Outer glow layer - ambient light */}
+        <div
+          className="absolute w-[800px] h-[800px] rounded-full"
+          style={{
+            background: "radial-gradient(circle, rgba(238, 96, 1, 0.08) 0%, rgba(238, 96, 1, 0.03) 40%, transparent 65%)",
+            filter: "blur(80px)",
+            transform: "translateZ(-50px)",
+            left: "-100px",
+            top: "-100px",
+          }}
+        />
+        
+        {/* Main gradient orb */}
+        <div
+          className="w-[600px] h-[600px] rounded-full relative"
+          style={{
+            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(238, 96, 1, 0.25) 0%, rgba(238, 96, 1, 0.14) 35%, rgba(238, 96, 1, 0.05) 55%, transparent 70%)",
+            filter: "blur(40px)",
+            transform: "translateZ(0px)",
+          }}
+        />
+        
+        {/* Inner core - brighter center for depth */}
+        <div
+          className="absolute w-[350px] h-[350px] rounded-full"
+          style={{
+            background: "radial-gradient(circle, rgba(255, 130, 50, 0.22) 0%, rgba(238, 96, 1, 0.1) 45%, transparent 70%)",
+            filter: "blur(25px)",
+            transform: "translateZ(20px)",
+            left: "125px",
+            top: "125px",
+          }}
+        />
+        
+        {/* Specular highlight - simulates light reflection */}
+        <div
+          className="absolute w-[200px] h-[150px] rounded-full"
+          style={{
+            background: "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255, 150, 80, 0.15) 0%, rgba(255, 120, 50, 0.05) 40%, transparent 70%)",
+            filter: "blur(20px)",
+            transform: `translateZ(40px) translate(${highlightOffsetX}px, ${highlightOffsetY}px)`,
+            transition: "transform 0.3s ease-out",
+            left: "180px",
+            top: "150px",
+          }}
+        />
+        
+        {/* Secondary rim highlight */}
+        <div
+          className="absolute w-[400px] h-[250px] rounded-full"
+          style={{
+            background: "radial-gradient(ellipse 100% 100% at 50% 0%, rgba(255, 180, 120, 0.08) 0%, transparent 50%)",
+            filter: "blur(30px)",
+            transform: `translateZ(30px) translate(${-highlightOffsetX * 0.5}px, ${-highlightOffsetY * 0.5 - 50}px)`,
+            transition: "transform 0.4s ease-out",
+            left: "100px",
+            top: "100px",
+          }}
+        />
+      </div>
     </div>
   );
 }
