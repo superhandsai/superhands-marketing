@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 // Floating gradient blob component that follows mouse
@@ -177,6 +177,30 @@ function LandingPageContent() {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
+
+  const faqs = [
+    {
+      question: "What is Superhands?",
+      answer: "Superhands is a platform that lets you build and share working prototypes directly in Cursor IDE. It handles all the technical complexity of local development, GitHub, and version control so you can focus on building.",
+    },
+    {
+      question: "Do I need coding experience to use Superhands?",
+      answer: "No! Superhands is designed for everyone - from complete beginners to experienced developers. Cursor's AI handles the coding while Superhands manages the infrastructure, making it easy to bring your ideas to life.",
+    },
+    {
+      question: "How do I share my prototypes?",
+      answer: "Once you've built something in Cursor with Superhands, you get an instant shareable link. No deployment steps, no server configuration - just share the link and anyone can see your working prototype.",
+    },
+    {
+      question: "What can I build with Superhands?",
+      answer: "You can build web apps, landing pages, internal tools, dashboards, and more. If you can describe it, Cursor's AI can help you build it, and Superhands will make it shareable instantly.",
+    },
+    {
+      question: "Is my work saved and secure?",
+      answer: "Yes, your projects are automatically saved and securely stored. You can access them anytime from any device, and you have full control over who can view your shared prototypes.",
+    },
+  ];
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -550,6 +574,42 @@ function LandingPageContent() {
                 <Maximize className="w-5 h-5" />
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="w-full mt-20 animate-fade-in-up animation-delay-500">
+          <h3 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-8">
+            Frequently Asked Questions
+          </h3>
+          <div className="max-w-2xl mx-auto space-y-3">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-card border border-border rounded-xl overflow-hidden"
+              >
+                <button
+                  onClick={() => setOpenFaqIndex(openFaqIndex === index ? null : index)}
+                  className="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer hover:bg-secondary/50 transition-colors"
+                >
+                  <span className="font-medium text-foreground pr-4">{faq.question}</span>
+                  <ChevronDown 
+                    className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${
+                      openFaqIndex === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-200 ease-in-out ${
+                    openFaqIndex === index ? "max-h-96" : "max-h-0"
+                  }`}
+                >
+                  <p className="px-6 pb-4 text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
