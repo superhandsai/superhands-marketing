@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 // Floating gradient blob component that follows mouse
@@ -552,6 +552,78 @@ function LandingPageContent() {
             </div>
           </div>
         </div>
+
+        {/* FAQ Section */}
+        <FAQSection />
+      </div>
+    </div>
+  );
+}
+
+const faqData = [
+  {
+    question: "What is Superhands?",
+    answer: "Superhands is a platform that makes it easy to build and share prototypes using Cursor IDE. We handle all the technical complexity of local development, GitHub, and version control so you can focus on creating.",
+  },
+  {
+    question: "Do I need coding experience to use Superhands?",
+    answer: "Not at all! Superhands is designed to make prototyping accessible to everyone. With Cursor's AI-powered coding assistance and our simplified workflow, you can build functional prototypes without deep technical knowledge.",
+  },
+  {
+    question: "How do I share my prototypes with others?",
+    answer: "Once you've built a prototype in Superhands, you can instantly share it with a unique URL. No complicated deployment steps or hosting configuration required — just share the link and your prototype is live.",
+  },
+  {
+    question: "Is Superhands free to use?",
+    answer: "We're currently in early access. Join our waitlist to get notified when we launch and to secure your spot for early access pricing and benefits.",
+  },
+  {
+    question: "What can I build with Superhands?",
+    answer: "You can build web apps, landing pages, dashboards, internal tools, and more. If you can describe it, Cursor's AI can help you build it — and Superhands makes it easy to share and iterate on your creations.",
+  },
+];
+
+function FAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
+  return (
+    <div className="w-full mt-20 animate-fade-in-up animation-delay-500">
+      <h3 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-8">
+        Frequently Asked Questions
+      </h3>
+      <div className="max-w-2xl mx-auto space-y-3">
+        {faqData.map((faq, index) => (
+          <div
+            key={index}
+            className="bg-card border border-border rounded-xl overflow-hidden"
+          >
+            <button
+              onClick={() => toggleFAQ(index)}
+              className="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer hover:bg-secondary/50 transition-colors"
+              aria-expanded={openIndex === index}
+            >
+              <span className="font-medium text-foreground pr-4">{faq.question}</span>
+              <ChevronDown
+                className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${
+                  openIndex === index ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            <div
+              className={`overflow-hidden transition-all duration-200 ease-in-out ${
+                openIndex === index ? "max-h-96" : "max-h-0"
+              }`}
+            >
+              <p className="px-5 pb-4 text-muted-foreground leading-relaxed">
+                {faq.answer}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
