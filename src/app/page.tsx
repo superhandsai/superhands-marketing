@@ -134,6 +134,7 @@ function LandingPageContent() {
   const [hoveredField, setHoveredField] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -176,6 +177,18 @@ function LandingPageContent() {
       document.documentElement.classList.add("dark");
     }
   }, [searchParams]);
+
+  // Track fullscreen state changes
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -374,8 +387,7 @@ function LandingPageContent() {
           <div className="absolute inset-0 left-[50%] -translate-x-1/2 w-screen bg-gradient-to-t from-primary/15 via-primary/5 to-transparent blur-3xl pointer-events-none" />
           <div 
             ref={videoContainerRef}
-            className="relative bg-card rounded-[18px] border border-border shadow-lg overflow-hidden group cursor-pointer"
-            onClick={togglePlayPause}
+            className="relative bg-card rounded-[18px] border border-border shadow-lg overflow-hidden group"
           >
             <video
               ref={videoRef}
@@ -390,12 +402,13 @@ function LandingPageContent() {
               Your browser does not support the video tag.
             </video>
             
-            {/* Center Play/Pause Button - visual only, clicks pass through to container */}
+            {/* Center Play/Pause Button */}
             <div 
-              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+              className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
             >
-              <div
-                className="p-7 bg-black/60 backdrop-blur-sm rounded-2xl text-white transition-all"
+              <button
+                onClick={togglePlayPause}
+                className="p-7 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-2xl text-white transition-all cursor-pointer hover:scale-105 active:scale-95"
                 aria-label={isPlaying ? "Pause video" : "Play video"}
               >
                 {isPlaying ? (
@@ -403,18 +416,18 @@ function LandingPageContent() {
                 ) : (
                   <Play className="w-14 h-14" fill="currentColor" />
                 )}
-              </div>
+              </button>
             </div>
 
             {/* Other Video Controls */}
             <div 
-              className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              onClick={(e) => e.stopPropagation()}
+              className="absolute top-4 right-4 flex gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300"
             >
               <button
                 onClick={toggleMute}
-                className="p-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg text-white transition-all hover:scale-105 active:scale-95"
-                aria-label={isMuted ? "Unmute video" : "Mute video"}
+                className="p-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg text-white transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                aria-label={isMuted ? "Unmute" : "Mute"}
+                title={isMuted ? "Unmute" : "Mute"}
               >
                 {isMuted ? (
                   <VolumeX className="w-5 h-5" />
@@ -424,8 +437,9 @@ function LandingPageContent() {
               </button>
               <button
                 onClick={toggleFullscreen}
-                className="p-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg text-white transition-all hover:scale-105 active:scale-95"
-                aria-label="Toggle fullscreen"
+                className="p-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg text-white transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
               >
                 <Maximize className="w-5 h-5" />
               </button>
