@@ -473,13 +473,14 @@ function LandingPageContent() {
                   </div>
                   <Button
                     type="submit"
-                    className="h-12 px-8 min-w-[160px] text-base bg-primary text-white font-medium rounded-[8px] transition-all hover:bg-primary/90 active:scale-[0.95] flex items-center justify-center cursor-pointer whitespace-nowrap"
+                    className="h-12 px-8 w-[160px] text-base bg-primary text-white font-medium rounded-[8px] transition-all hover:bg-primary/90 active:scale-[0.95] flex items-center justify-center cursor-pointer whitespace-nowrap"
                     disabled={loading}
                   >
-                    {loading && (
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {loading ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      "Join Waitlist"
                     )}
-                    Join Waitlist
                   </Button>
                 </div>
               </div>
