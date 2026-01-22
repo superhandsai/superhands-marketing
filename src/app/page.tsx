@@ -7,16 +7,19 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
-// Floating gradient blob component that follows mouse
+// Floating gradient blob component that follows mouse with 3D effect
 function FloatingGradient() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [isFollowingMouse, setIsFollowingMouse] = useState(false);
   const [floatOffset, setFloatOffset] = useState({ x: 0, y: 0 });
+  const [pulsePhase, setPulsePhase] = useState(0);
   const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const animationFrameRef = useRef<number | null>(null);
+  const lastPositionRef = useRef({ x: 0, y: 0 });
   
   // Random drift state
   const currentOffsetRef = useRef({ x: 0, y: 0 });
@@ -36,15 +39,28 @@ function FloatingGradient() {
 
   // Initialize position to center of screen
   useEffect(() => {
-    setPosition({
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-    });
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    setPosition({ x: centerX, y: centerY });
+    lastPositionRef.current = { x: centerX, y: centerY };
   }, []);
 
   // Handle mouse movement
   const handleMouseMove = useCallback((e: MouseEvent) => {
     setIsFollowingMouse(true);
+    
+    // Calculate velocity for 3D tilt effect
+    const newVelocity = {
+      x: (e.clientX - lastPositionRef.current.x) * 0.1,
+      y: (e.clientY - lastPositionRef.current.y) * 0.1,
+    };
+    // Clamp velocity
+    setVelocity({
+      x: Math.max(-15, Math.min(15, newVelocity.x)),
+      y: Math.max(-15, Math.min(15, newVelocity.y)),
+    });
+    
+    lastPositionRef.current = { x: e.clientX, y: e.clientY };
     setPosition({ x: e.clientX, y: e.clientY });
     // Reset float offset when mouse moves
     setFloatOffset({ x: 0, y: 0 });
@@ -60,6 +76,7 @@ function FloatingGradient() {
     mouseTimeoutRef.current = setTimeout(() => {
       pickNewTarget();
       setIsFollowingMouse(false);
+      setVelocity({ x: 0, y: 0 });
     }, 250);
   }, [pickNewTarget]);
 
@@ -101,6 +118,9 @@ function FloatingGradient() {
       const wobbleX = Math.sin(wobbleTime * 1.5) * 15;
       const wobbleY = Math.cos(wobbleTime * 1.2) * 12;
       
+      // Update pulse phase for breathing effect
+      setPulsePhase(wobbleTime);
+      
       setFloatOffset({ 
         x: currentOffsetRef.current.x + wobbleX, 
         y: currentOffsetRef.current.y + wobbleY 
@@ -131,6 +151,13 @@ function FloatingGradient() {
   // Calculate final position
   const finalX = isFollowingMouse ? position.x : position.x + floatOffset.x;
   const finalY = isFollowingMouse ? position.y : position.y + floatOffset.y;
+  
+  // 3D effects based on velocity and phase
+  const tiltX = velocity.y * 2; // Tilt based on Y movement
+  const tiltY = -velocity.x * 2; // Tilt based on X movement
+  const breathingScale = 1 + Math.sin(pulsePhase * 0.8) * 0.03;
+  const highlightOffsetX = -velocity.x * 3 + Math.sin(pulsePhase * 0.5) * 10;
+  const highlightOffsetY = -velocity.y * 3 + Math.cos(pulsePhase * 0.4) * 8;
 
   return (
     <div
@@ -140,14 +167,89 @@ function FloatingGradient() {
         top: finalY,
         transform: "translate(-50%, -50%)",
         transition: isFollowingMouse ? "left 0.15s ease-out, top 0.15s ease-out" : "left 0.5s ease-out, top 0.5s ease-out",
+        perspective: "1000px",
       }}
     >
+      {/* Main container with 3D transform */}
       <div
-        className="w-[600px] h-[600px] rounded-full bg-gradient-radial from-primary/25 via-primary/10 to-transparent blur-3xl"
         style={{
-          background: "radial-gradient(circle, rgba(238, 96, 1, 0.2) 0%, rgba(238, 96, 1, 0.08) 40%, transparent 70%)",
+          transform: `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${breathingScale})`,
+          transition: "transform 0.2s ease-out",
+          transformStyle: "preserve-3d",
         }}
-      />
+      >
+        {/* Deep shadow layer - creates depth underneath (hollow center) */}
+        <div
+          className="absolute w-[700px] h-[700px] rounded-full"
+          style={{
+            background: "radial-gradient(circle, transparent 0%, transparent 20%, rgba(0, 0, 0, 0.04) 40%, rgba(0, 0, 0, 0.02) 50%, transparent 65%)",
+            filter: "blur(60px)",
+            transform: "translateZ(-100px) translateY(40px)",
+            left: "-50px",
+            top: "-50px",
+          }}
+        />
+        
+        {/* Outer glow layer - ambient light */}
+        <div
+          className="absolute w-[800px] h-[800px] rounded-full"
+          style={{
+            background: "radial-gradient(circle, rgba(238, 96, 1, 0.08) 0%, rgba(238, 96, 1, 0.03) 40%, transparent 65%)",
+            filter: "blur(80px)",
+            transform: "translateZ(-50px)",
+            left: "-100px",
+            top: "-100px",
+          }}
+        />
+        
+        {/* Main gradient orb */}
+        <div
+          className="w-[600px] h-[600px] rounded-full relative"
+          style={{
+            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(238, 96, 1, 0.25) 0%, rgba(238, 96, 1, 0.14) 35%, rgba(238, 96, 1, 0.05) 55%, transparent 70%)",
+            filter: "blur(40px)",
+            transform: "translateZ(0px)",
+          }}
+        />
+        
+        {/* Inner core - brighter center for depth */}
+        <div
+          className="absolute w-[350px] h-[350px] rounded-full"
+          style={{
+            background: "radial-gradient(circle, rgba(255, 130, 50, 0.22) 0%, rgba(238, 96, 1, 0.1) 45%, transparent 70%)",
+            filter: "blur(25px)",
+            transform: "translateZ(20px)",
+            left: "125px",
+            top: "125px",
+          }}
+        />
+        
+        {/* Specular highlight - simulates light reflection */}
+        <div
+          className="absolute w-[200px] h-[150px] rounded-full"
+          style={{
+            background: "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255, 150, 80, 0.15) 0%, rgba(255, 120, 50, 0.05) 40%, transparent 70%)",
+            filter: "blur(20px)",
+            transform: `translateZ(40px) translate(${highlightOffsetX}px, ${highlightOffsetY}px)`,
+            transition: "transform 0.3s ease-out",
+            left: "180px",
+            top: "150px",
+          }}
+        />
+        
+        {/* Secondary rim highlight */}
+        <div
+          className="absolute w-[400px] h-[250px] rounded-full"
+          style={{
+            background: "radial-gradient(ellipse 100% 100% at 50% 0%, rgba(255, 180, 120, 0.08) 0%, transparent 50%)",
+            filter: "blur(30px)",
+            transform: `translateZ(30px) translate(${-highlightOffsetX * 0.5}px, ${-highlightOffsetY * 0.5 - 50}px)`,
+            transition: "transform 0.4s ease-out",
+            left: "100px",
+            top: "100px",
+          }}
+        />
+      </div>
     </div>
   );
 }
@@ -177,6 +279,7 @@ function LandingPageContent() {
   const [isMuted, setIsMuted] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -357,11 +460,11 @@ function LandingPageContent() {
           <div className="flex items-center">
             <img
               src="/icon.png"
-              alt="SuperHands"
+              alt="Superhands"
               className="w-10 h-10 mr-3"
             />
             <h1 className="text-xl font-bold uppercase text-foreground">
-              SUPERHANDS
+              Superhands
             </h1>
           </div>
           <a
@@ -550,6 +653,63 @@ function LandingPageContent() {
                 <Maximize className="w-5 h-5" />
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* FAQ Section */}
+        <div className="w-full mt-20 animate-fade-in-up animation-delay-500">
+          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
+            Frequently Asked Questions
+          </h3>
+          <div className="max-w-3xl mx-auto space-y-3">
+            {[
+              {
+                question: "What is Superhands?",
+                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in Cursor. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
+              },
+              {
+                question: "Do I need coding experience to use Superhands?",
+                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. Combined with Cursor's AI capabilities, you can build functional prototypes just by describing what you want to create."
+              },
+              {
+                question: "How do I share my prototypes with others?",
+                answer: "Superhands generates a shareable link for every prototype you create. Simply copy the link and share it with anyone — they can view and interact with your prototype instantly in their browser, no setup required."
+              },
+              {
+                question: "Is Superhands free to use?",
+                answer: "We'll be launching with a free tier that includes everything you need to get started. Premium plans with advanced features will be available for teams and power users."
+              },
+              {
+                question: "When will Superhands be available?",
+                answer: "We're currently in early access. Join the waitlist to be among the first to try Superhands and help shape the product with your feedback!"
+              }
+            ].map((faq, index) => (
+              <div
+                key={index}
+                className="border border-border rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm"
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                  className="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer hover:bg-secondary/50 transition-colors"
+                >
+                  <span className="font-medium text-foreground pr-4">{faq.question}</span>
+                  <ChevronDown 
+                    className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${
+                      openFaq === index ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div 
+                  className={`overflow-hidden transition-all duration-200 ease-in-out ${
+                    openFaq === index ? "max-h-96" : "max-h-0"
+                  }`}
+                >
+                  <p className="px-6 pb-4 text-muted-foreground">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -13,24 +13,24 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "SUPERHANDS - The easiest way to build and share prototypes in Cursor",
-  description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with SUPERHANDS.",
+  description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with Superhands.",
   openGraph: {
     title: "SUPERHANDS - The easiest way to build and share prototypes in Cursor",
-    description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with SUPERHANDS.",
+    description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with Superhands.",
     type: "website",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "SUPERHANDS",
+        alt: "Superhands",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "SUPERHANDS - The easiest way to build and share prototypes in Cursor",
-    description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with SUPERHANDS.",
+    description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with Superhands.",
     images: ["/og.png"],
   },
   icons: {
