@@ -460,11 +460,11 @@ function LandingPageContent() {
           <div className="flex items-center">
             <img
               src="/icon.png"
-              alt="SuperHands"
+              alt="Superhands"
               className="w-10 h-10 mr-3"
             />
             <h1 className="text-xl font-bold uppercase text-foreground">
-              SUPERHANDS
+              Superhands
             </h1>
           </div>
           <a
@@ -664,24 +664,24 @@ function LandingPageContent() {
           <div className="max-w-3xl mx-auto space-y-3">
             {[
               {
-                question: "What is SuperHands?",
-                answer: "SuperHands is a platform that makes it easy to build and share prototypes directly in Cursor. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
+                question: "What is Superhands?",
+                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in Cursor. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
               },
               {
-                question: "Do I need coding experience to use SuperHands?",
-                answer: "No coding experience is required! SuperHands is designed to be beginner-friendly. Combined with Cursor's AI capabilities, you can build functional prototypes just by describing what you want to create."
+                question: "Do I need coding experience to use Superhands?",
+                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. Combined with Cursor's AI capabilities, you can build functional prototypes just by describing what you want to create."
               },
               {
                 question: "How do I share my prototypes with others?",
-                answer: "SuperHands generates a shareable link for every prototype you create. Simply copy the link and share it with anyone — they can view and interact with your prototype instantly in their browser, no setup required."
+                answer: "Superhands generates a shareable link for every prototype you create. Simply copy the link and share it with anyone — they can view and interact with your prototype instantly in their browser, no setup required."
               },
               {
-                question: "Is SuperHands free to use?",
+                question: "Is Superhands free to use?",
                 answer: "We'll be launching with a free tier that includes everything you need to get started. Premium plans with advanced features will be available for teams and power users."
               },
               {
-                question: "When will SuperHands be available?",
-                answer: "We're currently in early access. Join the waitlist to be among the first to try SuperHands and help shape the product with your feedback!"
+                question: "When will Superhands be available?",
+                answer: "We're currently in early access. Join the waitlist to be among the first to try Superhands and help shape the product with your feedback!"
               }
             ].map((faq, index) => (
               <div
