@@ -11,10 +11,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Superhands - The easiest way to build and share prototypes in Cursor",
+  title: "SUPERHANDS - The easiest way to build and share prototypes in Cursor",
   description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with Superhands.",
   openGraph: {
-    title: "Superhands - The easiest way to build and share prototypes in Cursor",
+    title: "SUPERHANDS - The easiest way to build and share prototypes in Cursor",
     description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with Superhands.",
     type: "website",
     images: [
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Superhands - The easiest way to build and share prototypes in Cursor",
+    title: "SUPERHANDS - The easiest way to build and share prototypes in Cursor",
     description: "Get started in Cursor without all the technical complexity of local dev, GitHub and version control, with Superhands.",
     images: ["/og.png"],
   },
