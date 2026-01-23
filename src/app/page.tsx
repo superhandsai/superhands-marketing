@@ -576,7 +576,7 @@ function LandingPageContent() {
                   </div>
                   <Button
                     type="submit"
-                    className="h-12 px-8 w-[160px] text-base bg-primary text-white font-medium rounded-[8px] transition-all hover:bg-primary/90 active:scale-[0.95] flex items-center justify-center cursor-pointer whitespace-nowrap"
+                    className="h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-white font-medium rounded-[8px] transition-all hover:bg-primary/90 active:scale-[0.95] flex items-center justify-center cursor-pointer whitespace-nowrap"
                     disabled={loading}
                   >
                     {loading ? (
