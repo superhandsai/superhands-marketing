@@ -12,60 +12,46 @@ import { useSearchParams } from "next/navigation";
 
 // Floating gradient blob component that follows mouse with 3D effect
 function FloatingGradient() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [velocity, setVelocity] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const highlightRef = useRef<HTMLDivElement>(null);
+  const rimHighlightRef = useRef<HTMLDivElement>(null);
+
   const [isFollowingMouse, setIsFollowingMouse] = useState(false);
-  const [floatOffset, setFloatOffset] = useState({ x: 0, y: 0 });
-  const [pulsePhase, setPulsePhase] = useState(0);
   const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const lastPositionRef = useRef({ x: 0, y: 0 });
-  
-  // Random drift state
-  const currentOffsetRef = useRef({ x: 0, y: 0 });
-  const targetOffsetRef = useRef({ x: 0, y: 0 });
-  const lastDirectionChangeRef = useRef(0);
-
-  // Pick a new random target to drift towards
-  const pickNewTarget = useCallback(() => {
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 100 + Math.random() * 150; // Random distance 100-250px
-    targetOffsetRef.current = {
-      x: currentOffsetRef.current.x + Math.cos(angle) * distance,
-      y: currentOffsetRef.current.y + Math.sin(angle) * distance,
-    };
-    lastDirectionChangeRef.current = performance.now();
-  }, []);
+  const basePositionRef = useRef({ x: 0, y: 0 });
+  const lastMouseRef = useRef({ x: 0, y: 0 });
+  const velocityRef = useRef({ x: 0, y: 0 });
+  const startTimeRef = useRef(performance.now());
 
   // Initialize position to center of screen
   useEffect(() => {
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
-    setPosition({ x: centerX, y: centerY });
-    lastPositionRef.current = { x: centerX, y: centerY };
+    basePositionRef.current = { x: centerX, y: centerY };
+    lastMouseRef.current = { x: centerX, y: centerY };
+    startTimeRef.current = performance.now();
+
+    if (containerRef.current) {
+      containerRef.current.style.left = `${centerX}px`;
+      containerRef.current.style.top = `${centerY}px`;
+    }
   }, []);
 
   // Handle mouse movement
   const handleMouseMove = useCallback((e: MouseEvent) => {
     setIsFollowingMouse(true);
-    
+
     // Calculate velocity for 3D tilt effect
     const newVelocity = {
-      x: (e.clientX - lastPositionRef.current.x) * 0.1,
-      y: (e.clientY - lastPositionRef.current.y) * 0.1,
+      x: Math.max(-15, Math.min(15, (e.clientX - lastMouseRef.current.x) * 0.1)),
+      y: Math.max(-15, Math.min(15, (e.clientY - lastMouseRef.current.y) * 0.1)),
     };
-    // Clamp velocity
-    setVelocity({
-      x: Math.max(-15, Math.min(15, newVelocity.x)),
-      y: Math.max(-15, Math.min(15, newVelocity.y)),
-    });
-    
-    lastPositionRef.current = { x: e.clientX, y: e.clientY };
-    setPosition({ x: e.clientX, y: e.clientY });
-    // Reset float offset when mouse moves
-    setFloatOffset({ x: 0, y: 0 });
-    currentOffsetRef.current = { x: 0, y: 0 };
-    targetOffsetRef.current = { x: 0, y: 0 };
+    velocityRef.current = newVelocity;
+
+    lastMouseRef.current = { x: e.clientX, y: e.clientY };
+    basePositionRef.current = { x: e.clientX, y: e.clientY };
 
     // Clear existing timeout
     if (mouseTimeoutRef.current) {
@@ -74,57 +60,66 @@ function FloatingGradient() {
 
     // Set timeout to stop following mouse after 250ms of no movement
     mouseTimeoutRef.current = setTimeout(() => {
-      pickNewTarget();
       setIsFollowingMouse(false);
-      setVelocity({ x: 0, y: 0 });
+      velocityRef.current = { x: 0, y: 0 };
     }, 250);
-  }, [pickNewTarget]);
+  }, []);
 
-  // Floating animation when not following mouse
+  // Continuous animation loop - always running
   useEffect(() => {
-    if (isFollowingMouse) {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      return;
-    }
-
-    // Pick initial target when starting to float
-    if (lastDirectionChangeRef.current === 0) {
-      pickNewTarget();
-    }
-    
-    // Store the next change time
-    let nextChangeTime = performance.now() + 2000 + Math.random() * 2000;
-
     const animate = () => {
       const now = performance.now();
-      
-      // Pick a new random direction every 2-4 seconds
-      if (now > nextChangeTime) {
-        pickNewTarget();
-        nextChangeTime = now + 2000 + Math.random() * 2000;
+      const elapsed = (now - startTimeRef.current) / 1000;
+
+      // Multiple layered sine waves for organic, never-stopping motion
+      // Each wave has different frequency and amplitude
+      const floatX =
+        Math.sin(elapsed * 0.3) * 80 +      // Slow, wide drift
+        Math.sin(elapsed * 0.7) * 40 +      // Medium movement
+        Math.sin(elapsed * 1.3) * 15;       // Quick, subtle wobble
+
+      const floatY =
+        Math.cos(elapsed * 0.25) * 60 +     // Slow, wide drift (different phase)
+        Math.cos(elapsed * 0.6) * 35 +      // Medium movement
+        Math.sin(elapsed * 1.1) * 12;       // Quick, subtle wobble
+
+      // Calculate final position
+      const finalX = isFollowingMouse
+        ? basePositionRef.current.x
+        : basePositionRef.current.x + floatX;
+      const finalY = isFollowingMouse
+        ? basePositionRef.current.y
+        : basePositionRef.current.y + floatY;
+
+      // 3D effects
+      const velocity = velocityRef.current;
+      const tiltX = velocity.y * 2;
+      const tiltY = -velocity.x * 2;
+      const breathingScale = 1 + Math.sin(elapsed * 0.8) * 0.03;
+      const highlightOffsetX = -velocity.x * 3 + Math.sin(elapsed * 0.5) * 10;
+      const highlightOffsetY = -velocity.y * 3 + Math.cos(elapsed * 0.4) * 8;
+
+      // Update DOM directly for smooth animation
+      if (containerRef.current) {
+        containerRef.current.style.left = `${finalX}px`;
+        containerRef.current.style.top = `${finalY}px`;
+        containerRef.current.style.transition = isFollowingMouse
+          ? "left 0.15s ease-out, top 0.15s ease-out"
+          : "none";
       }
-      
-      // Smoothly lerp towards the target (increased speed)
-      const lerpFactor = 0.04;
-      currentOffsetRef.current = {
-        x: currentOffsetRef.current.x + (targetOffsetRef.current.x - currentOffsetRef.current.x) * lerpFactor,
-        y: currentOffsetRef.current.y + (targetOffsetRef.current.y - currentOffsetRef.current.y) * lerpFactor,
-      };
-      
-      // Add subtle organic wobble on top
-      const wobbleTime = now / 1000;
-      const wobbleX = Math.sin(wobbleTime * 1.5) * 15;
-      const wobbleY = Math.cos(wobbleTime * 1.2) * 12;
-      
-      // Update pulse phase for breathing effect
-      setPulsePhase(wobbleTime);
-      
-      setFloatOffset({ 
-        x: currentOffsetRef.current.x + wobbleX, 
-        y: currentOffsetRef.current.y + wobbleY 
-      });
+
+      if (innerRef.current) {
+        innerRef.current.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${breathingScale})`;
+      }
+
+      if (highlightRef.current) {
+        highlightRef.current.style.transform = `translateZ(40px) translate(${highlightOffsetX}px, ${highlightOffsetY}px)`;
+      }
+
+      if (rimHighlightRef.current) {
+        rimHighlightRef.current.style.transform = `translateZ(30px) translate(${-highlightOffsetX * 0.5}px, ${-highlightOffsetY * 0.5 - 50}px)`;
+      }
+
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
@@ -135,7 +130,7 @@ function FloatingGradient() {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isFollowingMouse, pickNewTarget]);
+  }, [isFollowingMouse]);
 
   // Add mouse move listener
   useEffect(() => {
@@ -148,32 +143,19 @@ function FloatingGradient() {
     };
   }, [handleMouseMove]);
 
-  // Calculate final position
-  const finalX = isFollowingMouse ? position.x : position.x + floatOffset.x;
-  const finalY = isFollowingMouse ? position.y : position.y + floatOffset.y;
-  
-  // 3D effects based on velocity and phase
-  const tiltX = velocity.y * 2; // Tilt based on Y movement
-  const tiltY = -velocity.x * 2; // Tilt based on X movement
-  const breathingScale = 1 + Math.sin(pulsePhase * 0.8) * 0.03;
-  const highlightOffsetX = -velocity.x * 3 + Math.sin(pulsePhase * 0.5) * 10;
-  const highlightOffsetY = -velocity.y * 3 + Math.cos(pulsePhase * 0.4) * 8;
-
   return (
     <div
+      ref={containerRef}
       className="fixed pointer-events-none z-0"
       style={{
-        left: finalX,
-        top: finalY,
         transform: "translate(-50%, -50%)",
-        transition: isFollowingMouse ? "left 0.15s ease-out, top 0.15s ease-out" : "left 0.5s ease-out, top 0.5s ease-out",
         perspective: "1000px",
       }}
     >
       {/* Main container with 3D transform */}
       <div
+        ref={innerRef}
         style={{
-          transform: `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${breathingScale})`,
           transition: "transform 0.2s ease-out",
           transformStyle: "preserve-3d",
         }}
@@ -226,11 +208,11 @@ function FloatingGradient() {
         
         {/* Specular highlight - simulates light reflection */}
         <div
+          ref={highlightRef}
           className="absolute w-[200px] h-[150px] rounded-full"
           style={{
             background: "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255, 150, 80, 0.15) 0%, rgba(255, 120, 50, 0.05) 40%, transparent 70%)",
             filter: "blur(20px)",
-            transform: `translateZ(40px) translate(${highlightOffsetX}px, ${highlightOffsetY}px)`,
             transition: "transform 0.3s ease-out",
             left: "180px",
             top: "150px",
@@ -239,11 +221,11 @@ function FloatingGradient() {
         
         {/* Secondary rim highlight */}
         <div
+          ref={rimHighlightRef}
           className="absolute w-[400px] h-[250px] rounded-full"
           style={{
             background: "radial-gradient(ellipse 100% 100% at 50% 0%, rgba(255, 180, 120, 0.08) 0%, transparent 50%)",
             filter: "blur(30px)",
-            transform: `translateZ(30px) translate(${-highlightOffsetX * 0.5}px, ${-highlightOffsetY * 0.5 - 50}px)`,
             transition: "transform 0.4s ease-out",
             left: "100px",
             top: "100px",
