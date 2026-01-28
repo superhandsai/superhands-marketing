@@ -24,6 +24,8 @@ function FloatingGradient() {
   const lastMouseRef = useRef({ x: 0, y: 0 });
   const velocityRef = useRef({ x: 0, y: 0 });
   const startTimeRef = useRef(performance.now());
+  const mouseStopTimeRef = useRef<number | null>(null);
+  const floatBlendRef = useRef(0);
 
   // Initialize position to center of screen
   useEffect(() => {
@@ -62,6 +64,8 @@ function FloatingGradient() {
     mouseTimeoutRef.current = setTimeout(() => {
       setIsFollowingMouse(false);
       velocityRef.current = { x: 0, y: 0 };
+      mouseStopTimeRef.current = performance.now();
+      floatBlendRef.current = 0;
     }, 250);
   }, []);
 
@@ -83,13 +87,21 @@ function FloatingGradient() {
         Math.cos(elapsed * 0.6) * 35 +      // Medium movement
         Math.sin(elapsed * 1.1) * 12;       // Quick, subtle wobble
 
-      // Calculate final position
-      const finalX = isFollowingMouse
-        ? basePositionRef.current.x
-        : basePositionRef.current.x + floatX;
-      const finalY = isFollowingMouse
-        ? basePositionRef.current.y
-        : basePositionRef.current.y + floatY;
+      // Update blend factor for smooth transition when mouse stops
+      if (isFollowingMouse) {
+        floatBlendRef.current = 0;
+      } else if (mouseStopTimeRef.current !== null) {
+        const timeSinceStop = (now - mouseStopTimeRef.current) / 1000;
+        // Ease-out over 1.2 seconds for smooth transition
+        const t = Math.min(1, timeSinceStop / 1.2);
+        floatBlendRef.current = 1 - Math.pow(1 - t, 3); // Cubic ease-out
+      }
+
+      const blend = floatBlendRef.current;
+
+      // Calculate final position with smooth blend
+      const finalX = basePositionRef.current.x + floatX * blend;
+      const finalY = basePositionRef.current.y + floatY * blend;
 
       // 3D effects
       const velocity = velocityRef.current;
