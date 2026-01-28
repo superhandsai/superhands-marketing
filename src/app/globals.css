@@ -172,6 +172,22 @@ body {
   animation: subtlePulse 4s ease-in-out infinite;
 }
 
+/* Slow pulse animation for floating gradient */
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 6s ease-in-out infinite;
+}
+
 /* Login button hover states */
 .login-btn:hover {
   background-color: #e4e4e7;

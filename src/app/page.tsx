@@ -12,99 +12,103 @@ import { useSearchParams } from "next/navigation";
 
 // Floating gradient blob component that follows mouse
 function FloatingGradient() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [renderPos, setRenderPos] = useState({ x: 0, y: 0 });
   const [isFollowingMouse, setIsFollowingMouse] = useState(false);
-  const [floatOffset, setFloatOffset] = useState({ x: 0, y: 0 });
   const mouseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const animationFrameRef = useRef<number | null>(null);
-  
-  // Random drift state
-  const currentOffsetRef = useRef({ x: 0, y: 0 });
-  const targetOffsetRef = useRef({ x: 0, y: 0 });
-  const lastDirectionChangeRef = useRef(0);
 
-  // Pick a new random target to drift towards
-  const pickNewTarget = useCallback(() => {
+  // Smooth position tracking
+  const targetPosRef = useRef({ x: 0, y: 0 });
+  const currentPosRef = useRef({ x: 0, y: 0 });
+  const velocityRef = useRef({ x: 0, y: 0 });
+
+  // Floating drift state
+  const floatTargetRef = useRef({ x: 0, y: 0 });
+  const floatPhaseRef = useRef(Math.random() * Math.PI * 2);
+
+  // Pick a new random float target
+  const pickNewFloatTarget = useCallback(() => {
     const angle = Math.random() * Math.PI * 2;
-    const distance = 100 + Math.random() * 150; // Random distance 100-250px
-    targetOffsetRef.current = {
-      x: currentOffsetRef.current.x + Math.cos(angle) * distance,
-      y: currentOffsetRef.current.y + Math.sin(angle) * distance,
+    const distance = 80 + Math.random() * 120;
+    floatTargetRef.current = {
+      x: Math.cos(angle) * distance,
+      y: Math.sin(angle) * distance,
     };
-    lastDirectionChangeRef.current = performance.now();
   }, []);
 
   // Initialize position to center of screen
   useEffect(() => {
-    setPosition({
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-    });
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    targetPosRef.current = { x: centerX, y: centerY };
+    currentPosRef.current = { x: centerX, y: centerY };
+    setRenderPos({ x: centerX, y: centerY });
   }, []);
 
   // Handle mouse movement
   const handleMouseMove = useCallback((e: MouseEvent) => {
     setIsFollowingMouse(true);
-    setPosition({ x: e.clientX, y: e.clientY });
-    // Reset float offset when mouse moves
-    setFloatOffset({ x: 0, y: 0 });
-    currentOffsetRef.current = { x: 0, y: 0 };
-    targetOffsetRef.current = { x: 0, y: 0 };
+    targetPosRef.current = { x: e.clientX, y: e.clientY };
 
-    // Clear existing timeout
     if (mouseTimeoutRef.current) {
       clearTimeout(mouseTimeoutRef.current);
     }
 
-    // Set timeout to stop following mouse after 250ms of no movement
     mouseTimeoutRef.current = setTimeout(() => {
-      pickNewTarget();
+      pickNewFloatTarget();
       setIsFollowingMouse(false);
-    }, 250);
-  }, [pickNewTarget]);
+    }, 300);
+  }, [pickNewFloatTarget]);
 
-  // Floating animation when not following mouse
+  // Main animation loop - always running for smooth movement
   useEffect(() => {
-    if (isFollowingMouse) {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      return;
-    }
-
-    // Pick initial target when starting to float
-    if (lastDirectionChangeRef.current === 0) {
-      pickNewTarget();
-    }
-    
-    // Store the next change time
-    let nextChangeTime = performance.now() + 2000 + Math.random() * 2000;
+    let nextFloatChangeTime = performance.now() + 3000 + Math.random() * 2000;
 
     const animate = () => {
       const now = performance.now();
-      
-      // Pick a new random direction every 2-4 seconds
-      if (now > nextChangeTime) {
-        pickNewTarget();
-        nextChangeTime = now + 2000 + Math.random() * 2000;
+
+      // Calculate target position
+      let targetX = targetPosRef.current.x;
+      let targetY = targetPosRef.current.y;
+
+      // When floating, add drift offset
+      if (!isFollowingMouse) {
+        // Periodically pick new drift target
+        if (now > nextFloatChangeTime) {
+          pickNewFloatTarget();
+          nextFloatChangeTime = now + 3000 + Math.random() * 2000;
+        }
+
+        // Smooth figure-8 like organic motion
+        floatPhaseRef.current += 0.008;
+        const phase = floatPhaseRef.current;
+        const organicX = Math.sin(phase) * 30 + Math.sin(phase * 0.7) * 20;
+        const organicY = Math.cos(phase * 0.8) * 25 + Math.cos(phase * 0.5) * 15;
+
+        targetX += floatTargetRef.current.x + organicX;
+        targetY += floatTargetRef.current.y + organicY;
       }
-      
-      // Smoothly lerp towards the target (increased speed)
-      const lerpFactor = 0.04;
-      currentOffsetRef.current = {
-        x: currentOffsetRef.current.x + (targetOffsetRef.current.x - currentOffsetRef.current.x) * lerpFactor,
-        y: currentOffsetRef.current.y + (targetOffsetRef.current.y - currentOffsetRef.current.y) * lerpFactor,
-      };
-      
-      // Add subtle organic wobble on top
-      const wobbleTime = now / 1000;
-      const wobbleX = Math.sin(wobbleTime * 1.5) * 15;
-      const wobbleY = Math.cos(wobbleTime * 1.2) * 12;
-      
-      setFloatOffset({ 
-        x: currentOffsetRef.current.x + wobbleX, 
-        y: currentOffsetRef.current.y + wobbleY 
+
+      // Spring physics for smooth movement
+      const stiffness = isFollowingMouse ? 0.08 : 0.02;
+      const damping = isFollowingMouse ? 0.75 : 0.85;
+
+      const dx = targetX - currentPosRef.current.x;
+      const dy = targetY - currentPosRef.current.y;
+
+      velocityRef.current.x += dx * stiffness;
+      velocityRef.current.y += dy * stiffness;
+      velocityRef.current.x *= damping;
+      velocityRef.current.y *= damping;
+
+      currentPosRef.current.x += velocityRef.current.x;
+      currentPosRef.current.y += velocityRef.current.y;
+
+      setRenderPos({
+        x: currentPosRef.current.x,
+        y: currentPosRef.current.y,
       });
+
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
@@ -115,7 +119,7 @@ function FloatingGradient() {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [isFollowingMouse, pickNewTarget]);
+  }, [isFollowingMouse, pickNewFloatTarget]);
 
   // Add mouse move listener
   useEffect(() => {
@@ -128,24 +132,40 @@ function FloatingGradient() {
     };
   }, [handleMouseMove]);
 
-  // Calculate final position
-  const finalX = isFollowingMouse ? position.x : position.x + floatOffset.x;
-  const finalY = isFollowingMouse ? position.y : position.y + floatOffset.y;
-
   return (
     <div
       className="fixed pointer-events-none z-0"
       style={{
-        left: finalX,
-        top: finalY,
+        left: renderPos.x,
+        top: renderPos.y,
         transform: "translate(-50%, -50%)",
-        transition: isFollowingMouse ? "left 0.15s ease-out, top 0.15s ease-out" : "left 0.5s ease-out, top 0.5s ease-out",
       }}
     >
+      {/* Outer soft glow layer */}
       <div
-        className="w-[600px] h-[600px] rounded-full bg-gradient-radial from-primary/25 via-primary/10 to-transparent blur-3xl"
+        className="absolute w-[900px] h-[900px] rounded-full blur-[120px] animate-pulse-slow"
         style={{
-          background: "radial-gradient(circle, rgba(238, 96, 1, 0.2) 0%, rgba(238, 96, 1, 0.08) 40%, transparent 70%)",
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(circle, rgba(238, 96, 1, 0.08) 0%, rgba(238, 96, 1, 0.03) 50%, transparent 70%)",
+        }}
+      />
+      {/* Middle glow layer */}
+      <div
+        className="absolute w-[700px] h-[700px] rounded-full blur-[80px]"
+        style={{
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -50%)",
+          background: "radial-gradient(circle, rgba(238, 96, 1, 0.12) 0%, rgba(238, 96, 1, 0.05) 45%, transparent 70%)",
+        }}
+      />
+      {/* Inner core glow */}
+      <div
+        className="w-[500px] h-[500px] rounded-full blur-3xl"
+        style={{
+          background: "radial-gradient(circle, rgba(238, 96, 1, 0.22) 0%, rgba(238, 96, 1, 0.1) 35%, transparent 65%)",
         }}
       />
     </div>
@@ -473,7 +493,7 @@ function LandingPageContent() {
                   </div>
                   <Button
                     type="submit"
-                    className="h-12 px-8 w-[160px] text-base bg-primary text-white font-medium rounded-[8px] transition-all hover:bg-primary/90 active:scale-[0.95] flex items-center justify-center cursor-pointer whitespace-nowrap"
+                    className="h-12 px-8 w-[160px] text-base bg-primary text-white font-medium rounded-[8px] transition-all duration-200 hover:bg-[#ff7020] hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/25 active:translate-y-0 active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap"
                     disabled={loading}
                   >
                     {loading ? (
