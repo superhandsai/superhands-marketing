@@ -21,7 +21,7 @@
       "id": "openSimpleBrowser",
       "type": "command",
       "command": "simpleBrowser.api.open",
-      "args": "http://127.0.0.1:43821/preview?previewUrl=https%3A%2F%2Fta-01kg3584vvja0b1qdj40qj74kt-3000.wo-ylz8n77rpg38x43lby293tk7b.w.modal.host&deploymentId=007489b8-9be1-4282-bc02-bcca7711328f&prototypeId=97199675-11a7-439d-b93b-38a0015ba9c9&branch=superhands-marketing-branch-0128-2038&owner=Ion-ev&repo=superhands-marketing&shareUrl=https%3A%2F%2Fapp.superhands.ai%2Fview%2F007489b8-9be1-4282-bc02-bcca7711328f&userId=92d275d5-dbfe-43d5-bf32-ba409e3bda93&userEmail=grant%40superhands.ai&userName=Superhands+User&title=superhands-marketing+-+Branch+0128-2038"
+      "args": "http://127.0.0.1:43821/preview?previewUrl=https%3A%2F%2Fta-01kg35kj23meymd2h34r0vt0g5-3000.wo-tj9s1blqt8rl0egrzl0ojj3se.w.modal.host&deploymentId=007489b8-9be1-4282-bc02-bcca7711328f&prototypeId=97199675-11a7-439d-b93b-38a0015ba9c9&branch=superhands-marketing-branch-0128-2038&owner=Ion-ev&repo=superhands-marketing&shareUrl=https%3A%2F%2Fapp.superhands.ai%2Fview%2F007489b8-9be1-4282-bc02-bcca7711328f&userId=92d275d5-dbfe-43d5-bf32-ba409e3bda93&userEmail=grant%40superhands.ai&userName=Superhands+User&title=superhands-marketing+-+Branch+0128-2038"
     }
   ]
 }
