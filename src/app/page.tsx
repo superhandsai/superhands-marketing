@@ -375,7 +375,7 @@ function LandingPageContent() {
         {/* Hero Section */}
         <div className="text-center mb-8">
           <h2 className="text-4xl sm:text-6xl font-bold text-foreground mb-4 leading-[1.1] animate-fade-in-up animation-delay-100">
-            The easiest way to build and share prototypes in Cursor
+            terst
           </h2>
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
             Get started in Cursor without all the technical complexity of local dev, GitHub and version control.
