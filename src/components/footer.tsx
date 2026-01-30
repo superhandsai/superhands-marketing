@@ -18,19 +18,19 @@ export function Footer() {
           {/* Links */}
           <nav className="flex items-center gap-6">
             <a
-              href="/privacy"
+              href="https://app.superhands.ai/privacy"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Privacy Policy
             </a>
             <a
-              href="/terms"
+              href="https://app.superhands.ai/terms-and-conditions"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Terms of Service
             </a>
             <a
-              href="mailto:contact@superhands.ai"
+              href="mailto:hello@superhands.ai"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
               Contact
