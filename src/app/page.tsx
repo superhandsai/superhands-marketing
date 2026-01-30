@@ -14,23 +14,9 @@ import { useSearchParams } from "next/navigation";
 function GradientTextHero() {
   const textRef = useRef<HTMLHeadingElement>(null);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-  const [isHovering, setIsHovering] = useState(false);
-
-  const handleMouseMove = useCallback((e: MouseEvent) => {
-    if (!textRef.current) return;
-
-    const rect = textRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-    setMousePos({ x, y });
-    setIsHovering(true);
-  }, []);
+  const [isTracking, setIsTracking] = useState(false);
 
   useEffect(() => {
-    const textElement = textRef.current;
-    if (!textElement) return;
-
     const handleGlobalMouseMove = (e: MouseEvent) => {
       if (!textRef.current) return;
 
@@ -42,48 +28,34 @@ function GradientTextHero() {
     };
 
     const handleMouseEnter = () => {
-      setIsHovering(true);
-      // Track mouse globally so gradient follows even outside the element
+      setIsTracking(true);
       document.addEventListener("mousemove", handleGlobalMouseMove);
     };
 
-    const handleMouseLeave = () => {
-      // Keep tracking for a bit to let gradient move to edge naturally
-      setTimeout(() => {
-        document.removeEventListener("mousemove", handleGlobalMouseMove);
-        setIsHovering(false);
-      }, 100);
-    };
+    const textElement = textRef.current;
+    if (!textElement) return;
 
     textElement.addEventListener("mouseenter", handleMouseEnter);
-    textElement.addEventListener("mousemove", handleMouseMove);
-    textElement.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
       textElement.removeEventListener("mouseenter", handleMouseEnter);
-      textElement.removeEventListener("mousemove", handleMouseMove);
-      textElement.removeEventListener("mouseleave", handleMouseLeave);
       document.removeEventListener("mousemove", handleGlobalMouseMove);
     };
-  }, [handleMouseMove]);
+  }, []);
 
   return (
     <h2
       ref={textRef}
       className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 relative cursor-default"
-      style={
-        isHovering
-          ? {
-              backgroundImage: `radial-gradient(circle 400px at ${mousePos.x}% ${mousePos.y}%, rgba(238, 96, 1, 0.9) 0%, rgba(255, 130, 50, 0.7) 25%, rgba(238, 96, 1, 0.4) 50%, var(--foreground) 70%)`,
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              textFillColor: "transparent",
-            }
-          : {
-              color: "var(--foreground)",
-            }
-      }
+      style={{
+        backgroundImage: isTracking
+          ? `radial-gradient(circle 400px at ${mousePos.x}% ${mousePos.y}%, rgba(238, 96, 1, 0.9) 0%, rgba(255, 130, 50, 0.7) 25%, rgba(238, 96, 1, 0.4) 50%, var(--foreground) 70%)`
+          : "none",
+        WebkitBackgroundClip: "text",
+        backgroundClip: "text",
+        WebkitTextFillColor: isTracking ? "transparent" : "var(--foreground)",
+        color: "var(--foreground)",
+      }}
     >
       The easiest way to build and share prototypes in Cursor
     </h2>
