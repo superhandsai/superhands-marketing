@@ -27,22 +27,45 @@ function GradientTextHero() {
     setIsHovering(true);
   }, []);
 
-  const handleMouseLeave = useCallback(() => {
-    setIsHovering(false);
-  }, []);
-
   useEffect(() => {
     const textElement = textRef.current;
     if (!textElement) return;
 
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!textRef.current) return;
+
+      const rect = textRef.current.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+      setMousePos({ x, y });
+    };
+
+    const handleMouseEnter = () => {
+      setIsHovering(true);
+      // Track mouse globally so gradient follows even outside the element
+      document.addEventListener("mousemove", handleGlobalMouseMove);
+    };
+
+    const handleMouseLeave = () => {
+      // Keep tracking for a bit to let gradient move to edge naturally
+      setTimeout(() => {
+        document.removeEventListener("mousemove", handleGlobalMouseMove);
+        setIsHovering(false);
+      }, 100);
+    };
+
+    textElement.addEventListener("mouseenter", handleMouseEnter);
     textElement.addEventListener("mousemove", handleMouseMove);
     textElement.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
+      textElement.removeEventListener("mouseenter", handleMouseEnter);
       textElement.removeEventListener("mousemove", handleMouseMove);
       textElement.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mousemove", handleGlobalMouseMove);
     };
-  }, [handleMouseMove, handleMouseLeave]);
+  }, [handleMouseMove]);
 
   return (
     <h2
