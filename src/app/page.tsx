@@ -10,6 +10,58 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
+// Hero text with mouse-tracking gradient effect
+function GradientTextHero() {
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const [isTracking, setIsTracking] = useState(false);
+
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!textRef.current) return;
+
+      const rect = textRef.current.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+      setMousePos({ x, y });
+    };
+
+    const handleMouseEnter = () => {
+      setIsTracking(true);
+      document.addEventListener("mousemove", handleGlobalMouseMove);
+    };
+
+    const textElement = textRef.current;
+    if (!textElement) return;
+
+    textElement.addEventListener("mouseenter", handleMouseEnter);
+
+    return () => {
+      textElement.removeEventListener("mouseenter", handleMouseEnter);
+      document.removeEventListener("mousemove", handleGlobalMouseMove);
+    };
+  }, []);
+
+  return (
+    <h2
+      ref={textRef}
+      className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 relative cursor-default"
+      style={{
+        backgroundImage: isTracking
+          ? `radial-gradient(circle 400px at ${mousePos.x}% ${mousePos.y}%, rgba(238, 96, 1, 0.9) 0%, rgba(255, 130, 50, 0.7) 25%, rgba(238, 96, 1, 0.4) 50%, var(--foreground) 70%)`
+          : "none",
+        WebkitBackgroundClip: "text",
+        backgroundClip: "text",
+        WebkitTextFillColor: isTracking ? "transparent" : "var(--foreground)",
+        color: "var(--foreground)",
+      }}
+    >
+      The easiest way to build and share prototypes in Cursor
+    </h2>
+  );
+}
+
 // Floating gradient blob component that follows mouse with 3D effect
 function FloatingGradient() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -471,9 +523,7 @@ function LandingPageContent() {
 
         {/* Hero Section */}
         <div className="text-center mb-8">
-          <h2 className="text-4xl sm:text-6xl font-bold text-foreground mb-4 leading-[1.1] animate-fade-in-up animation-delay-100">
-            The easiest way to build and share prototypes in Cursor
-          </h2>
+          <GradientTextHero />
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
             Get started in Cursor without all the technical complexity of local dev, GitHub and version control.
           </p>
