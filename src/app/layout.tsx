@@ -4,6 +4,7 @@ import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { PostHogProvider } from "@/providers/posthog-provider";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -52,10 +53,13 @@ export default function RootLayout({
 
   return (
     <html lang="en" className={inter.variable}>
-      <body className={`font-sans antialiased`}>
+      <body className={`font-sans antialiased flex flex-col min-h-screen`}>
         <PostHogProvider>
           <ThemeProvider>
-            {children}
+            <main className="flex-1">
+              {children}
+            </main>
+            <Footer />
           </ThemeProvider>
         </PostHogProvider>
         {intercomAppId && (
