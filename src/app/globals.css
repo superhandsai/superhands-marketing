@@ -174,17 +174,22 @@ body {
 
 /* Login button hover states */
 .login-btn {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: none;
 }
 
 .login-btn:hover {
   background-color: #e4e4e7;
   color: #ee6001;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: none;
 }
 
 .dark .login-btn:hover {
   background-color: #4a4c4e;
   color: #ee6001;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: none;
 }
