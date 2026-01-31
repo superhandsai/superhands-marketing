@@ -515,7 +515,7 @@ function LandingPageContent() {
           </div>
           <a
             href="https://app.superhands.ai/login"
-            className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
+            className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-red-500 text-white transition-all"
           >
             Login
           </a>
