@@ -626,7 +626,7 @@ function LandingPageContent() {
                     {loading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
-                      "Get started"
+                      "Get it started now."
                     )}
                   </Button>
                 </div>
