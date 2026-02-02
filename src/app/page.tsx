@@ -734,7 +734,9 @@ function LandingPageContent() {
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer hover:bg-secondary/50 transition-colors"
+                  className={`w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer transition-colors ${
+                    openFaq === index ? "" : "hover:bg-secondary/50"
+                  }`}
                 >
                   <span className="font-medium text-foreground pr-4">{faq.question}</span>
                   <ChevronDown 
