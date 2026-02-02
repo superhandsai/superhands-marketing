@@ -57,7 +57,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      The easiest way to build and share prototypes in Cursor
+      Finally, the engineer for non-engineers.
     </h2>
   );
 }
