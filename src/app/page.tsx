@@ -468,10 +468,10 @@ function LandingPageContent() {
   }, []);
 
   const triggerConfetti = () => {
-    const count = 50;
+    const count = 150;
     const defaults = {
       origin: { y: 0.2 },
-      colors: ['#ee6001', '#ff8232', '#ffa366', '#dc2626', '#ef4444']
+      colors: ['#ee6001', '#ff8232', '#ffa366', '#dc2626', '#ef4444', '#fb923c', '#fdba74']
     };
 
     function fire(particleRatio: number, opts: confetti.Options) {
@@ -482,31 +482,53 @@ function LandingPageContent() {
       });
     }
 
+    // Explosive center burst
     fire(0.25, {
-      spread: 26,
+      spread: 40,
+      startVelocity: 75,
+    });
+
+    // Wide spread
+    fire(0.2, {
+      spread: 90,
+      startVelocity: 65,
+    });
+
+    // Super wide spray
+    fire(0.35, {
+      spread: 140,
+      decay: 0.89,
+      scalar: 1.0,
       startVelocity: 55,
     });
 
-    fire(0.2, {
-      spread: 60,
+    // Slow floaters
+    fire(0.15, {
+      spread: 160,
+      startVelocity: 30,
+      decay: 0.88,
+      scalar: 1.4,
+      gravity: 0.8,
     });
 
-    fire(0.35, {
-      spread: 100,
-      decay: 0.91,
-      scalar: 0.8,
+    // Fast shooters
+    fire(0.15, {
+      spread: 130,
+      startVelocity: 80,
+      scalar: 0.9,
+    });
+
+    // Side bursts
+    fire(0.1, {
+      spread: 120,
+      startVelocity: 70,
+      angle: 60,
     });
 
     fire(0.1, {
       spread: 120,
-      startVelocity: 25,
-      decay: 0.92,
-      scalar: 1.2,
-    });
-
-    fire(0.1, {
-      spread: 120,
-      startVelocity: 45,
+      startVelocity: 70,
+      angle: 120,
     });
   };
 
