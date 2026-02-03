@@ -793,6 +793,10 @@ function LandingPageContent() {
               {
                 question: "When will Superhands be available?",
                 answer: "We're currently in early access. Join the waitlist to be among the first to try Superhands and help shape the product with your feedback!"
+              },
+              {
+                question: "Is my data secure with Superhands?",
+                answer: "Yes, security is our top priority. All data is encrypted in transit and at rest. Your prototypes are private by default, and you have full control over who can access them. We follow industry-standard security practices to protect your work and information."
               }
             ].map((faq, index) => (
               <div
