@@ -19,41 +19,48 @@ function HDRWhiteDemo() {
         HDR Super Bright White (ColorWeb-CG)
       </h3>
 
-      <div className="space-y-6">
-        {/* Static HDR White Box */}
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground mb-3">Static HDR White</p>
-          <div className="w-full h-32 hdr-super-white rounded-xl shadow-lg"></div>
-          <p className="text-xs text-muted-foreground mt-2">
-            Uses color(rec2100-pnp 1.5 1.5 1.5) - 50% brighter than SDR white
-          </p>
+      <div className="space-y-8">
+        {/* Comparison: Normal White vs Super Bright White */}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground mb-3">Normal White</p>
+            <div className="w-full h-32 bg-white rounded-xl shadow-lg border border-gray-200"></div>
+            <p className="text-xs text-muted-foreground mt-2">
+              Standard #ffffff
+            </p>
+          </div>
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground mb-3">Super Bright White</p>
+            <div className="w-full h-32 hdr-super-white rounded-xl shadow-lg"></div>
+            <p className="text-xs text-muted-foreground mt-2">
+              HDR rec2100-pnp 1.5x
+            </p>
+          </div>
         </div>
 
-        {/* Animated HDR White Box */}
+        {/* Animated HDR White Box - Full Width */}
         <div className="text-center">
-          <p className="text-sm text-muted-foreground mb-3">Animated HDR White Glow</p>
-          <div className="w-full h-32 hdr-super-white-glow rounded-xl"></div>
+          <p className="text-sm text-muted-foreground mb-3">Pulsing HDR White</p>
+          <div className="w-full h-40 hdr-super-white-glow rounded-xl"></div>
           <p className="text-xs text-muted-foreground mt-2">
-            Pulses between 1.3x and 1.6x SDR white brightness
+            Animated between 1.2x and 1.5x SDR white brightness
           </p>
         </div>
 
         {/* HDR White Text on Dark Background */}
-        <div className="text-center bg-black rounded-xl p-6">
-          <p className="text-sm text-muted-foreground mb-3">HDR White Text</p>
-          <p className="hdr-white-text text-4xl font-bold">
-            SUPER BRIGHT
+        <div className="text-center bg-black rounded-xl p-8">
+          <p className="hdr-white-text text-5xl sm:text-6xl font-bold tracking-tight">
+            ULTRA BRIGHT
           </p>
-          <p className="text-xs text-muted-foreground mt-2">
-            Text colored with HDR white (1.5x brightness)
+          <p className="text-xs text-gray-400 mt-4">
+            HDR white text with bloom effect (1.8x brightness)
           </p>
         </div>
 
         <div className="mt-6 p-4 bg-secondary/50 rounded-lg">
           <p className="text-xs text-muted-foreground text-center">
-            <strong>Note:</strong> HDR effects are most visible on HDR-capable displays
-            (HDR10, Dolby Vision, etc.). On SDR displays, these will appear as standard white
-            with enhanced glow effects.
+            <strong>💡 Best viewed on:</strong> HDR displays (MacBook Pro XDR, Pro Display XDR, HDR10+ monitors).
+            On SDR displays, you'll see enhanced bloom and glow effects that simulate super brightness.
           </p>
         </div>
       </div>

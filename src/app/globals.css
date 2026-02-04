@@ -191,49 +191,86 @@ body {
 
 /* Super Bright HDR White using ColorWeb-CG spec */
 .hdr-super-white {
-  /* HDR PQ (Perceptual Quantizer) white with 2x peak luminance */
+  /* Base white */
+  background: #ffffff;
+
+  /* Simulated super-bright effect using multiple layers */
+  box-shadow:
+    inset 0 0 60px rgba(255, 255, 255, 1),
+    inset 0 0 100px rgba(255, 255, 255, 0.8),
+    0 0 40px rgba(255, 255, 255, 1),
+    0 0 80px rgba(255, 255, 255, 0.8),
+    0 0 120px rgba(255, 255, 255, 0.6);
+
+  /* HDR color space (for HDR-capable displays) */
   background: color(rec2100-pnp 1.5 1.5 1.5);
 
-  /* Fallback for non-HDR displays using multiple techniques */
-  background:
-    /* Standard white fallback */
-    #ffffff,
-    /* Display P3 wide gamut white (slightly brighter on compatible displays) */
-    color(display-p3 1 1 1),
-    /* HDR linear with 2x multiplier */
-    color(rec2100-linear 2 2 2),
-    /* HDR PQ with peak brightness */
-    color(rec2100-pnp 1.5 1.5 1.5);
+  /* Create bloom effect */
+  filter: brightness(1.3) saturate(0);
+  position: relative;
+  overflow: hidden;
+}
+
+.hdr-super-white::before {
+  content: '';
+  position: absolute;
+  inset: -20px;
+  background: radial-gradient(circle,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.6) 30%,
+    rgba(255, 255, 255, 0.3) 60%,
+    transparent 100%);
+  filter: blur(20px);
+  animation: innerGlow 2s ease-in-out infinite;
+}
+
+@keyframes innerGlow {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
 }
 
 /* Animated HDR white with breathing glow effect */
 @keyframes hdrGlow {
   0%, 100% {
-    background: color(rec2100-pnp 1.3 1.3 1.3);
+    background: #ffffff;
+    filter: brightness(1.2);
     box-shadow:
-      0 0 20px color(rec2100-pnp 1.5 1.5 1.5),
-      0 0 40px color(rec2100-pnp 1.3 1.3 1.3),
-      0 0 60px color(rec2100-pnp 1.2 1.2 1.2);
+      inset 0 0 60px rgba(255, 255, 255, 1),
+      inset 0 0 100px rgba(255, 255, 255, 0.8),
+      0 0 50px rgba(255, 255, 255, 1),
+      0 0 100px rgba(255, 255, 255, 0.8),
+      0 0 150px rgba(255, 255, 255, 0.6);
   }
   50% {
-    background: color(rec2100-pnp 1.6 1.6 1.6);
+    background: #ffffff;
+    filter: brightness(1.5);
     box-shadow:
-      0 0 30px color(rec2100-pnp 1.8 1.8 1.8),
-      0 0 60px color(rec2100-pnp 1.5 1.5 1.5),
-      0 0 90px color(rec2100-pnp 1.3 1.3 1.3);
+      inset 0 0 80px rgba(255, 255, 255, 1),
+      inset 0 0 120px rgba(255, 255, 255, 0.9),
+      0 0 80px rgba(255, 255, 255, 1),
+      0 0 150px rgba(255, 255, 255, 0.9),
+      0 0 200px rgba(255, 255, 255, 0.7),
+      0 0 250px rgba(255, 255, 255, 0.5);
   }
 }
 
 .hdr-super-white-glow {
-  background: color(rec2100-pnp 1.5 1.5 1.5);
-  animation: hdrGlow 3s ease-in-out infinite;
-  /* Fallback for non-HDR */
   background: #ffffff;
+  animation: hdrGlow 3s ease-in-out infinite;
+  position: relative;
+  overflow: visible;
 }
 
 /* HDR white text (for use on dark backgrounds) */
 .hdr-white-text {
-  color: color(rec2100-pnp 1.5 1.5 1.5);
-  /* Fallback */
   color: #ffffff;
+  text-shadow:
+    0 0 10px rgba(255, 255, 255, 1),
+    0 0 20px rgba(255, 255, 255, 0.8),
+    0 0 30px rgba(255, 255, 255, 0.6),
+    0 0 40px rgba(255, 255, 255, 0.4);
+  filter: brightness(1.5);
+
+  /* HDR color space for capable displays */
+  color: color(rec2100-pnp 1.8 1.8 1.8);
 }
