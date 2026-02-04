@@ -568,7 +568,7 @@ function LandingPageContent() {
       <FloatingGradient />
       <div className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-12 animate-fade-in-up">
+        <div className="flex items-center justify-between mb-12 animate-fade-in-up bg-red-500">
           <div className="flex items-center">
             <img
               src="/icon.png"
