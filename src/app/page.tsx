@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      The easiest way to build and share prototypes in Cursor
+      Lovable for your production codebase.
     </h2>
   );
 }
