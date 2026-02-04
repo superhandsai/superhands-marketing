@@ -11,6 +11,56 @@ import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "l
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 
+// HDR Super Bright White Demo Component
+function HDRWhiteDemo() {
+  return (
+    <div className="w-full max-w-2xl mx-auto my-8 p-8 bg-card border border-border rounded-2xl">
+      <h3 className="text-xl font-semibold mb-6 text-center text-foreground">
+        HDR Super Bright White (ColorWeb-CG)
+      </h3>
+
+      <div className="space-y-6">
+        {/* Static HDR White Box */}
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground mb-3">Static HDR White</p>
+          <div className="w-full h-32 hdr-super-white rounded-xl shadow-lg"></div>
+          <p className="text-xs text-muted-foreground mt-2">
+            Uses color(rec2100-pnp 1.5 1.5 1.5) - 50% brighter than SDR white
+          </p>
+        </div>
+
+        {/* Animated HDR White Box */}
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground mb-3">Animated HDR White Glow</p>
+          <div className="w-full h-32 hdr-super-white-glow rounded-xl"></div>
+          <p className="text-xs text-muted-foreground mt-2">
+            Pulses between 1.3x and 1.6x SDR white brightness
+          </p>
+        </div>
+
+        {/* HDR White Text on Dark Background */}
+        <div className="text-center bg-black rounded-xl p-6">
+          <p className="text-sm text-muted-foreground mb-3">HDR White Text</p>
+          <p className="hdr-white-text text-4xl font-bold">
+            SUPER BRIGHT
+          </p>
+          <p className="text-xs text-muted-foreground mt-2">
+            Text colored with HDR white (1.5x brightness)
+          </p>
+        </div>
+
+        <div className="mt-6 p-4 bg-secondary/50 rounded-lg">
+          <p className="text-xs text-muted-foreground text-center">
+            <strong>Note:</strong> HDR effects are most visible on HDR-capable displays
+            (HDR10, Dolby Vision, etc.). On SDR displays, these will appear as standard white
+            with enhanced glow effects.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Hero text with mouse-tracking gradient effect
 function GradientTextHero() {
   const textRef = useRef<HTMLHeadingElement>(null);
@@ -593,6 +643,11 @@ function LandingPageContent() {
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
             Get started in Cursor without all the technical complexity of local dev, GitHub and version control.
           </p>
+        </div>
+
+        {/* HDR Super White Demo */}
+        <div className="flex justify-center mb-16 animate-fade-in-up animation-delay-250">
+          <HDRWhiteDemo />
         </div>
 
         {/* Email Signup Form */}
