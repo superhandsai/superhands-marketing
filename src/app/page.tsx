@@ -16,7 +16,7 @@ function HDRWhiteDemo() {
   return (
     <div className="w-full max-w-2xl mx-auto my-8 p-8 bg-card border border-border rounded-2xl">
       <h3 className="text-xl font-semibold mb-6 text-center text-foreground">
-        HDR Super Bright White (ColorWeb-CG)
+        Super Bright White (mix-blend-mode technique)
       </h3>
 
       <div className="space-y-8">
@@ -31,36 +31,52 @@ function HDRWhiteDemo() {
           </div>
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-3">Super Bright White</p>
-            <div className="w-full h-32 hdr-super-white rounded-xl shadow-lg"></div>
+            <div className="hdr-super-white-wrapper">
+              <div className="w-full h-32 hdr-super-white rounded-xl shadow-lg"></div>
+            </div>
             <p className="text-xs text-muted-foreground mt-2">
-              HDR rec2100-pnp 1.5x
+              Layered with mix-blend-mode
             </p>
           </div>
         </div>
 
         {/* Animated HDR White Box - Full Width */}
         <div className="text-center">
-          <p className="text-sm text-muted-foreground mb-3">Pulsing HDR White</p>
+          <p className="text-sm text-muted-foreground mb-3">Pulsing Ultra White</p>
           <div className="w-full h-40 hdr-super-white-glow rounded-xl"></div>
           <p className="text-xs text-muted-foreground mt-2">
-            Animated between 1.2x and 1.5x SDR white brightness
+            Multiple blended layers with animated glow
           </p>
         </div>
 
         {/* HDR White Text on Dark Background */}
         <div className="text-center bg-black rounded-xl p-8">
-          <p className="hdr-white-text text-5xl sm:text-6xl font-bold tracking-tight">
-            ULTRA BRIGHT
-          </p>
+          <div className="hdr-text-wrapper">
+            <span
+              className="hdr-white-text text-5xl sm:text-6xl font-bold tracking-tight"
+              data-text="ULTRA BRIGHT"
+            >
+              ULTRA BRIGHT
+            </span>
+          </div>
           <p className="text-xs text-gray-400 mt-4">
-            HDR white text with bloom effect (1.8x brightness)
+            Layered text with screen blend mode
           </p>
         </div>
 
         <div className="mt-6 p-4 bg-secondary/50 rounded-lg">
           <p className="text-xs text-muted-foreground text-center">
-            <strong>💡 Best viewed on:</strong> HDR displays (MacBook Pro XDR, Pro Display XDR, HDR10+ monitors).
-            On SDR displays, you'll see enhanced bloom and glow effects that simulate super brightness.
+            <strong>💡 Technique:</strong> Uses <code className="bg-black/20 px-1 rounded">mix-blend-mode: screen</code> with multiple white layers.
+            Each layer additively blends, creating whites brighter than standard #ffffff!
+            <br />
+            <a
+              href="https://kidi.ng/wanna-see-a-whiter-white/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline mt-2 inline-block"
+            >
+              Learn more about this technique →
+            </a>
           </p>
         </div>
       </div>
