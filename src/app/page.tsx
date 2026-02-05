@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
+import { Loader2, ChevronDown, Zap, Shield } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 
@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Lovable for your production codebase.
+      Lovable, but for real production code.
     </h2>
   );
 }
@@ -323,84 +323,8 @@ function LandingPageContent() {
   const [loading, setLoading] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [hoveredField, setHoveredField] = useState<string | null>(null);
-  const [isMuted, setIsMuted] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
-
-  const togglePlayPause = () => {
-    if (videoRef.current) {
-      if (videoRef.current.paused) {
-        videoRef.current.play();
-        setIsPlaying(true);
-      } else {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      }
-    }
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(videoRef.current.muted);
-    }
-  };
-
-  const toggleFullscreen = () => {
-    const video = videoRef.current;
-    const container = videoContainerRef.current;
-    
-    if (!video || !container) return;
-
-    // Check if we're currently in fullscreen
-    const fullscreenElement = document.fullscreenElement || 
-      (document as unknown as { webkitFullscreenElement?: Element }).webkitFullscreenElement ||
-      (document as unknown as { msFullscreenElement?: Element }).msFullscreenElement;
-
-    if (fullscreenElement) {
-      // Exit fullscreen
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if ((document as unknown as { webkitExitFullscreen?: () => Promise<void> }).webkitExitFullscreen) {
-        (document as unknown as { webkitExitFullscreen: () => Promise<void> }).webkitExitFullscreen();
-      } else if ((document as unknown as { msExitFullscreen?: () => Promise<void> }).msExitFullscreen) {
-        (document as unknown as { msExitFullscreen: () => Promise<void> }).msExitFullscreen();
-      }
-    } else {
-      // Enter fullscreen - try video element first for iOS compatibility
-      const videoElement = video as HTMLVideoElement & { 
-        webkitEnterFullscreen?: () => void;
-        webkitSupportsFullscreen?: boolean;
-      };
-      
-      // iOS Safari: use video's native fullscreen (only option that works)
-      if (videoElement.webkitSupportsFullscreen && videoElement.webkitEnterFullscreen) {
-        videoElement.webkitEnterFullscreen();
-        return;
-      }
-      
-      // Try container fullscreen for desktop/Android
-      const containerElement = container as HTMLDivElement & {
-        webkitRequestFullscreen?: () => Promise<void>;
-        msRequestFullscreen?: () => Promise<void>;
-      };
-      
-      if (containerElement.requestFullscreen) {
-        containerElement.requestFullscreen();
-      } else if (containerElement.webkitRequestFullscreen) {
-        containerElement.webkitRequestFullscreen();
-      } else if (containerElement.msRequestFullscreen) {
-        containerElement.msRequestFullscreen();
-      } else if (videoElement.webkitEnterFullscreen) {
-        // Fallback to video fullscreen for other mobile browsers
-        videoElement.webkitEnterFullscreen();
-      }
-    }
-  };
 
   // Allow theme override via URL parameter for previewing
   useEffect(() => {
@@ -411,39 +335,6 @@ function LandingPageContent() {
       document.documentElement.classList.add("dark");
     }
   }, [searchParams]);
-
-  // Track fullscreen state changes (including vendor-prefixed events)
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      const fullscreenElement = document.fullscreenElement || 
-        (document as unknown as { webkitFullscreenElement?: Element }).webkitFullscreenElement ||
-        (document as unknown as { msFullscreenElement?: Element }).msFullscreenElement;
-      setIsFullscreen(!!fullscreenElement);
-    };
-    
-    // Listen to all fullscreen change events for cross-browser support
-    document.addEventListener("fullscreenchange", handleFullscreenChange);
-    document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
-    document.addEventListener("msfullscreenchange", handleFullscreenChange);
-    
-    // Also listen to video's webkitbeginfullscreen/webkitendfullscreen for iOS
-    const video = videoRef.current;
-    if (video) {
-      video.addEventListener("webkitbeginfullscreen", () => setIsFullscreen(true));
-      video.addEventListener("webkitendfullscreen", () => setIsFullscreen(false));
-    }
-    
-    return () => {
-      document.removeEventListener("fullscreenchange", handleFullscreenChange);
-      document.removeEventListener("webkitfullscreenchange", handleFullscreenChange);
-      document.removeEventListener("msfullscreenchange", handleFullscreenChange);
-      if (video) {
-        video.removeEventListener("webkitbeginfullscreen", () => setIsFullscreen(true));
-        video.removeEventListener("webkitendfullscreen", () => setIsFullscreen(false));
-      }
-    };
-  }, []);
-
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -568,7 +459,7 @@ function LandingPageContent() {
       <FloatingGradient />
       <div className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-12 animate-fade-in-up">
+        <div className="flex items-center justify-center mb-12 animate-fade-in-up">
           <div className="flex items-center">
             <img
               src="/icon.png"
@@ -579,19 +470,13 @@ function LandingPageContent() {
               Superhands
             </h1>
           </div>
-          <a
-            href="https://app.superhands.ai/login"
-            className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
-          >
-            Login
-          </a>
         </div>
 
         {/* Hero Section */}
         <div className="text-center mb-8">
           <GradientTextHero />
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-            Get started in Cursor without all the technical complexity of local dev, GitHub and version control.
+            A browser-based, Claude-powered experience with guardrails that engineering teams are comfortable with.
           </p>
         </div>
 
@@ -623,7 +508,7 @@ function LandingPageContent() {
                   htmlFor="email"
                   className="text-base font-medium text-foreground block text-center"
                 >
-                  Get early access
+                  Join our pilot
                 </Label>
                 <div className="flex flex-col sm:flex-row gap-3">
                   <div className="flex-1">
@@ -693,7 +578,7 @@ function LandingPageContent() {
                     {loading ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
-                      "Get started"
+                      "Join waitlist"
                     )}
                   </Button>
                 </div>
@@ -702,73 +587,93 @@ function LandingPageContent() {
           </div>
         </div>
 
-        {/* Video Section */}
-        <div className="w-full animate-fade-in-up animation-delay-400 relative">
-          <div className="absolute inset-0 left-[50%] -translate-x-1/2 w-screen bg-gradient-to-t from-primary/15 via-primary/5 to-transparent blur-3xl pointer-events-none" />
-          <div 
-            ref={videoContainerRef}
-            className="relative bg-card rounded-[18px] border border-border shadow-lg overflow-hidden group"
-          >
-            <video
-              ref={videoRef}
-              className="w-full h-auto"
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="auto"
-            >
-              <source src="/demo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            
-            {/* Center Play/Pause Button */}
-            <div 
-              className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-            >
-              <button
-                onClick={togglePlayPause}
-                className="p-7 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-2xl text-white transition-all cursor-pointer hover:scale-105 active:scale-95"
-                aria-label={isPlaying ? "Pause video" : "Play video"}
-              >
-                {isPlaying ? (
-                  <Pause className="w-14 h-14" fill="currentColor" />
-                ) : (
-                  <Play className="w-14 h-14" fill="currentColor" />
-                )}
-              </button>
+        {/* Use Cases Section */}
+        <div className="w-full animate-fade-in-up animation-delay-400 mb-20">
+          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
+            With Superhands
+          </h3>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Prototyping Card */}
+            <div className="relative p-6 rounded-2xl border border-border bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+                  <Zap className="w-6 h-6" />
+                </div>
+                <h4 className="text-xl font-semibold text-foreground">
+                  Prototype to explore ideas fast
+                </h4>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                Explore product ideas, flows, and UI early — before entering a traditional dev cycle — to get internal alignment without burning engineering time.
+              </p>
             </div>
 
-            {/* Other Video Controls */}
-            <div 
-              className="absolute top-4 right-4 flex gap-2 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300"
-            >
-              <button
-                onClick={toggleMute}
-                className="p-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg text-white transition-all hover:scale-105 active:scale-95 cursor-pointer"
-                aria-label={isMuted ? "Unmute" : "Mute"}
-                title={isMuted ? "Unmute" : "Mute"}
-              >
-                {isMuted ? (
-                  <VolumeX className="w-5 h-5" />
-                ) : (
-                  <Volume2 className="w-5 h-5" />
-                )}
-              </button>
-              <button
-                onClick={toggleFullscreen}
-                className="p-2.5 bg-black/60 hover:bg-black/80 backdrop-blur-sm rounded-lg text-white transition-all hover:scale-105 active:scale-95 cursor-pointer"
-                aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-                title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-              >
-                <Maximize className="w-5 h-5" />
-              </button>
+            {/* Validation Card */}
+            <div className="relative p-6 rounded-2xl border border-border bg-card/50 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 group">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+                  <Shield className="w-6 h-6" />
+                </div>
+                <h4 className="text-xl font-semibold text-foreground">
+                  Validate before production
+                </h4>
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                A new design-to-dev handoff where teams can validate features, updates, and experiments without risking production code or changing existing workflows.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Pain Points Section */}
+        <div className="w-full animate-fade-in-up animation-delay-500 mb-20">
+          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-10 text-center">
+            Problems we solve
+          </h3>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {/* CEO Pain Point */}
+            <div className="p-6 rounded-2xl border border-border bg-card/50 backdrop-blur-sm relative">
+              <div className="absolute top-4 left-4 text-5xl text-primary/20 font-serif leading-none">&ldquo;</div>
+              <div className="pt-6">
+                <div className="text-sm font-semibold text-primary mb-3 uppercase tracking-wide">
+                  CEOs
+                </div>
+                <p className="text-foreground text-lg leading-relaxed">
+                  We&apos;re too slow at exploring and shipping product. Competitors are learning faster than us.
+                </p>
+              </div>
+            </div>
+
+            {/* CTO Pain Point */}
+            <div className="p-6 rounded-2xl border border-border bg-card/50 backdrop-blur-sm relative">
+              <div className="absolute top-4 left-4 text-5xl text-primary/20 font-serif leading-none">&ldquo;</div>
+              <div className="pt-6">
+                <div className="text-sm font-semibold text-primary mb-3 uppercase tracking-wide">
+                  CTOs
+                </div>
+                <p className="text-foreground text-lg leading-relaxed">
+                  I don&apos;t want new security risks or tools that force us to change how we work.
+                </p>
+              </div>
+            </div>
+
+            {/* Everyone else Pain Point */}
+            <div className="p-6 rounded-2xl border border-border bg-card/50 backdrop-blur-sm relative">
+              <div className="absolute top-4 left-4 text-5xl text-primary/20 font-serif leading-none">&ldquo;</div>
+              <div className="pt-6">
+                <div className="text-sm font-semibold text-primary mb-3 uppercase tracking-wide">
+                  Everyone else
+                </div>
+                <p className="text-foreground text-lg leading-relaxed">
+                  I&apos;ve used Lovable but have no idea about local dev environments and GitHub.
+                </p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* FAQ Section */}
-        <div className="w-full mt-20 animate-fade-in-up animation-delay-500">
+        <div className="w-full animate-fade-in-up">
           <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
             Frequently Asked Questions
           </h3>
@@ -776,23 +681,23 @@ function LandingPageContent() {
             {[
               {
                 question: "What is Superhands?",
-                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in Cursor. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
+                answer: "Superhands is a browser-based, Claude-powered platform for prototyping and validating changes on real production codebases. It's designed to help teams explore ideas fast and validate changes before they hit production — all with guardrails that engineering teams are comfortable with."
               },
               {
-                question: "Do I need coding experience to use Superhands?",
-                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. Combined with Cursor's AI capabilities, you can build functional prototypes just by describing what you want to create."
+                question: "Do I need to use Cursor or any IDE?",
+                answer: "No! The experience lives entirely in your browser. You don't need to install Cursor, set up a local dev environment, or deal with GitHub and version control. Just open Superhands and start building."
               },
               {
-                question: "How do I share my prototypes with others?",
-                answer: "Superhands generates a shareable link for every prototype you create. Simply copy the link and share it with anyone — they can view and interact with your prototype instantly in their browser, no setup required."
+                question: "How does it work with production code?",
+                answer: "Superhands connects to your existing codebase and lets you prototype and validate changes in a safe, sandboxed environment. Nothing touches production until your engineering team is ready to merge — giving you the freedom to experiment without risk."
+              },
+              {
+                question: "What guardrails are in place for engineering teams?",
+                answer: "We've built Superhands with security and workflow preservation in mind. Changes are isolated, there are no new security risks introduced, and it integrates with your existing processes rather than forcing you to change how you work."
               },
               {
                 question: "Is Superhands free to use?",
                 answer: "We'll be launching with a free tier that includes everything you need to get started. Premium plans with advanced features will be available for teams and power users."
-              },
-              {
-                question: "When will Superhands be available?",
-                answer: "We're currently in early access. Join the waitlist to be among the first to try Superhands and help shape the product with your feedback!"
               }
             ].map((faq, index) => (
               <div
