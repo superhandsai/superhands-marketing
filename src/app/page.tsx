@@ -471,7 +471,7 @@ function LandingPageContent() {
     const count = 150;
     const defaults = {
       origin: { y: 0.2 },
-      colors: ['#ee6001', '#ff8232', '#ffa366', '#dc2626', '#ef4444', '#fb923c', '#fdba74']
+      colors: ['#ee6001', '#ff8232', '#ffa366', '#dc2626', '#ef4444', '#fb923c', '#fdba74', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#06b6d4', '#6366f1', '#84cc16', '#f97316', '#14b8a6', '#a855f7', '#eab308']
     };
 
     function fire(particleRatio: number, opts: confetti.Options) {
