@@ -564,7 +564,9 @@ function LandingPageContent() {
   };
 
   return (
-    <div className="min-h-svh w-full bg-dot-pattern bg-background overflow-hidden relative">
+    <div className="min-h-svh w-full bg-dot-pattern overflow-hidden relative" style={{
+      background: 'linear-gradient(135deg, #ff8c42 0%, #ff6b35 25%, #f7931e 50%, #ff8c42 75%, #ff6b35 100%)'
+    }}>
       <FloatingGradient />
       <div className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
