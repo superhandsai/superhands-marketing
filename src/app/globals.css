@@ -180,11 +180,9 @@ body {
 .login-btn:hover {
   background-color: #e4e4e7;
   color: #ee6001;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .dark .login-btn:hover {
   background-color: #4a4c4e;
   color: #ee6001;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
