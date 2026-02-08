@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Plus, X } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 
@@ -327,6 +327,7 @@ function LandingPageContent() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -764,6 +765,94 @@ function LandingPageContent() {
                 <Maximize className="w-5 h-5" />
               </button>
             </div>
+          </div>
+        </div>
+
+        {/* Feature Showcase Section */}
+        <div className="w-full mt-32 animate-fade-in-up animation-delay-400">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <h3 className="text-3xl sm:text-5xl font-bold text-foreground mb-6">
+              Made for modern product teams
+            </h3>
+            <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Ship faster with a platform designed for speed, focus, and quality. Built from the ground up to remove friction from your workflow.
+            </p>
+            <a
+              href="https://app.superhands.ai/login"
+              className="inline-flex items-center text-[#ee6001] hover:text-[#ff8232] font-medium transition-colors group"
+            >
+              Make the switch
+              <svg
+                className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+
+          {/* Feature Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            {[
+              {
+                title: "Purpose-built",
+                description: "Built specifically for rapid prototyping and iteration. Every feature is designed to help you move from idea to working prototype faster.",
+                gradient: "from-purple-500/20 to-pink-500/20"
+              },
+              {
+                title: "Blazingly fast",
+                description: "Instant previews, zero-config setup, and optimized infrastructure mean you spend less time waiting and more time building.",
+                gradient: "from-blue-500/20 to-cyan-500/20"
+              },
+              {
+                title: "Designed with craft",
+                description: "Beautiful by default with a design system that scales. Clean code, modern patterns, and attention to detail in every pixel.",
+                gradient: "from-orange-500/20 to-amber-500/20"
+              }
+            ].map((feature, index) => (
+              <div
+                key={index}
+                className="border border-border rounded-2xl overflow-hidden bg-card/50 backdrop-blur-sm transition-all hover:border-border/80"
+              >
+                {/* Card Visual */}
+                <div className={`relative h-48 bg-gradient-to-br ${feature.gradient} flex items-center justify-center overflow-hidden`}>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]" />
+                  <div className="relative z-10 w-32 h-32 rounded-2xl bg-card/30 backdrop-blur-md border border-white/10 shadow-2xl transform rotate-12 hover:rotate-0 transition-transform duration-300" />
+                </div>
+
+                {/* Card Content */}
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <h4 className="text-lg font-semibold text-foreground">
+                      {feature.title}
+                    </h4>
+                    <button
+                      onClick={() => setExpandedCard(expandedCard === index ? null : index)}
+                      className="flex-shrink-0 w-8 h-8 rounded-lg bg-secondary/50 hover:bg-secondary flex items-center justify-center transition-all hover:scale-105 active:scale-95"
+                      aria-label={expandedCard === index ? "Collapse" : "Expand"}
+                    >
+                      {expandedCard === index ? (
+                        <X className="w-4 h-4 text-foreground" />
+                      ) : (
+                        <Plus className="w-4 h-4 text-foreground" />
+                      )}
+                    </button>
+                  </div>
+
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      expandedCard === index ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    }`}
+                  >
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 
