@@ -32,7 +32,7 @@ export function ContactModal({ children }: { children: React.ReactNode }) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Email Us</DialogTitle>
-          <DialogPrimitive.Close className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+          <DialogPrimitive.Close className="inline-flex items-center justify-center h-9 w-9 rounded-md bg-secondary text-secondary-foreground transition-all hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none">
             <X className="h-4 w-4" />
             <span className="sr-only">Close</span>
           </DialogPrimitive.Close>
