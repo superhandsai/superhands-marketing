@@ -709,9 +709,9 @@ function LandingPageContent() {
         {/* Video Section */}
         <div className="w-full animate-fade-in-up animation-delay-400 relative">
           <div className="absolute inset-0 left-[50%] -translate-x-1/2 w-screen bg-gradient-to-t from-primary/15 via-primary/5 to-transparent blur-3xl pointer-events-none" />
-          <div 
+          <div
             ref={videoContainerRef}
-            className="relative bg-card rounded-[18px] border border-border shadow-lg overflow-hidden group"
+            className="relative rounded-[18px] overflow-hidden group"
           >
             <video
               ref={videoRef}
