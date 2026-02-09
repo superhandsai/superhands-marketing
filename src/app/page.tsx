@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Lovable for your production codebase.
+      test
     </h2>
   );
 }
