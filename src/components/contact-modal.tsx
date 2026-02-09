@@ -38,7 +38,7 @@ export function ContactModal({ children }: { children: React.ReactNode }) {
           </DialogPrimitive.Close>
         </DialogHeader>
         <div className="py-4">
-          <div className="relative flex items-center bg-secondary rounded-md">
+          <div className="relative flex items-center bg-secondary rounded-lg">
             <div className="flex-1 px-3 py-2 text-sm text-foreground">
               {email}
             </div>
@@ -46,7 +46,7 @@ export function ContactModal({ children }: { children: React.ReactNode }) {
               type="button"
               size="sm"
               onClick={copyToClipboard}
-              className="absolute right-1 bg-primary hover:bg-primary/90 text-white h-7 text-xs"
+              className="absolute right-1.5 bg-primary hover:bg-primary/90 text-white h-7 text-xs rounded-md"
             >
               {copied ? (
                 <>
