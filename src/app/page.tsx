@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Lovable for your production codebase.
+      Code with AI directly in your browser.
     </h2>
   );
 }
@@ -595,7 +595,7 @@ function LandingPageContent() {
         <div className="text-center mb-8">
           <GradientTextHero />
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-            Get started in Cursor without all the technical complexity of local dev, GitHub and version control.
+            Build and share prototypes without all the technical complexity of local dev, GitHub and version control.
           </p>
         </div>
 
@@ -780,11 +780,11 @@ function LandingPageContent() {
             {[
               {
                 question: "What is Superhands?",
-                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in Cursor. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
+                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in your browser. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
               },
               {
                 question: "Do I need coding experience to use Superhands?",
-                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. Combined with Cursor's AI capabilities, you can build functional prototypes just by describing what you want to create."
+                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. With AI assistance built right into your browser, you can build functional prototypes just by describing what you want to create."
               },
               {
                 question: "How do I share my prototypes with others?",
