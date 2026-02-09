@@ -34,7 +34,7 @@ export function Footer() {
             </a>
             <ContactModal>
               <button className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                Contact
+                Email Us
               </button>
             </ContactModal>
             <a
