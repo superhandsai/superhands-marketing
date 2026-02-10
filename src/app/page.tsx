@@ -595,7 +595,7 @@ function LandingPageContent() {
         <div className="text-center mb-8">
           <GradientTextHero />
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-            Explore new features, fix bugs and suggest updates to your production codebase, without the engineering complexity.
+            Explore new features, fix bugs and make updates, without the engineering bottleneck.
           </p>
         </div>
 
