@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Copy, Check } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Copy, Check, Search, Sparkles, Eye } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
@@ -848,12 +848,23 @@ function LandingPageContent() {
 
         {/* Features Accordion with Video Section */}
         <div className="w-full mt-32 animate-fade-in-up animation-delay-500">
-          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-12 text-center">
-            How It Works
-          </h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-6">
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium text-primary">How It Works</span>
+            </div>
+            <h3 className="text-3xl sm:text-5xl font-bold text-foreground mb-4 bg-gradient-to-r from-foreground via-primary/90 to-foreground bg-clip-text">
+              Ship faster, vibe harder
+            </h3>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              From exploration to deployment in three simple steps
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Left side - Accordions */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               <Accordion
                 type="single"
                 value={accordionValue}
@@ -862,72 +873,117 @@ function LandingPageContent() {
               >
                 <AccordionItem value="item-1">
                   <AccordionTrigger>
-                    <span className="text-lg">Explore Your Codebase</span>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 shrink-0">
+                        <Search className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-lg font-semibold">Explore Your Codebase</div>
+                        <div className="text-sm text-muted-foreground font-normal">Navigate like a pro</div>
+                      </div>
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <p className="leading-relaxed">
-                      Navigate through your entire codebase directly in your browser. Search for files,
-                      explore components, and understand how everything connects—no local setup required.
-                      Our intelligent interface makes it easy to find exactly what you need.
-                    </p>
+                    <div className="pl-16">
+                      <p className="text-base leading-relaxed">
+                        Navigate through your entire codebase directly in your browser. Search for files,
+                        explore components, and understand how everything connects—no local setup required.
+                        Our intelligent interface makes it easy to find exactly what you need.
+                      </p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-2">
                   <AccordionTrigger>
-                    <span className="text-lg">Make Changes with AI</span>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 shrink-0">
+                        <Sparkles className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-lg font-semibold">Make Changes with AI</div>
+                        <div className="text-sm text-muted-foreground font-normal">Code in plain English</div>
+                      </div>
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <p className="leading-relaxed">
-                      Describe what you want to change in plain English, and our AI assistant helps you
-                      make the updates. Whether it's fixing a bug, tweaking text, or adjusting styles,
-                      you don't need to know how to code—just tell us what you want to accomplish.
-                    </p>
+                    <div className="pl-16">
+                      <p className="text-base leading-relaxed">
+                        Describe what you want to change in plain English, and our AI assistant helps you
+                        make the updates. Whether it's fixing a bug, tweaking text, or adjusting styles,
+                        you don't need to know how to code—just tell us what you want to accomplish.
+                      </p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
                 <AccordionItem value="item-3">
                   <AccordionTrigger>
-                    <span className="text-lg">Preview and Deploy</span>
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 border border-primary/20 shrink-0">
+                        <Eye className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="text-left">
+                        <div className="text-lg font-semibold">Preview and Deploy</div>
+                        <div className="text-sm text-muted-foreground font-normal">Ship with confidence</div>
+                      </div>
+                    </div>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <p className="leading-relaxed">
-                      See your changes live in a preview environment before they go to production.
-                      Test everything, get feedback from your team, and deploy with confidence.
-                      All the power of version control, without the complexity.
-                    </p>
+                    <div className="pl-16">
+                      <p className="text-base leading-relaxed">
+                        See your changes live in a preview environment before they go to production.
+                        Test everything, get feedback from your team, and deploy with confidence.
+                        All the power of version control, without the complexity.
+                      </p>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
             </div>
 
             {/* Right side - Video */}
-            <div className="relative rounded-[18px] overflow-hidden bg-card/50 backdrop-blur-sm border border-border lg:sticky lg:top-8">
-              <div className="relative aspect-video">
-                <video
-                  ref={featureVideoRef}
-                  key={accordionValue}
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="auto"
-                >
-                  <source
-                    src={
-                      accordionValue === "item-1"
-                        ? "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
-                        : accordionValue === "item-2"
-                        ? "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
-                        : "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
-                    }
-                    type="video/mp4"
-                  />
-                  Your browser does not support the video tag.
-                </video>
-                {/* Gradient overlay for better text visibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+            <div className="relative lg:sticky lg:top-8">
+              {/* Animated Background Glow */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-primary/30 to-primary/20 rounded-[24px] blur-2xl opacity-50 animate-pulse" />
+
+              {/* Video Container */}
+              <div className="relative rounded-[20px] overflow-hidden bg-card/50 backdrop-blur-sm border-2 border-primary/20 shadow-2xl shadow-primary/20">
+                {/* Step Indicator */}
+                <div className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full">
+                  <span className="text-xs font-semibold text-white">
+                    Step {accordionValue === "item-1" ? "1" : accordionValue === "item-2" ? "2" : "3"}
+                  </span>
+                </div>
+
+                <div className="relative aspect-video">
+                  <video
+                    ref={featureVideoRef}
+                    key={accordionValue}
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="auto"
+                  >
+                    <source
+                      src={
+                        accordionValue === "item-1"
+                          ? "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
+                          : accordionValue === "item-2"
+                          ? "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
+                          : "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
+                      }
+                      type="video/mp4"
+                    />
+                    Your browser does not support the video tag.
+                  </video>
+
+                  {/* Gradient overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none" />
+                </div>
               </div>
             </div>
           </div>
