@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Lovable for your production codebase.
+      Code with AI directly in your browser.
     </h2>
   );
 }
@@ -350,55 +350,59 @@ function LandingPageContent() {
     }
   };
 
-  const toggleFullscreen = () => {
+  const toggleFullscreen = async () => {
     const video = videoRef.current;
     const container = videoContainerRef.current;
-    
+
     if (!video || !container) return;
 
     // Check if we're currently in fullscreen
-    const fullscreenElement = document.fullscreenElement || 
+    const fullscreenElement = document.fullscreenElement ||
       (document as unknown as { webkitFullscreenElement?: Element }).webkitFullscreenElement ||
       (document as unknown as { msFullscreenElement?: Element }).msFullscreenElement;
 
-    if (fullscreenElement) {
-      // Exit fullscreen
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if ((document as unknown as { webkitExitFullscreen?: () => Promise<void> }).webkitExitFullscreen) {
-        (document as unknown as { webkitExitFullscreen: () => Promise<void> }).webkitExitFullscreen();
-      } else if ((document as unknown as { msExitFullscreen?: () => Promise<void> }).msExitFullscreen) {
-        (document as unknown as { msExitFullscreen: () => Promise<void> }).msExitFullscreen();
+    try {
+      if (fullscreenElement) {
+        // Exit fullscreen
+        if (document.exitFullscreen) {
+          await document.exitFullscreen();
+        } else if ((document as unknown as { webkitExitFullscreen?: () => Promise<void> }).webkitExitFullscreen) {
+          await (document as unknown as { webkitExitFullscreen: () => Promise<void> }).webkitExitFullscreen();
+        } else if ((document as unknown as { msExitFullscreen?: () => Promise<void> }).msExitFullscreen) {
+          await (document as unknown as { msExitFullscreen: () => Promise<void> }).msExitFullscreen();
+        }
+      } else {
+        // Enter fullscreen - try video element first for iOS compatibility
+        const videoElement = video as HTMLVideoElement & {
+          webkitEnterFullscreen?: () => void;
+          webkitSupportsFullscreen?: boolean;
+        };
+
+        // iOS Safari: use video's native fullscreen (only option that works)
+        if (videoElement.webkitSupportsFullscreen && videoElement.webkitEnterFullscreen) {
+          videoElement.webkitEnterFullscreen();
+          return;
+        }
+
+        // Try container fullscreen for desktop/Android
+        const containerElement = container as HTMLDivElement & {
+          webkitRequestFullscreen?: () => Promise<void>;
+          msRequestFullscreen?: () => Promise<void>;
+        };
+
+        if (containerElement.requestFullscreen) {
+          await containerElement.requestFullscreen();
+        } else if (containerElement.webkitRequestFullscreen) {
+          await containerElement.webkitRequestFullscreen();
+        } else if (containerElement.msRequestFullscreen) {
+          await containerElement.msRequestFullscreen();
+        } else if (videoElement.webkitEnterFullscreen) {
+          // Fallback to video fullscreen for other mobile browsers
+          videoElement.webkitEnterFullscreen();
+        }
       }
-    } else {
-      // Enter fullscreen - try video element first for iOS compatibility
-      const videoElement = video as HTMLVideoElement & { 
-        webkitEnterFullscreen?: () => void;
-        webkitSupportsFullscreen?: boolean;
-      };
-      
-      // iOS Safari: use video's native fullscreen (only option that works)
-      if (videoElement.webkitSupportsFullscreen && videoElement.webkitEnterFullscreen) {
-        videoElement.webkitEnterFullscreen();
-        return;
-      }
-      
-      // Try container fullscreen for desktop/Android
-      const containerElement = container as HTMLDivElement & {
-        webkitRequestFullscreen?: () => Promise<void>;
-        msRequestFullscreen?: () => Promise<void>;
-      };
-      
-      if (containerElement.requestFullscreen) {
-        containerElement.requestFullscreen();
-      } else if (containerElement.webkitRequestFullscreen) {
-        containerElement.webkitRequestFullscreen();
-      } else if (containerElement.msRequestFullscreen) {
-        containerElement.msRequestFullscreen();
-      } else if (videoElement.webkitEnterFullscreen) {
-        // Fallback to video fullscreen for other mobile browsers
-        videoElement.webkitEnterFullscreen();
-      }
+    } catch (error) {
+      console.error('Fullscreen error:', error);
     }
   };
 
@@ -591,7 +595,7 @@ function LandingPageContent() {
         <div className="text-center mb-8">
           <GradientTextHero />
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-            Get started in Cursor without all the technical complexity of local dev, GitHub and version control.
+            Build and share prototypes without all the technical complexity of local dev, GitHub and version control.
           </p>
         </div>
 
@@ -705,9 +709,9 @@ function LandingPageContent() {
         {/* Video Section */}
         <div className="w-full animate-fade-in-up animation-delay-400 relative">
           <div className="absolute inset-0 left-[50%] -translate-x-1/2 w-screen bg-gradient-to-t from-primary/15 via-primary/5 to-transparent blur-3xl pointer-events-none" />
-          <div 
+          <div
             ref={videoContainerRef}
-            className="relative bg-card rounded-[18px] border border-border shadow-lg overflow-hidden group"
+            className="relative rounded-[18px] overflow-hidden group"
           >
             <video
               ref={videoRef}
@@ -718,7 +722,7 @@ function LandingPageContent() {
               playsInline
               preload="auto"
             >
-              <source src="/demo.mp4" type="video/mp4" />
+              <source src="https://yc-app-vids.s3.us-west-2.amazonaws.com/app_videos/x2026/grantmac/demo-8bf955fe-254e-4d13-9ed0-51a383458bd5.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ASIAQC4NIECAHGKGYVSO%2F20260209%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260209T131002Z&X-Amz-Expires=14174&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEMP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQC2bWGOjFjckUOob%2Fr9PFFeyeh3AmH19UM52Xoy4YL9BgIgPaSWQlTgka5Cv5G1TASqea804k1azBWuRpF7qxbr4F8q7gMIjP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgwwMDYyMDE4MTEwNzIiDHREJ8TOKblPWFdqeSrCA0m4GjE%2Fgo36y8KV43Yt8Fo2F%2Feq1cu5waKnAh%2FrO6y62chZ%2BhDkXtel%2BSUf6Pq%2FpVh%2BLo0pyTq4AZ6bS6kSKWXz5hv3Fr5vtEscF7TdZbx9EtC%2FeGVvEozXbJvi0Qavhr1cMUhdKKtlEifIQ8nkcw3C9MxhLrL%2F1kuSyjIcPK8JJL0tHvJco86dtDLqQhOY75EhMInUOz1lQp1SGr0yJfNrQfi5RR6835AazC6mgzwvJK%2Ffbut3uw1RQLFAslcuVbueLW2Z4wtkiLvzOVZyIjacJ3VGCtGVG23LFIEsu4ZoIZ7hSIso%2FyUN7XaB4inSMAcxLukZP%2Fj3RoMjCXUWTJpNWYjUqBM12rIdHrKiUWhAhm6hb%2F3E7QUXGHoSDAlN0b%2BjwfZMkUAyTgeCTtMfI1NdtAtKMcM5uzbQugnM1Jli4n7SwzpglxTOIc%2B45jk7TmhaXaXM3ww3GVrB%2BYAblIVg0ND7DIpY9NYDM4C%2BqYQ3ZeCRpfX%2F2qrGNLMzGveU010Tbcd6wPj%2F3miLlNRS81BJNmiXv2SNiNs40KdO7HOO%2BhKn%2FNgtWDAyal%2FWSvXL4D4FHGNPKwsIpC8QFoYAO8%2BRwTCo%2F6bMBjqlARbo1cWl5GeqjwdIDjbQdXKWyD296Ba9W1iIr2xUiUVVQoA8phXyi6Gues4tvVkR0%2BkxBKIkDlWc5iZIKnSmMYSqerdYCDZCEairKFZRVF9FfYqktbMs6PQYKZvPh8MsJpCwksMXkHUtHYLRLj8VKDN1yFTcQ%2FtOTssYOrCiAxhrhxm3QajPaVU6wZy9N8%2BQhnqOZUU5C%2B9cZ5VaWcfrqAhBnF44aw%3D%3D&X-Amz-SignedHeaders=host&X-Amz-Signature=446d9b6bf812a0c5ed5c39d34302537831480fabe56b3c64a5d321faff12efc4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
             
@@ -776,11 +780,11 @@ function LandingPageContent() {
             {[
               {
                 question: "What is Superhands?",
-                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in Cursor. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
+                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in your browser. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
               },
               {
                 question: "Do I need coding experience to use Superhands?",
-                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. Combined with Cursor's AI capabilities, you can build functional prototypes just by describing what you want to create."
+                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. With AI assistance built right into your browser, you can build functional prototypes just by describing what you want to create."
               },
               {
                 question: "How do I share my prototypes with others?",
