@@ -533,8 +533,8 @@ function LandingPageContent() {
   }, []);
 
   const triggerConfetti = () => {
-    // BRAAAHHHH! 100x MORE CONFETTI! 🎉🎉🎉
-    const count = 15000; // Was 150, now 15000!
+    // BRAAAHHHH! 10x MORE CONFETTI! 🎉
+    const count = 1500; // Was 150, now 1500!
     const defaults = {
       origin: { y: 0.2 },
       colors: ['#ee6001', '#ff8232', '#ffa366', '#dc2626', '#ef4444', '#fb923c', '#fdba74', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#06b6d4', '#6366f1', '#84cc16', '#f97316', '#14b8a6', '#a855f7', '#eab308']
