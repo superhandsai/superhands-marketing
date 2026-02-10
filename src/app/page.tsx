@@ -864,7 +864,7 @@ function LandingPageContent() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
             {/* Left side - Accordions */}
-            <div className="space-y-6">
+            <div className="space-y-4">
               <Accordion
                 type="single"
                 value={accordionValue}
@@ -950,8 +950,8 @@ function LandingPageContent() {
               {/* Video Container */}
               <div className="relative rounded-[20px] overflow-hidden bg-card/50 backdrop-blur-sm border-2 border-primary/20 shadow-2xl shadow-primary/20">
                 {/* Step Indicator */}
-                <div className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full">
-                  <span className="text-xs font-semibold text-white">
+                <div className="absolute top-4 left-4 z-10 px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/10 rounded-full transition-all duration-300">
+                  <span key={accordionValue} className="text-xs font-semibold text-white animate-fade-in">
                     Step {accordionValue === "item-1" ? "1" : accordionValue === "item-2" ? "2" : "3"}
                   </span>
                 </div>
@@ -960,7 +960,7 @@ function LandingPageContent() {
                   <video
                     ref={featureVideoRef}
                     key={accordionValue}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover animate-fade-in"
                     autoPlay
                     muted
                     loop

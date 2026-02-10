@@ -13,9 +13,9 @@ const AccordionItem = React.forwardRef<
   <AccordionPrimitive.Item
     ref={ref}
     className={cn(
-      "group relative border border-border rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm transition-all duration-300",
-      "hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5",
-      "data-[state=open]:border-primary/50 data-[state=open]:shadow-xl data-[state=open]:shadow-primary/10",
+      "group relative border border-border rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm transition-all duration-500 ease-out",
+      "hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 hover:scale-[1.01]",
+      "data-[state=open]:border-primary/50 data-[state=open]:shadow-xl data-[state=open]:shadow-primary/10 data-[state=open]:scale-[1.02]",
       "data-[state=open]:bg-gradient-to-br data-[state=open]:from-card/80 data-[state=open]:to-primary/5",
       className
     )}
