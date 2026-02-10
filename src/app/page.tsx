@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Copy, Check } from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 
@@ -388,8 +389,10 @@ function LandingPageContent() {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [videoError, setVideoError] = useState<string | null>(null);
+  const [accordionValue, setAccordionValue] = useState<string>("item-1");
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
+  const featureVideoRef = useRef<HTMLVideoElement>(null);
   const searchParams = useSearchParams();
 
   const togglePlayPause = () => {
@@ -839,6 +842,93 @@ function LandingPageContent() {
               >
                 <Maximize className="w-5 h-5" />
               </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Features Accordion with Video Section */}
+        <div className="w-full mt-32 animate-fade-in-up animation-delay-500">
+          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-12 text-center">
+            How It Works
+          </h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            {/* Left side - Accordions */}
+            <div className="space-y-4">
+              <Accordion
+                type="single"
+                value={accordionValue}
+                onValueChange={(value) => setAccordionValue(value || "item-1")}
+                collapsible
+              >
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>
+                    <span className="text-lg">Explore Your Codebase</span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="leading-relaxed">
+                      Navigate through your entire codebase directly in your browser. Search for files,
+                      explore components, and understand how everything connects—no local setup required.
+                      Our intelligent interface makes it easy to find exactly what you need.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-2">
+                  <AccordionTrigger>
+                    <span className="text-lg">Make Changes with AI</span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="leading-relaxed">
+                      Describe what you want to change in plain English, and our AI assistant helps you
+                      make the updates. Whether it's fixing a bug, tweaking text, or adjusting styles,
+                      you don't need to know how to code—just tell us what you want to accomplish.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-3">
+                  <AccordionTrigger>
+                    <span className="text-lg">Preview and Deploy</span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <p className="leading-relaxed">
+                      See your changes live in a preview environment before they go to production.
+                      Test everything, get feedback from your team, and deploy with confidence.
+                      All the power of version control, without the complexity.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </div>
+
+            {/* Right side - Video */}
+            <div className="relative rounded-[18px] overflow-hidden bg-card/50 backdrop-blur-sm border border-border lg:sticky lg:top-8">
+              <div className="relative aspect-video">
+                <video
+                  ref={featureVideoRef}
+                  key={accordionValue}
+                  className="w-full h-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                >
+                  <source
+                    src={
+                      accordionValue === "item-1"
+                        ? "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
+                        : accordionValue === "item-2"
+                        ? "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
+                        : "https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4"
+                    }
+                    type="video/mp4"
+                  />
+                  Your browser does not support the video tag.
+                </video>
+                {/* Gradient overlay for better text visibility */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+              </div>
             </div>
           </div>
         </div>
