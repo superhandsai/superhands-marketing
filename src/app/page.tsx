@@ -81,7 +81,9 @@ function EmailCopy() {
 
   return (
     <div
-      className="relative inline-flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border border-border rounded-xl transition-all hover:border-primary/50 cursor-pointer"
+      className={`relative inline-flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border rounded-xl transition-all cursor-pointer ${
+        copied ? 'border-green-500/50' : 'border-border hover:border-primary/50'
+      }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={copyToClipboard}
@@ -95,26 +97,28 @@ function EmailCopy() {
       }}
       aria-label="Click to copy email address"
     >
-      <span className="text-lg text-foreground font-medium">
-        {email}
-      </span>
-      <div
-        className={`inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md bg-secondary text-secondary-foreground transition-all ${
-          isHovered || copied ? 'opacity-100' : 'opacity-0'
-        }`}
-      >
-        {copied ? (
-          <>
-            <Check className="w-4 h-4 text-green-500" />
-            <span className="text-sm">Copied</span>
-          </>
-        ) : (
-          <>
+      {copied ? (
+        <>
+          <Check className="w-5 h-5 text-green-500" />
+          <span className="text-lg text-green-500 font-medium">
+            Copied to clipboard!
+          </span>
+        </>
+      ) : (
+        <>
+          <span className="text-lg text-foreground font-medium">
+            {email}
+          </span>
+          <div
+            className={`inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md bg-secondary text-secondary-foreground transition-all ${
+              isHovered ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
             <Copy className="w-4 h-4" />
             <span className="text-sm">Copy</span>
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
