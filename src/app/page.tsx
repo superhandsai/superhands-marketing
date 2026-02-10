@@ -870,6 +870,7 @@ function LandingPageContent() {
                 value={accordionValue}
                 onValueChange={(value) => setAccordionValue(value || "item-1")}
                 collapsible
+                className="space-y-4"
               >
                 <AccordionItem value="item-1">
                   <AccordionTrigger>
