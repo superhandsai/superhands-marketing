@@ -1,10 +1,23 @@
 'use client';
 
-import React from 'react';
-import { ContactModal } from './contact-modal';
+import React, { useState } from 'react';
+import { Copy, Check } from 'lucide-react';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const [copied, setCopied] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const email = "hello@superhands.ai";
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   return (
     <footer className="w-full border-t border-border bg-background mt-auto">
@@ -32,11 +45,28 @@ export function Footer() {
             >
               Terms of Service
             </a>
-            <ContactModal>
-              <button className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                Email Us
+            <div
+              className="relative inline-flex items-center gap-2"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              <span className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                {email}
+              </span>
+              <button
+                onClick={copyToClipboard}
+                className={`inline-flex items-center justify-center h-6 w-6 rounded-md bg-secondary text-secondary-foreground transition-all hover:bg-secondary/80 cursor-pointer ${
+                  isHovered || copied ? 'opacity-100' : 'opacity-0'
+                }`}
+                aria-label="Copy email"
+              >
+                {copied ? (
+                  <Check className="w-3.5 h-3.5 text-green-500" />
+                ) : (
+                  <Copy className="w-3.5 h-3.5" />
+                )}
               </button>
-            </ContactModal>
+            </div>
             <a
               href="https://www.linkedin.com/company/superhandsai/"
               target="_blank"

@@ -780,15 +780,15 @@ function LandingPageContent() {
             {[
               {
                 question: "What is Superhands?",
-                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in your browser. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
+                answer: "Superhands empowers your team to explore features, fix bugs, and make updates to your production codebase directly in the browser—without the engineering bottleneck. It removes the complexity of local development, GitHub, and version control so everyone can contribute."
               },
               {
                 question: "Do I need coding experience to use Superhands?",
-                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. With AI assistance built right into your browser, you can build functional prototypes just by describing what you want to create."
+                answer: "No coding experience is required! Superhands is designed for product managers, designers, and anyone on the team who wants to contribute. With AI assistance built right into your browser, you can make changes to your existing product just by describing what you want to update."
               },
               {
-                question: "How do I share my prototypes with others?",
-                answer: "Superhands generates a shareable link for every prototype you create. Simply copy the link and share it with anyone — they can view and interact with your prototype instantly in their browser, no setup required."
+                question: "How does Superhands work with my existing codebase?",
+                answer: "Superhands connects to your team's production codebase and lets you explore, test changes, and propose updates in a safe environment. You can experiment with new features and bug fixes without affecting your live product or needing to set up a local development environment."
               },
               {
                 question: "Is Superhands free to use?",
