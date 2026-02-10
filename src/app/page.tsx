@@ -81,19 +81,27 @@ function EmailCopy() {
 
   return (
     <div
-      className="relative inline-flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border border-border rounded-xl transition-all hover:border-primary/50"
+      className="relative inline-flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border border-border rounded-xl transition-all hover:border-primary/50 cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={copyToClipboard}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          copyToClipboard();
+        }
+      }}
+      aria-label="Click to copy email address"
     >
       <span className="text-lg text-foreground font-medium">
         {email}
       </span>
-      <button
-        onClick={copyToClipboard}
-        className={`inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md bg-secondary text-secondary-foreground transition-all hover:bg-secondary/80 cursor-pointer ${
+      <div
+        className={`inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md bg-secondary text-secondary-foreground transition-all ${
           isHovered || copied ? 'opacity-100' : 'opacity-0'
         }`}
-        aria-label="Copy email"
       >
         {copied ? (
           <>
@@ -106,7 +114,7 @@ function EmailCopy() {
             <span className="text-sm">Copy</span>
           </>
         )}
-      </button>
+      </div>
     </div>
   );
 }
