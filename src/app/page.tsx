@@ -862,7 +862,7 @@ function LandingPageContent() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side - Accordions */}
             <div className="space-y-4">
               <Accordion
