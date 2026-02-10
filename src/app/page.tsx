@@ -7,7 +7,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown } from "lucide-react";
+import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Copy, Check } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 
@@ -58,8 +58,68 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Code with AI directly in your browser.
+      Vibe code on your team's existing product
     </h2>
+  );
+}
+
+// Email copy component with hover interaction
+function EmailCopy() {
+  const [copied, setCopied] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const email = "hello@superhands.ai";
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
+
+  return (
+    <div
+      className={`relative inline-flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border rounded-xl transition-all cursor-pointer ${
+        copied ? 'border-green-500/50' : 'border-border hover:border-primary/50'
+      }`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={copyToClipboard}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          copyToClipboard();
+        }
+      }}
+      aria-label="Click to copy email address"
+    >
+      {copied ? (
+        <>
+          <Check className="w-5 h-5 text-green-500" />
+          <span className="text-lg text-green-500 font-medium">
+            Copied to clipboard!
+          </span>
+        </>
+      ) : (
+        <>
+          <span className="text-lg text-foreground font-medium">
+            {email}
+          </span>
+          <div
+            className={`inline-flex items-center justify-center gap-2 h-9 px-4 rounded-md bg-secondary text-secondary-foreground transition-all ${
+              isHovered ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            <Copy className="w-4 h-4" />
+            <span className="text-sm">Copy</span>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -596,7 +656,7 @@ function LandingPageContent() {
         <div className="text-center mb-8">
           <GradientTextHero />
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-            Build and share prototypes without all the technical complexity of local dev, GitHub and version control.
+            Explore new features, fix bugs and make updates, without the engineering bottleneck.
           </p>
         </div>
 
@@ -792,15 +852,15 @@ function LandingPageContent() {
             {[
               {
                 question: "What is Superhands?",
-                answer: "Superhands is a platform that makes it easy to build and share prototypes directly in your browser. It removes the technical complexity of local development, GitHub, and version control so you can focus on bringing your ideas to life."
+                answer: "Superhands empowers your team to explore features, fix bugs, and make updates to your production codebase directly in the browser—without the engineering bottleneck. It removes the complexity of local development, GitHub, and version control so everyone can contribute."
               },
               {
                 question: "Do I need coding experience to use Superhands?",
-                answer: "No coding experience is required! Superhands is designed to be beginner-friendly. With AI assistance built right into your browser, you can build functional prototypes just by describing what you want to create."
+                answer: "No coding experience is required! Superhands is designed for product managers, designers, and anyone on the team who wants to contribute. With AI assistance built right into your browser, you can make changes to your existing product just by describing what you want to update."
               },
               {
-                question: "How do I share my prototypes with others?",
-                answer: "Superhands generates a shareable link for every prototype you create. Simply copy the link and share it with anyone — they can view and interact with your prototype instantly in their browser, no setup required."
+                question: "How does Superhands work with my existing codebase?",
+                answer: "Superhands connects to your team's production codebase and lets you explore, test changes, and propose updates in a safe environment. You can experiment with new features and bug fixes without affecting your live product or needing to set up a local development environment."
               },
               {
                 question: "Is Superhands free to use?",
@@ -837,6 +897,16 @@ function LandingPageContent() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Email Us Section */}
+        <div className="w-full mt-20 animate-fade-in-up animation-delay-600">
+          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
+            Get in Touch
+          </h3>
+          <div className="max-w-3xl mx-auto flex justify-center">
+            <EmailCopy />
           </div>
         </div>
       </div>

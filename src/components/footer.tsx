@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { ContactModal } from './contact-modal';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -32,11 +31,6 @@ export function Footer() {
             >
               Terms of Service
             </a>
-            <ContactModal>
-              <button className="text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer">
-                Email Us
-              </button>
-            </ContactModal>
             <a
               href="https://www.linkedin.com/company/superhandsai/"
               target="_blank"
