@@ -327,6 +327,7 @@ function LandingPageContent() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [videoError, setVideoError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -721,10 +722,21 @@ function LandingPageContent() {
               loop
               playsInline
               preload="auto"
+              onError={(e) => {
+                console.error('Video error:', e);
+                setVideoError('Failed to load video');
+              }}
+              onLoadStart={() => console.log('Video loading started')}
+              onLoadedData={() => console.log('Video data loaded')}
             >
               <source src="https://gpzgnsqxhytllyibiova.supabase.co/storage/v1/object/public/page-captures/vid.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
+            {videoError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white">
+                <p>{videoError}</p>
+              </div>
+            )}
             
             {/* Center Play/Pause Button */}
             <div 
