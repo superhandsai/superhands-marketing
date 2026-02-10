@@ -533,7 +533,8 @@ function LandingPageContent() {
   }, []);
 
   const triggerConfetti = () => {
-    const count = 150;
+    // BRAAAHHHH! 100x MORE CONFETTI! 🎉🎉🎉
+    const count = 15000; // Was 150, now 15000!
     const defaults = {
       origin: { y: 0.2 },
       colors: ['#ee6001', '#ff8232', '#ffa366', '#dc2626', '#ef4444', '#fb923c', '#fdba74', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#06b6d4', '#6366f1', '#84cc16', '#f97316', '#14b8a6', '#a855f7', '#eab308']
@@ -547,19 +548,19 @@ function LandingPageContent() {
       });
     }
 
-    // Explosive center burst
+    // MASSIVE explosive center burst
     fire(0.25, {
       spread: 40,
       startVelocity: 75,
     });
 
-    // Wide spread
+    // HUGE wide spread
     fire(0.2, {
       spread: 90,
       startVelocity: 65,
     });
 
-    // Super wide spray
+    // INSANE super wide spray
     fire(0.35, {
       spread: 140,
       decay: 0.89,
@@ -567,7 +568,7 @@ function LandingPageContent() {
       startVelocity: 55,
     });
 
-    // Slow floaters
+    // TONS of slow floaters
     fire(0.15, {
       spread: 160,
       startVelocity: 30,
@@ -576,24 +577,96 @@ function LandingPageContent() {
       gravity: 0.8,
     });
 
-    // Fast shooters
+    // TONS of fast shooters
     fire(0.15, {
       spread: 130,
       startVelocity: 80,
       scalar: 0.9,
     });
 
-    // Side bursts
+    // EPIC side bursts (left)
     fire(0.1, {
       spread: 120,
       startVelocity: 70,
       angle: 60,
     });
 
+    // EPIC side bursts (right)
     fire(0.1, {
       spread: 120,
       startVelocity: 70,
       angle: 120,
+    });
+
+    // EXTRA: Full left side explosion
+    fire(0.15, {
+      spread: 100,
+      startVelocity: 85,
+      angle: 45,
+    });
+
+    // EXTRA: Full right side explosion
+    fire(0.15, {
+      spread: 100,
+      startVelocity: 85,
+      angle: 135,
+    });
+
+    // EXTRA: Straight up fountain
+    fire(0.2, {
+      spread: 60,
+      startVelocity: 100,
+      angle: 90,
+    });
+
+    // EXTRA: Wild spiraling confetti
+    fire(0.12, {
+      spread: 180,
+      startVelocity: 60,
+      decay: 0.85,
+      scalar: 1.8,
+    });
+
+    // EXTRA: Glitter particles
+    fire(0.08, {
+      spread: 360,
+      startVelocity: 25,
+      decay: 0.9,
+      scalar: 0.6,
+      ticks: 400,
+    });
+
+    // EXTRA: Low gravity floaters
+    fire(0.1, {
+      spread: 200,
+      startVelocity: 35,
+      decay: 0.85,
+      scalar: 2.0,
+      gravity: 0.3,
+    });
+
+    // EXTRA: Super fast shooters from bottom
+    fire(0.08, {
+      spread: 100,
+      startVelocity: 120,
+      angle: 90,
+      origin: { y: 0.8 },
+    });
+
+    // EXTRA: Corner bursts (top left)
+    fire(0.05, {
+      spread: 90,
+      startVelocity: 90,
+      angle: 315,
+      origin: { x: 0.2, y: 0.1 },
+    });
+
+    // EXTRA: Corner bursts (top right)
+    fire(0.05, {
+      spread: 90,
+      startVelocity: 90,
+      angle: 225,
+      origin: { x: 0.8, y: 0.1 },
     });
   };
 
