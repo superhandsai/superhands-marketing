@@ -20,6 +20,12 @@ export function Footer() {
           {/* Links */}
           <nav className="flex items-center gap-6">
             <a
+              href="/contact"
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Contact
+            </a>
+            <a
               href="https://app.superhands.ai/privacy"
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
             >

@@ -73,3 +73,57 @@ export async function notifyWaitlistSignup(email: string): Promise<boolean> {
     ],
   });
 }
+
+export async function notifyContactSubmission(
+  name: string,
+  email: string,
+  message: string
+): Promise<boolean> {
+  // Truncate message for Slack preview
+  const messagePreview = message.length > 100
+    ? message.substring(0, 100) + "..."
+    : message;
+
+  return sendSlackNotification({
+    text: `New contact form submission from ${name}`,
+    blocks: [
+      {
+        type: "header",
+        text: {
+          type: "plain_text",
+          text: "New Contact Form Submission",
+          emoji: true,
+        },
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "mrkdwn",
+            text: `*Name:*\n${name}`,
+          },
+          {
+            type: "mrkdwn",
+            text: `*Email:*\n${email}`,
+          },
+        ],
+      },
+      {
+        type: "section",
+        text: {
+          type: "mrkdwn",
+          text: `*Message:*\n${messagePreview}`,
+        },
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "mrkdwn",
+            text: `*Time:*\n${new Date().toISOString()}`,
+          },
+        ],
+      },
+    ],
+  });
+}
