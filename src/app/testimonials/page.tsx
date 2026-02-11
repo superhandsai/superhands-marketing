@@ -332,7 +332,7 @@ const caseStudies: CaseStudy[] = [
     logo: "https://api.dicebear.com/7.x/shapes/svg?seed=GrowthKit",
     summary: "As a lean startup, GrowthKit needed to move fast with limited engineering resources. Superhands enabled their founder to make product updates, test growth experiments, and ship features independently—accelerating their path to product-market fit.",
     metrics: [
-      { label: "Engineering Time Saved", value: "40hrs/mo" },
+      { label: "Engineering Time Saved", value: "40hrs" },
       { label: "Feature Releases", value: "2x" },
       { label: "Experiment Velocity", value: "4x" },
     ],
