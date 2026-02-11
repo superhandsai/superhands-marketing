@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
 import { notifyContactSubmission } from "@/lib/services/slack";
 
 export async function POST(request: NextRequest) {
@@ -50,19 +49,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const supabase = await createClient();
-
-    const { error: insertError } = await supabase
-      .from("contact_submissions")
-      .insert({ name, email, message });
-
-    if (insertError) {
-      console.error("Contact submission insert error:", insertError);
-      return NextResponse.json(
-        { error: "Failed to submit contact form. Please try again." },
-        { status: 500 }
-      );
-    }
+    // Log the submission (for prototype - no database storage)
+    console.log("Contact form submission:", { name, email, message });
 
     // Send Slack notification (non-blocking, don't fail if it errors)
     notifyContactSubmission(name, email, message).catch((err) => {
