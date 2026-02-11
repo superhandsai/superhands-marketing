@@ -476,12 +476,12 @@ export default function TestimonialsPage() {
                       {study.metrics.map((metric, metricIndex) => (
                         <div
                           key={metricIndex}
-                          className="text-center p-4 bg-secondary/50 rounded-xl border border-border flex flex-col items-center justify-center min-h-[100px]"
+                          className="text-center p-3 bg-secondary/50 rounded-xl border border-border flex flex-col items-center justify-center min-h-[100px]"
                         >
-                          <div className="text-2xl font-bold text-primary mb-1 break-words">
+                          <div className="text-xl font-bold text-primary mb-2 w-full">
                             {metric.value}
                           </div>
-                          <div className="text-xs text-muted-foreground break-words">
+                          <div className="text-[10px] leading-tight text-muted-foreground w-full break-words hyphens-auto">
                             {metric.label}
                           </div>
                         </div>
