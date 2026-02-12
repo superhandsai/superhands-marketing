@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Copy, Check } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
+import { Testimonials } from "@/components/testimonials";
 
 // Hero text with mouse-tracking gradient effect
 function GradientTextHero() {
@@ -972,6 +973,9 @@ function LandingPageContent() {
             ))}
           </div>
         </div>
+
+        {/* Testimonials Section */}
+        <Testimonials />
 
         {/* Email Us Section */}
         <div className="w-full mt-20 animate-fade-in-up animation-delay-600">
