@@ -916,6 +916,31 @@ function LandingPageContent() {
           </div>
         </div>
 
+        {/* Component Link */}
+        <div className="w-full mt-8 flex justify-center animate-fade-in-up animation-delay-450">
+          <a
+            href="https://bbelow.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-secondary/50"
+          >
+            <span>Built with bbelow</span>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+              />
+            </svg>
+          </a>
+        </div>
+
         {/* FAQ Section */}
         <div className="w-full mt-20 animate-fade-in-up animation-delay-500">
           <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
