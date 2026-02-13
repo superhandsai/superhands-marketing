@@ -99,6 +99,70 @@ export default function ContactPage() {
             <EmailCopy />
           </div>
         </div>
+
+        {/* Logo Showcase */}
+        <div className="mt-32 animate-fade-in-up animation-delay-300">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-20 opacity-60">
+              {/* Vercel */}
+              <div className="flex items-center gap-2 text-foreground">
+                <svg className="w-5 h-5" viewBox="0 0 76 65" fill="currentColor">
+                  <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+                </svg>
+                <span className="text-xl font-semibold">Vercel</span>
+              </div>
+
+              {/* Cursor */}
+              <div className="flex items-center gap-2 text-foreground">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3z" />
+                  <path d="M13 13l6 6" />
+                </svg>
+                <span className="text-xl font-semibold">CURSOR</span>
+              </div>
+
+              {/* Oscar */}
+              <div className="text-foreground">
+                <span className="text-xl font-semibold tracking-tight">Oscar</span>
+              </div>
+
+              {/* OpenAI */}
+              <div className="text-foreground">
+                <span className="text-xl font-semibold">OpenAI</span>
+              </div>
+
+              {/* Coinbase */}
+              <div className="text-foreground">
+                <span className="text-xl font-semibold">coinbase</span>
+              </div>
+
+              {/* Cash App */}
+              <div className="flex items-center gap-2 text-foreground">
+                <div className="w-6 h-6 bg-foreground rounded-md flex items-center justify-center">
+                  <span className="text-background text-xs font-bold">$</span>
+                </div>
+                <span className="text-xl font-semibold">Cash App</span>
+              </div>
+
+              {/* BOOM */}
+              <div className="flex items-center gap-2 text-foreground">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                </svg>
+                <span className="text-xl font-semibold">BOOM</span>
+              </div>
+
+              {/* ramp */}
+              <div className="flex items-center gap-1 text-foreground">
+                <span className="text-xl font-semibold">ramp</span>
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M7 17l9.2-9.2M17 17V7H7" stroke="currentColor" strokeWidth="2" fill="none"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
