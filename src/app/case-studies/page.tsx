@@ -88,81 +88,89 @@ const caseStudies = [
 export default function CaseStudiesPage() {
   return (
     <div className="min-h-screen w-full bg-dot-pattern bg-background">
-      <div className="mx-auto max-w-6xl px-4 pt-8 pb-12 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-6 pb-20 sm:px-6 lg:px-8">
         {/* Navigation Header */}
-        <div className="flex items-center justify-between mb-12 animate-fade-in-up">
-          <div className="flex items-center">
+        <div className="flex items-center justify-between mb-16 animate-fade-in-up">
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
             <img
               src="/icon.png"
               alt="Superhands"
               className="w-10 h-10 mr-3"
             />
-            <h1 className="text-xl font-bold uppercase text-foreground">
+            <h1 className="text-xl font-bold uppercase text-foreground tracking-tight">
               Superhands
             </h1>
-          </div>
+          </Link>
           <a
             href="https://app.superhands.ai/login"
-            className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
+            className="login-btn inline-flex items-center justify-center h-10 px-6 py-2 text-sm font-medium rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/80 transition-all shadow-sm"
           >
             Login
           </a>
         </div>
 
         {/* Page Header */}
-        <div className="mb-12">
+        <div className="mb-16 animate-fade-in-up">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6 group"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span>Back to home</span>
+            <span className="text-sm font-medium">Back to home</span>
           </Link>
 
-          <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4">
-            Case Studies
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            See how teams across industries are using Superhands to accelerate product development and empower everyone to contribute.
-          </p>
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 border border-primary/20 rounded-full">
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">Success Stories</span>
+            </div>
+            <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground leading-tight">
+              Case Studies
+            </h2>
+            <p className="text-xl sm:text-2xl text-muted-foreground max-w-3xl leading-relaxed">
+              See how teams across industries are using Superhands to accelerate product development and empower everyone to contribute.
+            </p>
+          </div>
         </div>
 
         {/* Case Studies Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {caseStudies.map((study) => (
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-20">
+          {caseStudies.map((study, index) => (
             <div
               key={study.id}
-              className="group relative bg-card border border-border rounded-xl p-6 transition-all duration-300 hover:shadow-lg hover:border-primary/50 hover:-translate-y-1"
+              className="group relative bg-card border border-border rounded-2xl p-8 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/5 hover:border-primary/40 hover:-translate-y-2 animate-fade-in-up"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Logo */}
-              <div className="text-5xl mb-4">{study.logo}</div>
+              {/* Logo with background */}
+              <div className="flex items-center justify-center w-16 h-16 mb-6 text-4xl bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                {study.logo}
+              </div>
+
+              {/* Industry Tag */}
+              <div className="inline-block px-3 py-1 bg-secondary/50 border border-border rounded-full text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-4">
+                {study.industry}
+              </div>
 
               {/* Company & Tagline */}
-              <h3 className="text-xl font-bold text-foreground mb-2">
+              <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                 {study.company}
               </h3>
-              <p className="text-primary font-medium mb-3">
+              <p className="text-primary font-semibold mb-4 text-lg leading-snug">
                 {study.tagline}
               </p>
 
               {/* Description */}
-              <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+              <p className="text-muted-foreground text-base mb-6 leading-relaxed line-clamp-3">
                 {study.description}
               </p>
 
-              {/* Industry Tag */}
-              <div className="inline-block px-3 py-1 bg-secondary rounded-full text-xs font-medium text-foreground mb-4">
-                {study.industry}
-              </div>
-
               {/* Metrics */}
-              <div className="space-y-2 pt-4 border-t border-border">
+              <div className="space-y-3 pt-6 border-t-2 border-border/50">
                 {study.metrics.map((metric, idx) => (
-                  <div key={idx} className="flex justify-between items-center">
-                    <span className="text-xs text-muted-foreground">
+                  <div key={idx} className="flex justify-between items-center gap-4">
+                    <span className="text-sm text-muted-foreground font-medium">
                       {metric.label}
                     </span>
-                    <span className="text-sm font-semibold text-foreground">
+                    <span className="text-base font-bold text-foreground bg-secondary/30 px-3 py-1 rounded-lg">
                       {metric.value}
                     </span>
                   </div>
@@ -170,30 +178,38 @@ export default function CaseStudiesPage() {
               </div>
 
               {/* Read More Link */}
-              <div className="mt-4 pt-4 border-t border-border">
-                <button className="inline-flex items-center gap-2 text-primary text-sm font-medium group-hover:gap-3 transition-all">
+              <div className="mt-6 pt-6 border-t-2 border-border/50">
+                <button className="inline-flex items-center gap-2 text-primary text-sm font-semibold group-hover:gap-3 transition-all uppercase tracking-wide">
                   <span>Read full story</span>
                   <ExternalLink className="w-4 h-4" />
                 </button>
               </div>
+
+              {/* Hover Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-primary/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
             </div>
           ))}
         </div>
 
         {/* CTA Section */}
-        <div className="mt-16 text-center bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-2xl p-12">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            Ready to write your success story?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join hundreds of teams who are shipping faster and empowering their entire team to contribute.
-          </p>
-          <Link
-            href="/"
-            className="inline-flex items-center justify-center h-12 px-8 text-base bg-primary text-white font-medium rounded-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(238,96,1,0.5)] hover:scale-105 active:scale-95"
-          >
-            Get started with Superhands
-          </Link>
+        <div className="relative text-center bg-gradient-to-br from-primary/15 via-primary/10 to-transparent border-2 border-primary/30 rounded-3xl p-12 sm:p-16 overflow-hidden animate-fade-in-up">
+          {/* Background decoration */}
+          <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+
+          <div className="relative z-10">
+            <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-6">
+              Ready to write your success story?
+            </h2>
+            <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
+              Join hundreds of teams who are shipping faster and empowering their entire team to contribute.
+            </p>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center h-14 px-10 text-base bg-primary text-white font-semibold rounded-xl transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_30px_rgba(238,96,1,0.4)] hover:scale-105 active:scale-95 shadow-lg"
+            >
+              Get started with Superhands
+            </Link>
+          </div>
         </div>
       </div>
     </div>
