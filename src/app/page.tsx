@@ -711,7 +711,7 @@ function LandingPageContent() {
             <img
               src="/logo.svg"
               alt="Superhands"
-              className="w-10 h-10 mr-3"
+              className="w-10 h-10 mr-3 logo-invert"
             />
             <h1 className="text-xl font-semibold text-foreground tracking-tight">
               Superhands

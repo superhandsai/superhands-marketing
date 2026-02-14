@@ -11,7 +11,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           {/* Logo and Copyright */}
           <div className="flex items-center gap-2">
-            <img src="/logo.svg" alt="Superhands" className="w-6 h-6" />
+            <img src="/logo.svg" alt="Superhands" className="w-6 h-6 logo-invert" />
             <span className="text-sm text-muted-foreground">
               © {currentYear} Superhands. All rights reserved.
             </span>
