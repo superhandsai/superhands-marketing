@@ -942,7 +942,7 @@ function LandingPageContent() {
                 step: "02",
                 title: "Test",
                 subtitle: "Share instantly",
-                description: "Generate shareable links. Get your prototype in front of users, stakeholders, anyone—in seconds."
+                description: "Generate shareable links. Get your prototype in front of users, stakeholders, anyone in seconds."
               },
               {
                 step: "03",
@@ -984,7 +984,7 @@ function LandingPageContent() {
             {[
               {
                 question: "What is Superhands?",
-                answer: "Superhands empowers product managers, designers, and non-technical team members to prototype features, test ideas with users, and validate concepts—all on your production codebase, directly in the browser. Stop waiting for engineering. Start learning from users today."
+                answer: "Superhands empowers product managers, designers, and non-technical team members to prototype features, test ideas with users, and validate concepts. All on your production codebase, directly in the browser. Stop waiting for engineering. Start learning from users today."
               },
               {
                 question: "Do I need coding experience to use Superhands?",
@@ -996,7 +996,7 @@ function LandingPageContent() {
               },
               {
                 question: "How can I use Superhands to validate product ideas?",
-                answer: "Superhands lets you build functional prototypes directly on your production codebase. Describe the feature or change you want to test, and our AI helps you build it in minutes. You can then share a link to your prototype with users or stakeholders to gather feedback—all before writing a single engineering ticket or PRD."
+                answer: "Superhands lets you build functional prototypes directly on your production codebase. Describe the feature or change you want to test, and our AI helps you build it in minutes. You can then share a link to your prototype with users or stakeholders to gather feedback, all before writing a single engineering ticket or PRD."
               },
               {
                 question: "Is Superhands free to use?",
