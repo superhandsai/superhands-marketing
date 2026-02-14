@@ -50,7 +50,7 @@ function GradientTextHero() {
       className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 relative cursor-default"
       style={{
         backgroundImage: isTracking
-          ? `radial-gradient(circle 400px at ${mousePos.x}% ${mousePos.y}%, rgba(238, 96, 1, 0.9) 0%, rgba(255, 130, 50, 0.7) 25%, rgba(238, 96, 1, 0.4) 50%, var(--foreground) 70%)`
+          ? `radial-gradient(circle 400px at ${mousePos.x}% ${mousePos.y}%, rgba(255, 255, 255, 0.95) 0%, rgba(200, 200, 200, 0.7) 25%, rgba(150, 150, 150, 0.4) 50%, var(--foreground) 70%)`
           : "none",
         WebkitBackgroundClip: "text",
         backgroundClip: "text",
@@ -296,60 +296,60 @@ function FloatingGradient() {
             top: "-50px",
           }}
         />
-        
+
         {/* Outer glow layer - ambient light */}
         <div
           className="absolute w-[800px] h-[800px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(238, 96, 1, 0.08) 0%, rgba(238, 96, 1, 0.03) 40%, transparent 65%)",
+            background: "radial-gradient(circle, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 40%, transparent 65%)",
             filter: "blur(80px)",
             transform: "translateZ(-50px)",
             left: "-100px",
             top: "-100px",
           }}
         />
-        
+
         {/* Main gradient orb */}
         <div
           className="w-[600px] h-[600px] rounded-full relative"
           style={{
-            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(238, 96, 1, 0.25) 0%, rgba(238, 96, 1, 0.14) 35%, rgba(238, 96, 1, 0.05) 55%, transparent 70%)",
+            background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255, 255, 255, 0.15) 0%, rgba(200, 200, 200, 0.08) 35%, rgba(150, 150, 150, 0.03) 55%, transparent 70%)",
             filter: "blur(40px)",
             transform: "translateZ(0px)",
           }}
         />
-        
+
         {/* Inner core - brighter center for depth */}
         <div
           className="absolute w-[350px] h-[350px] rounded-full"
           style={{
-            background: "radial-gradient(circle, rgba(255, 130, 50, 0.22) 0%, rgba(238, 96, 1, 0.1) 45%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(200, 200, 200, 0.05) 45%, transparent 70%)",
             filter: "blur(25px)",
             transform: "translateZ(20px)",
             left: "125px",
             top: "125px",
           }}
         />
-        
+
         {/* Specular highlight - simulates light reflection */}
         <div
           ref={highlightRef}
           className="absolute w-[200px] h-[150px] rounded-full"
           style={{
-            background: "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255, 150, 80, 0.15) 0%, rgba(255, 120, 50, 0.05) 40%, transparent 70%)",
+            background: "radial-gradient(ellipse 100% 80% at 50% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(200, 200, 200, 0.03) 40%, transparent 70%)",
             filter: "blur(20px)",
             transition: "transform 0.3s ease-out",
             left: "180px",
             top: "150px",
           }}
         />
-        
+
         {/* Secondary rim highlight */}
         <div
           ref={rimHighlightRef}
           className="absolute w-[400px] h-[250px] rounded-full"
           style={{
-            background: "radial-gradient(ellipse 100% 100% at 50% 0%, rgba(255, 180, 120, 0.08) 0%, transparent 50%)",
+            background: "radial-gradient(ellipse 100% 100% at 50% 0%, rgba(255, 255, 255, 0.06) 0%, transparent 50%)",
             filter: "blur(30px)",
             transition: "transform 0.4s ease-out",
             left: "100px",
@@ -533,11 +533,11 @@ function LandingPageContent() {
   }, []);
 
   const triggerConfetti = () => {
-    // Confetti effect 🎉
+    // Confetti effect
     const count = 1000;
     const defaults = {
       origin: { y: 0.2 },
-      colors: ['#ee6001', '#ff8232', '#ffa366', '#dc2626', '#ef4444', '#fb923c', '#fdba74', '#10b981', '#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#06b6d4', '#6366f1', '#84cc16', '#f97316', '#14b8a6', '#a855f7', '#eab308']
+      colors: ['#ffffff', '#e5e5e5', '#d4d4d4', '#a3a3a3', '#737373', '#525252', '#404040', '#262626', '#171717']
     };
 
     function fire(particleRatio: number, opts: confetti.Options) {
@@ -709,11 +709,11 @@ function LandingPageContent() {
         <div className="flex items-center justify-between mb-12 animate-fade-in-up">
           <div className="flex items-center">
             <img
-              src="/icon.png"
+              src="/logo.svg"
               alt="Superhands"
               className="w-10 h-10 mr-3"
             />
-            <h1 className="text-xl font-bold uppercase text-foreground">
+            <h1 className="text-xl font-semibold text-foreground tracking-tight">
               Superhands
             </h1>
           </div>
@@ -776,12 +776,12 @@ function LandingPageContent() {
                       autoCapitalize="none"
                       autoComplete="email"
                       autoCorrect="off"
-                      className="!bg-secondary h-12 transition-all duration-200 cursor-text selection:!bg-orange-500 selection:!text-white px-4 rounded-[8px] text-base ring-0 focus-visible:ring-0 border-0 !opacity-100 w-full"
+                      className="!bg-secondary h-12 transition-all duration-200 cursor-text selection:!bg-primary selection:!text-primary-foreground px-4 rounded-[8px] text-base ring-0 focus-visible:ring-0 border-0 !opacity-100 w-full"
                       style={{
                         border: form.formState.errors.email
                           ? "1px solid #EF4444"
                           : focusedField === "email"
-                            ? "1px solid #ee6001"
+                            ? "1px solid var(--foreground)"
                             : "1px solid var(--input-border)",
                         color:
                           focusedField === "email" || form.watch("email")
@@ -824,7 +824,7 @@ function LandingPageContent() {
                   </div>
                   <Button
                     type="submit"
-                    className="h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-white font-medium rounded-[8px] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(238,96,1,0.5)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap"
+                    className="h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-primary-foreground font-medium rounded-[8px] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap"
                     disabled={loading}
                     onMouseEnter={triggerConfetti}
                   >
@@ -842,7 +842,7 @@ function LandingPageContent() {
 
         {/* Video Section */}
         <div className="w-full animate-fade-in-up animation-delay-400 relative">
-          <div className="absolute inset-0 left-[50%] -translate-x-1/2 w-screen bg-gradient-to-t from-primary/15 via-primary/5 to-transparent blur-3xl pointer-events-none" />
+          <div className="absolute inset-0 left-[50%] -translate-x-1/2 w-screen bg-gradient-to-t from-white/10 via-white/5 to-transparent blur-3xl pointer-events-none" />
           <div
             ref={videoContainerRef}
             className="relative rounded-[18px] overflow-hidden group"

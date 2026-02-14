@@ -10,18 +10,18 @@ body {
 /* Light mode (default) */
 :root {
   --background: #fafafa;
-  --foreground: #141414;
+  --foreground: #1a1a1a;
   --card: #ffffff;
-  --card-foreground: #141414;
+  --card-foreground: #1a1a1a;
   --popover: #ffffff;
-  --popover-foreground: #141414;
-  --primary: #ee6001;
+  --popover-foreground: #1a1a1a;
+  --primary: #1a1a1a;
   --primary-foreground: #ffffff;
   --secondary: #f4f4f5;
-  --secondary-foreground: #141414;
+  --secondary-foreground: #1a1a1a;
   --muted: #f4f4f5;
   --muted-foreground: #71717a;
-  --accent: #ee6001;
+  --accent: #1a1a1a;
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #fafafa;
@@ -34,26 +34,26 @@ body {
 
 /* Dark mode */
 .dark {
-  --background: #141414;
-  --foreground: #fefefe;
-  --card: #202224;
-  --card-foreground: #fefefe;
-  --popover: #202224;
-  --popover-foreground: #fefefe;
-  --primary: #ee6001;
-  --primary-foreground: #ffffff;
-  --secondary: #383a3c;
-  --secondary-foreground: #fefefe;
-  --muted: #383a3c;
-  --muted-foreground: #a1a1aa;
-  --accent: #ee6001;
-  --accent-foreground: #141414;
+  --background: #1a1a1a;
+  --foreground: #f5f5f5;
+  --card: #232323;
+  --card-foreground: #f5f5f5;
+  --popover: #232323;
+  --popover-foreground: #f5f5f5;
+  --primary: #f5f5f5;
+  --primary-foreground: #1a1a1a;
+  --secondary: #2a2a2a;
+  --secondary-foreground: #f5f5f5;
+  --muted: #2a2a2a;
+  --muted-foreground: #a0a0a0;
+  --accent: #f5f5f5;
+  --accent-foreground: #1a1a1a;
   --destructive: #dc2626;
-  --destructive-foreground: #fefefe;
-  --border: #383a3c;
-  --input: #383a3c;
+  --destructive-foreground: #f5f5f5;
+  --border: #333333;
+  --input: #2a2a2a;
   --input-border: transparent;
-  --ring: #383a3c;
+  --ring: #333333;
 }
 
 @theme inline {
@@ -88,7 +88,7 @@ body {
     "Noto Color Emoji";
 }
 
-/* Text selection styling - orange highlight with white text */
+/* Text selection styling */
 ::selection {
   background-color: var(--primary);
   color: #ffffff;
@@ -179,10 +179,10 @@ body {
 
 .login-btn:hover {
   background-color: #e4e4e7;
-  color: #ee6001;
+  color: #1a1a1a;
 }
 
 .dark .login-btn:hover {
-  background-color: #4a4c4e;
-  color: #ee6001;
+  background-color: #3a3a3a;
+  color: #f5f5f5;
 }

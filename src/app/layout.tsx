@@ -13,10 +13,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "SUPERHANDS - The easiest way to build and share prototypes in your browser",
+  title: "Superhands - The easiest way to build and share prototypes in your browser",
   description: "Build prototypes directly in your browser without all the technical complexity of local dev, GitHub and version control.",
   openGraph: {
-    title: "SUPERHANDS - The easiest way to build and share prototypes in your browser",
+    title: "Superhands - The easiest way to build and share prototypes in your browser",
     description: "Build prototypes directly in your browser without all the technical complexity of local dev, GitHub and version control.",
     type: "website",
     images: [
@@ -30,17 +30,17 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SUPERHANDS - The easiest way to build and share prototypes in your browser",
+    title: "Superhands - The easiest way to build and share prototypes in your browser",
     description: "Build prototypes directly in your browser without all the technical complexity of local dev, GitHub and version control.",
     images: ["/og.png"],
   },
   icons: {
     icon: [
-      { url: "/favicon.ico?v=2", sizes: "any" },
-      { url: "/favicon.png?v=2", sizes: "48x48", type: "image/png" },
+      { url: "/favicon.svg?v=3", type: "image/svg+xml" },
+      { url: "/favicon.ico?v=3", sizes: "any" },
     ],
-    shortcut: "/favicon.ico?v=2",
-    apple: "/favicon.png?v=2",
+    shortcut: "/favicon.svg?v=3",
+    apple: "/favicon.svg?v=3",
   },
 };
 
