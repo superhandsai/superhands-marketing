@@ -729,7 +729,7 @@ function LandingPageContent() {
         <div className="text-center mb-8">
           <GradientTextHero />
           <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-            Explore new features, fix bugs and make updates, without the engineering bottleneck.
+            Stop waiting for engineering. Prototype, test, and validate ideas yourself.
           </p>
         </div>
 
@@ -824,14 +824,16 @@ function LandingPageContent() {
                   </div>
                   <Button
                     type="submit"
-                    className="h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-primary-foreground font-medium rounded-[8px] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap"
+                    className="relative h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-primary-foreground font-medium rounded-[8px] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn"
                     disabled={loading}
                     onMouseEnter={triggerConfetti}
                   >
+                    {/* Shimmer effect */}
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out" />
                     {loading ? (
-                      <Loader2 className="h-5 w-5 animate-spin" />
+                      <Loader2 className="h-5 w-5 animate-spin relative z-10" />
                     ) : (
-                      "Get started"
+                      <span className="relative z-10">Get started</span>
                     )}
                   </Button>
                 </div>
@@ -916,8 +918,65 @@ function LandingPageContent() {
           </div>
         </div>
 
+        {/* How It Works Section */}
+        <div className="w-full mt-24 animate-fade-in-up animation-delay-450">
+          <div className="text-center mb-16">
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground/60 mb-4 font-medium">The Process</p>
+            <h3 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight">
+              From Idea to Validated Feature
+            </h3>
+            <p className="text-lg text-muted-foreground mt-4">
+              The fastest teams don't plan more. They learn faster.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                step: "01",
+                title: "Build",
+                subtitle: "Describe what you want",
+                description: "AI transforms your words into functional prototypes on your real codebase. No coding required."
+              },
+              {
+                step: "02",
+                title: "Test",
+                subtitle: "Share instantly",
+                description: "Generate shareable links. Get your prototype in front of users, stakeholders, anyone—in seconds."
+              },
+              {
+                step: "03",
+                title: "Learn",
+                subtitle: "Decide with confidence",
+                description: "Shorten the loop between idea and insight. Kill bad bets in days, not quarters."
+              }
+            ].map((item) => (
+              <div key={item.step} className="relative group text-center">
+                {/* Large step number - editorial style */}
+                <div className="relative mb-6">
+                  <span
+                    className="text-[120px] md:text-[140px] font-black leading-none text-transparent bg-clip-text select-none pointer-events-none"
+                    style={{
+                      WebkitTextStroke: '1px rgba(255,255,255,0.08)',
+                    }}
+                  >
+                    {item.step}
+                  </span>
+                  {/* Title overlaid */}
+                  <h4 className="absolute bottom-4 left-0 right-0 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
+                    {item.title}
+                  </h4>
+                </div>
+
+                <p className="text-sm uppercase tracking-[0.15em] text-foreground/40 mb-4 font-medium">{item.subtitle}</p>
+                <p className="text-muted-foreground text-base leading-relaxed max-w-xs mx-auto">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* FAQ Section */}
-        <div className="w-full mt-20 animate-fade-in-up animation-delay-500">
+        <div className="w-full mt-24 animate-fade-in-up animation-delay-500">
           <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
             Frequently Asked Questions
           </h3>
@@ -925,7 +984,7 @@ function LandingPageContent() {
             {[
               {
                 question: "What is Superhands?",
-                answer: "Superhands empowers your team to explore features, fix bugs, and make updates to your production codebase directly in the browser—without the engineering bottleneck. It removes the complexity of local development, GitHub, and version control so everyone can contribute."
+                answer: "Superhands empowers product managers, designers, and non-technical team members to prototype features, test ideas with users, and validate concepts—all on your production codebase, directly in the browser. Stop waiting for engineering. Start learning from users today."
               },
               {
                 question: "Do I need coding experience to use Superhands?",
@@ -934,6 +993,10 @@ function LandingPageContent() {
               {
                 question: "How does Superhands work with my existing codebase?",
                 answer: "Superhands connects to your team's production codebase and lets you explore, test changes, and propose updates in a safe environment. You can experiment with new features and bug fixes without affecting your live product or needing to set up a local development environment."
+              },
+              {
+                question: "How can I use Superhands to validate product ideas?",
+                answer: "Superhands lets you build functional prototypes directly on your production codebase. Describe the feature or change you want to test, and our AI helps you build it in minutes. You can then share a link to your prototype with users or stakeholders to gather feedback—all before writing a single engineering ticket or PRD."
               },
               {
                 question: "Is Superhands free to use?",
