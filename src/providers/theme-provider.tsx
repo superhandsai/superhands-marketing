@@ -22,7 +22,8 @@ function getSystemTheme(): ResolvedTheme {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("system");
+  // Initialize with "dark" to match SSR default
+  const [theme, setThemeState] = useState<Theme>("dark");
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
   const [mounted, setMounted] = useState(false);
 
@@ -33,7 +34,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (stored && (stored === "light" || stored === "dark" || stored === "system")) {
       setThemeState(stored);
     } else {
-      setThemeState("dark");
+      // Default to system preference if available, otherwise dark
+      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setThemeState("system");
+      setResolvedTheme(systemPrefersDark ? "dark" : "light");
     }
   }, []);
 
@@ -115,13 +119,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(newTheme);
   };
 
-  // Prevent flash by not rendering until mounted
-  if (!mounted) {
-    return <div style={{ visibility: "hidden" }}>{children}</div>;
-  }
+  // Always provide the context, but use default values during SSR to prevent errors
+  const contextValue = mounted
+    ? { theme, resolvedTheme, toggleTheme, setTheme }
+    : { 
+        theme: "dark" as Theme, 
+        resolvedTheme: "dark" as ResolvedTheme, 
+        toggleTheme: () => {}, 
+        setTheme: () => {} 
+      };
 
   return (
-    <ThemeContext.Provider value={{ theme, resolvedTheme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );

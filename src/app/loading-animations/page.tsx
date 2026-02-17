@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Heart, Moon, Sun, Copy, Check } from "lucide-react";
+import { useTheme } from "@/providers/theme-provider";
 
 // Logo paths from the SVG
 const logoPaths = [
@@ -16,8 +18,413 @@ interface LogoAnimationProps {
   title: string;
 }
 
+// Function to get CSS code for each animation variant
+function getAnimationCSS(variant: string): string {
+  const cssMap: Record<string, string> = {
+    sequential: `.logo-anim-sequential {
+  opacity: 0;
+  animation: fadeInPathLoop 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes fadeInPathLoop {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  50% { opacity: 1; }
+  65% { opacity: 0; }
+  100% { opacity: 0; }
+}`,
+    sequential2: `.logo-anim-sequential2 {
+  opacity: 0;
+  animation: fadeInPathLoop2 2s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes fadeInPathLoop2 {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  45% { opacity: 1; }
+  55% { opacity: 0; }
+  100% { opacity: 0; }
+}`,
+    sequential3: `.logo-anim-sequential3 {
+  opacity: 0;
+  animation: fadeInPathLoop3 3.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes fadeInPathLoop3 {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  55% { opacity: 1; }
+  70% { opacity: 0; }
+  100% { opacity: 0; }
+}`,
+    sequential4: `.logo-anim-sequential4 {
+  opacity: 0;
+  animation: fadeInPathLoop4 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes fadeInPathLoop4 {
+  0% { opacity: 0; }
+  12% { opacity: 0.5; }
+  15% { opacity: 1; }
+  50% { opacity: 1; }
+  65% { opacity: 0.5; }
+  68% { opacity: 0; }
+  100% { opacity: 0; }
+}`,
+    scale: `.logo-anim-scale {
+  opacity: 0;
+  transform: scale(0);
+  animation: scaleInPathLoop 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes scaleInPathLoop {
+  0% { opacity: 0; transform: scale(0); }
+  15% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1); }
+  65% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0; transform: scale(0); }
+}`,
+    scale2: `.logo-anim-scale2 {
+  opacity: 0;
+  transform: scale(0);
+  animation: scaleInPathLoop2 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes scaleInPathLoop2 {
+  0% { opacity: 0; transform: scale(0); }
+  10% { opacity: 0.8; transform: scale(1.2); }
+  15% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1); }
+  65% { opacity: 0.8; transform: scale(1.1); }
+  90% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0; transform: scale(0); }
+}`,
+    scale3: `.logo-anim-scale3 {
+  opacity: 0;
+  transform: scale(0);
+  animation: scaleInPathLoop3 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes scaleInPathLoop3 {
+  0% { opacity: 0; transform: scale(0); }
+  20% { opacity: 1; transform: scale(1); }
+  55% { opacity: 1; transform: scale(1); }
+  70% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0; transform: scale(0); }
+}`,
+    scale4: `.logo-anim-scale4 {
+  opacity: 0;
+  transform: scale(0);
+  animation: scaleInPathLoop4 1.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes scaleInPathLoop4 {
+  0% { opacity: 0; transform: scale(0); }
+  8% { opacity: 1; transform: scale(1); }
+  48% { opacity: 1; transform: scale(1); }
+  58% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0; transform: scale(0); }
+}`,
+    rotate: `.logo-anim-rotate {
+  opacity: 0;
+  transform: rotate(-180deg) scale(0.5);
+  animation: rotateInPathLoop 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes rotateInPathLoop {
+  0% { opacity: 0; transform: rotate(-180deg) scale(0.5); }
+  15% { opacity: 1; transform: rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: rotate(0deg) scale(1); }
+  65% { opacity: 0; transform: rotate(180deg) scale(0.5); }
+  100% { opacity: 0; transform: rotate(180deg) scale(0.5); }
+}`,
+    rotate2: `.logo-anim-rotate2 {
+  opacity: 0;
+  transform: rotate(-360deg) scale(0.5);
+  animation: rotateInPathLoop2 2.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes rotateInPathLoop2 {
+  0% { opacity: 0; transform: rotate(-360deg) scale(0.5); }
+  15% { opacity: 1; transform: rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: rotate(0deg) scale(1); }
+  65% { opacity: 0; transform: rotate(360deg) scale(0.5); }
+  100% { opacity: 0; transform: rotate(360deg) scale(0.5); }
+}`,
+    rotate3: `.logo-anim-rotate3 {
+  opacity: 0;
+  transform: rotate(-180deg) scale(0.5);
+  animation: rotateInPathLoop3 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes rotateInPathLoop3 {
+  0% { opacity: 0; transform: rotate(-180deg) scale(0.5); }
+  10% { opacity: 0.8; transform: rotate(-90deg) scale(0.8); }
+  15% { opacity: 1; transform: rotate(0deg) scale(1); }
+  50% { opacity: 1; transform: rotate(0deg) scale(1); }
+  65% { opacity: 0.8; transform: rotate(90deg) scale(0.8); }
+  90% { opacity: 0; transform: rotate(180deg) scale(0.5); }
+  100% { opacity: 0; transform: rotate(180deg) scale(0.5); }
+}`,
+    rotate4: `.logo-anim-rotate4 {
+  opacity: 0;
+  transform: rotate(-180deg) scale(0.5);
+  animation: rotateInPathLoop4 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes rotateInPathLoop4 {
+  0% { opacity: 0; transform: rotate(-180deg) scale(0.5); }
+  20% { opacity: 1; transform: rotate(0deg) scale(1); }
+  55% { opacity: 1; transform: rotate(0deg) scale(1); }
+  70% { opacity: 0; transform: rotate(180deg) scale(0.5); }
+  100% { opacity: 0; transform: rotate(180deg) scale(0.5); }
+}`,
+    morph: `.logo-anim-morph {
+  opacity: 0;
+  transform: scale(0.3);
+  animation: morphInPathLoop 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes morphInPathLoop {
+  0% { opacity: 0; transform: scale(0.3); }
+  10% { opacity: 0.7; transform: scale(1.1); }
+  15% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1); }
+  65% { opacity: 0.7; transform: scale(1.1); }
+  90% { opacity: 0; transform: scale(0.3); }
+  100% { opacity: 0; transform: scale(0.3); }
+}`,
+    morph2: `.logo-anim-morph2 {
+  opacity: 0;
+  transform: scale(0.3);
+  animation: morphInPathLoop2 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes morphInPathLoop2 {
+  0% { opacity: 0; transform: scale(0.3); }
+  8% { opacity: 0.6; transform: scale(1.2); }
+  12% { opacity: 0.9; transform: scale(0.95); }
+  15% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1); }
+  65% { opacity: 0.9; transform: scale(1.05); }
+  75% { opacity: 0.6; transform: scale(1.15); }
+  92% { opacity: 0; transform: scale(0.3); }
+  100% { opacity: 0; transform: scale(0.3); }
+}`,
+    morph3: `.logo-anim-morph3 {
+  opacity: 0;
+  transform: scale(0.3);
+  animation: morphInPathLoop3 1.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes morphInPathLoop3 {
+  0% { opacity: 0; transform: scale(0.3); }
+  8% { opacity: 0.7; transform: scale(1.1); }
+  12% { opacity: 1; transform: scale(1); }
+  48% { opacity: 1; transform: scale(1); }
+  58% { opacity: 0.7; transform: scale(1.1); }
+  92% { opacity: 0; transform: scale(0.3); }
+  100% { opacity: 0; transform: scale(0.3); }
+}`,
+    morph4: `.logo-anim-morph4 {
+  opacity: 0;
+  transform: scale(0.3);
+  animation: morphInPathLoop4 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes morphInPathLoop4 {
+  0% { opacity: 0; transform: scale(0.3); }
+  20% { opacity: 1; transform: scale(1); }
+  55% { opacity: 1; transform: scale(1); }
+  70% { opacity: 0; transform: scale(0.3); }
+  100% { opacity: 0; transform: scale(0.3); }
+}`,
+    wave: `.logo-anim-wave {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: waveInPathLoop 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes waveInPathLoop {
+  0% { opacity: 0; transform: translateY(20px); }
+  15% { opacity: 1; transform: translateY(-5px); }
+  20% { opacity: 1; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(0); }
+  65% { opacity: 1; transform: translateY(5px); }
+  100% { opacity: 0; transform: translateY(20px); }
+}`,
+    wave2: `.logo-anim-wave2 {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: waveInPathLoop2 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes waveInPathLoop2 {
+  0% { opacity: 0; transform: translateX(-20px); }
+  15% { opacity: 1; transform: translateX(5px); }
+  20% { opacity: 1; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(0); }
+  65% { opacity: 1; transform: translateX(-5px); }
+  100% { opacity: 0; transform: translateX(-20px); }
+}`,
+    wave3: `.logo-anim-wave3 {
+  opacity: 0;
+  transform: translate(-15px, 15px);
+  animation: waveInPathLoop3 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes waveInPathLoop3 {
+  0% { opacity: 0; transform: translate(-15px, 15px); }
+  15% { opacity: 1; transform: translate(5px, -5px); }
+  20% { opacity: 1; transform: translate(0, 0); }
+  50% { opacity: 1; transform: translate(0, 0); }
+  65% { opacity: 1; transform: translate(-5px, 5px); }
+  100% { opacity: 0; transform: translate(-15px, 15px); }
+}`,
+    wave4: `.logo-anim-wave4 {
+  opacity: 0;
+  transform: scale(0.5);
+  animation: waveInPathLoop4 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes waveInPathLoop4 {
+  0% { opacity: 0; transform: scale(0.5); }
+  10% { opacity: 0.5; transform: scale(0.8); }
+  15% { opacity: 1; transform: scale(1.05); }
+  20% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1); }
+  65% { opacity: 1; transform: scale(1.05); }
+  80% { opacity: 0.5; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(0.5); }
+}`,
+    pulse: `.logo-anim-pulse {
+  opacity: 0;
+  transform: scale(0);
+  animation: pulseInPathLoop 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes pulseInPathLoop {
+  0% { opacity: 0; transform: scale(0); }
+  10% { opacity: 1; transform: scale(1.15); }
+  15% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1); }
+  65% { opacity: 1; transform: scale(1.1); }
+  90% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0; transform: scale(0); }
+}`,
+    pulse2: `.logo-anim-pulse2 {
+  opacity: 0;
+  transform: scale(0);
+  animation: pulseInPathLoop2 2.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes pulseInPathLoop2 {
+  0% { opacity: 0; transform: scale(0); }
+  8% { opacity: 1; transform: scale(1.25); }
+  12% { opacity: 1; transform: scale(0.95); }
+  15% { opacity: 1; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1); }
+  65% { opacity: 1; transform: scale(1.15); }
+  88% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0; transform: scale(0); }
+}`,
+    pulse3: `.logo-anim-pulse3 {
+  opacity: 0;
+  transform: scale(0);
+  animation: pulseInPathLoop3 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes pulseInPathLoop3 {
+  0% { opacity: 0; transform: scale(0); }
+  20% { opacity: 1; transform: scale(1.05); }
+  25% { opacity: 1; transform: scale(1); }
+  55% { opacity: 1; transform: scale(1); }
+  70% { opacity: 1; transform: scale(1.05); }
+  85% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0; transform: scale(0); }
+}`,
+    pulse4: `.logo-anim-pulse4 {
+  opacity: 0;
+  transform: scale(0);
+  animation: pulseInPathLoop4 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes pulseInPathLoop4 {
+  0% { opacity: 0; transform: scale(0); }
+  6% { opacity: 1; transform: scale(1.2); }
+  10% { opacity: 1; transform: scale(1); }
+  46% { opacity: 1; transform: scale(1); }
+  54% { opacity: 1; transform: scale(1.1); }
+  94% { opacity: 0; transform: scale(0); }
+  100% { opacity: 0; transform: scale(0); }
+}`,
+  };
+
+  return cssMap[variant] || '';
+}
+
 function LogoAnimation({ variant, title }: LogoAnimationProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const favoriteKey = `favorite-${variant}`;
+  const countKey = `favorite-count-${variant}`;
+  
+  // Check if user has already favorited this animation
+  const [isFavorited, setIsFavorited] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem(favoriteKey) === 'true';
+    }
+    return false;
+  });
+  
+  // Get favorite count
+  const [favoriteCount, setFavoriteCount] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const count = localStorage.getItem(countKey);
+      return count ? parseInt(count, 10) : 0;
+    }
+    return 0;
+  });
+
+  // Copy animation code state
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyCode = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const cssCode = getAnimationCSS(variant);
+    if (cssCode) {
+      try {
+        await navigator.clipboard.writeText(cssCode);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy code:', err);
+      }
+    }
+  };
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -57,7 +464,41 @@ function LogoAnimation({ variant, title }: LogoAnimationProps) {
         case "wave":
           delay = index * 0.1;
           break;
+        case "wave2":
+          delay = index * 0.1;
+          break;
+        case "wave3":
+          delay = index * 0.12;
+          break;
+        case "wave4":
+          delay = index * 0.08;
+          break;
         case "pulse":
+          delay = index * 0.08;
+          break;
+        case "sequential2":
+        case "sequential3":
+        case "sequential4":
+          delay = index * 0.15;
+          break;
+        case "scale2":
+        case "scale3":
+        case "scale4":
+          delay = index * 0.1;
+          break;
+        case "rotate2":
+        case "rotate3":
+        case "rotate4":
+          delay = index * 0.12;
+          break;
+        case "morph2":
+        case "morph3":
+        case "morph4":
+          delay = index * 0.15;
+          break;
+        case "pulse2":
+        case "pulse3":
+        case "pulse4":
           delay = index * 0.08;
           break;
       }
@@ -70,10 +511,69 @@ function LogoAnimation({ variant, title }: LogoAnimationProps) {
   }, [variant]);
 
   return (
-    <div className="flex flex-col items-center gap-4 p-6 bg-card/50 backdrop-blur-sm border border-border rounded-xl">
-      <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-        {title}
-      </h3>
+    <div className="flex flex-col items-center gap-4 p-6 bg-card/50 backdrop-blur-sm border border-border rounded-xl relative">
+      <div className="flex items-center justify-center w-full relative">
+        <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+          {title}
+        </h3>
+        <div className="absolute right-0 flex items-center gap-1.5">
+          <button
+            onClick={handleCopyCode}
+            className="p-1.5 rounded-full hover:bg-secondary/50 transition-colors cursor-pointer group"
+            aria-label="Copy animation code"
+            title="Copy CSS code"
+          >
+            {copied ? (
+              <Check className="w-4 h-4 text-green-500" />
+            ) : (
+              <Copy className="w-4 h-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+            )}
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isFavorited) {
+                // Unfavorite
+                setIsFavorited(false);
+                localStorage.removeItem(favoriteKey);
+                
+                // Decrement count (ensure it doesn't go below 0)
+                const newCount = Math.max(0, favoriteCount - 1);
+                setFavoriteCount(newCount);
+                if (newCount > 0) {
+                  localStorage.setItem(countKey, newCount.toString());
+                } else {
+                  localStorage.removeItem(countKey);
+                }
+              } else {
+                // Favorite
+                setIsFavorited(true);
+                localStorage.setItem(favoriteKey, 'true');
+                
+                // Increment count
+                const newCount = favoriteCount + 1;
+                setFavoriteCount(newCount);
+                localStorage.setItem(countKey, newCount.toString());
+              }
+            }}
+            className="p-1.5 rounded-full hover:bg-secondary/50 transition-colors cursor-pointer group"
+            aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+          >
+            <Heart
+              className={`w-4 h-4 transition-all ${
+                isFavorited
+                  ? "fill-red-500 text-red-500"
+                  : "text-muted-foreground group-hover:fill-red-500 group-hover:text-red-500"
+              }`}
+            />
+          </button>
+          {favoriteCount > 0 && (
+            <span className="text-xs text-muted-foreground min-w-[1rem]">
+              {favoriteCount}
+            </span>
+          )}
+        </div>
+      </div>
       <div className="w-32 h-32 flex items-center justify-center">
         <svg
           ref={svgRef}
@@ -98,26 +598,162 @@ function LogoAnimation({ variant, title }: LogoAnimationProps) {
   );
 }
 
-export default function LoadingAnimationsPage() {
+// Animation group component - shows all variations grouped by title
+function AnimationGroup({ 
+  baseVariant, 
+  title, 
+  variations 
+}: { 
+  baseVariant: string; 
+  title: string; 
+  variations: { variant: string; title: string }[] 
+}) {
   return (
-    <div className="min-h-screen w-full bg-background p-8">
+    <div className="space-y-6 pt-12">
+      <h2 className="text-lg font-semibold text-foreground">
+        {title}
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <LogoAnimation variant={baseVariant} title="Original" />
+        {variations.map((variation) => (
+          <LogoAnimation 
+            key={variation.variant} 
+            variant={variation.variant} 
+            title={variation.title} 
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default function LoadingAnimationsPage() {
+  const { resolvedTheme, toggleTheme } = useTheme();
+
+  useEffect(() => {
+    // Hide footer on this page
+    const footer = document.querySelector('footer');
+    if (footer) {
+      footer.style.display = 'none';
+    }
+    
+    return () => {
+      // Restore footer when leaving page
+      const footer = document.querySelector('footer');
+      if (footer) {
+        footer.style.display = '';
+      }
+    };
+  }, []);
+
+  return (
+    <div className="min-h-screen w-full bg-background p-8 pb-24" style={{ fontFamily: 'var(--font-space-grotesk), sans-serif' }}>
       <div className="max-w-7xl mx-auto">
+        {/* Theme Toggle */}
+        <div className="flex justify-end mb-6" suppressHydrationWarning>
+          <button
+            onClick={toggleTheme}
+            className="flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/50 hover:bg-card transition-all group"
+            aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            suppressHydrationWarning
+          >
+            <div className="flex items-center gap-2">
+              <Sun className={`w-4 h-4 transition-colors ${resolvedTheme === "light" ? "text-foreground" : "text-muted-foreground"}`} />
+              <span className={`text-xs font-medium transition-colors ${resolvedTheme === "light" ? "text-foreground" : "text-muted-foreground"}`}>
+                Light
+              </span>
+            </div>
+            <div className="w-8 h-4 rounded-full bg-muted relative transition-colors">
+              <div
+                className={`absolute top-0.5 w-3 h-3 rounded-full bg-background border border-border transition-transform ${
+                  resolvedTheme === "dark" ? "translate-x-4" : "translate-x-0.5"
+                }`}
+                suppressHydrationWarning
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Moon className={`w-4 h-4 transition-colors ${resolvedTheme === "dark" ? "text-foreground" : "text-muted-foreground"}`} />
+              <span className={`text-xs font-medium transition-colors ${resolvedTheme === "dark" ? "text-foreground" : "text-muted-foreground"}`}>
+                Dark
+              </span>
+            </div>
+          </button>
+        </div>
+
+        {/* Logo Header */}
+        <div className="flex items-center justify-center mb-3">
+          <img
+            src="/logo-full-white.svg"
+            alt="Superhands"
+            className={`h-16 ${resolvedTheme === "light" ? "brightness-0" : ""}`}
+            suppressHydrationWarning
+          />
+        </div>
+
         <div className="mb-12 text-center">
-          <h1 className="text-4xl font-bold text-foreground mb-4">
-            Logo Loading Animations
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            Various animation styles for the Superhands logo
+          <h2 className="text-4xl font-bold text-foreground mb-3">
+            Logo Animation Exploration
+          </h2>
+          <p className="text-base text-muted-foreground max-w-2xl mx-auto">
+            Click the heart on animations you like for use as loading states.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <LogoAnimation variant="sequential" title="Sequential Reveal" />
-          <LogoAnimation variant="scale" title="Scale from Center" />
-          <LogoAnimation variant="rotate" title="Rotate into Place" />
-          <LogoAnimation variant="morph" title="Morph from Circles" />
-          <LogoAnimation variant="wave" title="Wave Effect" />
-          <LogoAnimation variant="pulse" title="Pulse Animation" />
+        <div className="space-y-8">
+          <AnimationGroup
+            baseVariant="sequential"
+            title="Sequential Reveal"
+            variations={[
+              { variant: "sequential2", title: "Sequential Fast" },
+              { variant: "sequential3", title: "Sequential Slow" },
+              { variant: "sequential4", title: "Sequential Bounce" }
+            ]}
+          />
+          <AnimationGroup
+            baseVariant="scale"
+            title="Scale from Centre"
+            variations={[
+              { variant: "scale2", title: "Scale Elastic" },
+              { variant: "scale3", title: "Scale Smooth" },
+              { variant: "scale4", title: "Scale Quick" }
+            ]}
+          />
+          <AnimationGroup
+            baseVariant="rotate"
+            title="Rotate into Place"
+            variations={[
+              { variant: "rotate2", title: "Rotate 360°" },
+              { variant: "rotate3", title: "Rotate Bounce" },
+              { variant: "rotate4", title: "Rotate Smooth" }
+            ]}
+          />
+          <AnimationGroup
+            baseVariant="morph"
+            title="Morph from Circles"
+            variations={[
+              { variant: "morph2", title: "Morph Elastic" },
+              { variant: "morph3", title: "Morph Quick" },
+              { variant: "morph4", title: "Morph Smooth" }
+            ]}
+          />
+          <AnimationGroup
+            baseVariant="wave"
+            title="Wave Effect"
+            variations={[
+              { variant: "wave2", title: "Wave Horizontal" },
+              { variant: "wave3", title: "Wave Diagonal" },
+              { variant: "wave4", title: "Wave Ripple" }
+            ]}
+          />
+          <AnimationGroup
+            baseVariant="pulse"
+            title="Pulse Animation"
+            variations={[
+              { variant: "pulse2", title: "Pulse Strong" },
+              { variant: "pulse3", title: "Pulse Gentle" },
+              { variant: "pulse4", title: "Pulse Quick" }
+            ]}
+          />
         </div>
       </div>
     </div>

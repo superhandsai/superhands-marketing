@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
@@ -12,12 +12,18 @@ const inter = Inter({
   display: "swap",
 });
 
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Superhands - The easiest way to build and share prototypes in your browser",
-  description: "Superhands lets PMs and designers prototype features and test ideas with users directly on your production codebase. No coding required.",
+  title: "Superhands - Stop waiting for engineering. Prototype, test, and validate ideas yourself.",
+  description: "Stop waiting for engineering. Prototype, test, and validate ideas yourself. Build and share interactive prototypes directly in your browser—no coding required.",
   openGraph: {
-    title: "Superhands - The easiest way to build and share prototypes in your browser",
-    description: "Superhands lets PMs and designers prototype features and test ideas with users directly on your production codebase. No coding required.",
+    title: "Superhands - Stop waiting for engineering. Prototype, test, and validate ideas yourself.",
+    description: "Stop waiting for engineering. Prototype, test, and validate ideas yourself. Build and share interactive prototypes directly in your browser—no coding required.",
     type: "website",
     images: [
       {
@@ -30,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Superhands - The easiest way to build and share prototypes in your browser",
-    description: "Superhands lets PMs and designers prototype features and test ideas with users directly on your production codebase. No coding required.",
+    title: "Superhands - Stop waiting for engineering. Prototype, test, and validate ideas yourself.",
+    description: "Stop waiting for engineering. Prototype, test, and validate ideas yourself. Build and share interactive prototypes directly in your browser—no coding required.",
     images: ["/og.png"],
   },
   icons: {
@@ -52,7 +58,7 @@ export default function RootLayout({
   const intercomAppId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID;
 
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
       <body className={`font-sans antialiased flex flex-col min-h-screen`}>
         <PostHogProvider>
           <ThemeProvider>
