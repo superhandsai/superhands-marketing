@@ -34,6 +34,7 @@ interface LogoAnimationProps {
     variants: Array<{ variant: string; title: string }>;
   }>;
   currentGroupIndex?: number;
+  isMobile?: boolean;
 }
 
 // Modal Animation SVG Component
@@ -591,7 +592,7 @@ function getAnimationCSS(variant: string, customCSS?: Record<string, string>): s
   return cssMap[variant] || '';
 }
 
-function LogoAnimation({ variant, title, logoColor, customVariantCSS, groupTitle, allVariants, currentIndex, allGroups, currentGroupIndex }: LogoAnimationProps & { customVariantCSS?: Record<string, string> }) {
+function LogoAnimation({ variant, title, logoColor, customVariantCSS, groupTitle, allVariants, currentIndex, allGroups, currentGroupIndex, isMobile }: LogoAnimationProps & { customVariantCSS?: Record<string, string> }) {
   const svgRef = useRef<SVGSVGElement>(null);
   const modalSvgRef = useRef<SVGSVGElement>(null);
   const favoriteKey = `favorite-${variant}`;
@@ -995,7 +996,7 @@ function LogoAnimation({ variant, title, logoColor, customVariantCSS, groupTitle
             }`}
             aria-label="Previous animation"
             style={{ 
-              left: 'calc((100% - 42rem) / 4)', 
+              left: isMobile ? '8px' : 'calc((100% - 42rem) / 4)', 
               top: '50%', 
               transform: 'translateY(-50%)' 
             }}
@@ -1014,7 +1015,7 @@ function LogoAnimation({ variant, title, logoColor, customVariantCSS, groupTitle
             }`}
             aria-label="Next animation"
             style={{ 
-              right: 'calc((100% - 42rem) / 4)', 
+              right: isMobile ? '8px' : 'calc((100% - 42rem) / 4)', 
               top: '50%', 
               transform: 'translateY(-50%)' 
             }}
@@ -1120,7 +1121,8 @@ function AnimationGroup({
   generatingVariant,
   allAnimationGroups,
   className,
-  colorPickerOpen
+  colorPickerOpen,
+  isMobile
 }: { 
   baseVariant: string; 
   title: string; 
@@ -1137,6 +1139,7 @@ function AnimationGroup({
   }>;
   className?: string;
   colorPickerOpen?: boolean;
+  isMobile?: boolean;
 }) {
   const spacingClass = hideHeading 
     ? (colorPickerOpen ? 'space-y-6' : 'space-y-0') 
@@ -1169,6 +1172,7 @@ function AnimationGroup({
               currentIndex={index}
               allGroups={allAnimationGroups}
               currentGroupIndex={groupIndex >= 0 ? groupIndex : undefined}
+              isMobile={isMobile}
             />
           );
         })}
@@ -1954,6 +1958,19 @@ export default function LoadingAnimationsPage() {
     return () => mq.removeEventListener("change", update);
   }, []);
 
+  // Prevent body scrolling when mobile color picker is open
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (showColorPicker && isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showColorPicker, isMobile]);
+
   useEffect(() => {
     // Hide footer on this page
     const footer = document.querySelector('footer');
@@ -2012,6 +2029,11 @@ export default function LoadingAnimationsPage() {
       { ref: waveRef, title: "Wave Effect" },
       { ref: pulseRef, title: "Pulse Animation" },
       { ref: subtleRef, title: "Subtle Motion" },
+      // Add custom animation sets
+      ...customAnimations.map(set => ({
+        ref: getCustomSetRef(set.id),
+        title: set.title
+      }))
     ];
 
     const observers: IntersectionObserver[] = [];
@@ -2038,7 +2060,7 @@ export default function LoadingAnimationsPage() {
     return () => {
       observers.forEach(obs => obs.disconnect());
     };
-  }, []);
+  }, [customAnimations]);
 
   const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = e.target.value;
@@ -2268,14 +2290,31 @@ export default function LoadingAnimationsPage() {
     setGeneratingVariant(baseVariant);
     
     try {
-      const baseCSS = getAnimationCSS(baseVariant);
+      // Check if this is a custom animation set (e.g., custom-1-base)
+      const isCustomSet = baseVariant.startsWith('custom-') && baseVariant.includes('-base');
+      
+      let baseCSS: string | undefined;
+      
+      if (isCustomSet) {
+        // For custom sets, get CSS from customVariantCSS or the custom set's css property
+        baseCSS = customVariantCSS[baseVariant];
+        if (!baseCSS) {
+          const customSet = customAnimations.find(set => set.baseVariant === baseVariant);
+          if (customSet?.css) {
+            // Extract just the base variant CSS from the full CSS
+            const baseMatch = customSet.css.match(new RegExp(`\\.logo-anim-${baseVariant.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}[\\s\\S]*?\\n\\n`, 'm'));
+            baseCSS = baseMatch ? baseMatch[0].trim() : customSet.css.split('\n\n')[0];
+          }
+        }
+      } else {
+        // For predefined variants, use getAnimationCSS with customVariantCSS
+        baseCSS = getAnimationCSS(baseVariant, customVariantCSS);
+      }
+      
       if (!baseCSS) {
         setGeneratingVariant(null);
         return;
       }
-
-      // Check if this is a custom animation set (e.g., custom-1-base)
-      const isCustomSet = baseVariant.startsWith('custom-') && baseVariant.includes('-base');
       
       let nextNumber: number;
       let newVariant: string;
@@ -2842,6 +2881,17 @@ export default function LoadingAnimationsPage() {
     });
   }, [randomGeneratorAnimation, logoColorWithAlpha]);
 
+  // Create refs for custom animation sets dynamically
+  const customSetRefs = useRef<Map<string, React.RefObject<HTMLHeadingElement>>>(new Map());
+  
+  // Get or create ref for a custom set
+  const getCustomSetRef = (id: string) => {
+    if (!customSetRefs.current.has(id)) {
+      customSetRefs.current.set(id, React.createRef<HTMLHeadingElement>());
+    }
+    return customSetRefs.current.get(id)!;
+  };
+
   // Build all animation groups structure for modal navigation
   const allAnimationGroups = [
     {
@@ -2950,7 +3000,7 @@ export default function LoadingAnimationsPage() {
         </div>
 
         <div className="mb-12 text-center mt-0">
-          <h2 className="font-space-grotesk text-4xl font-bold text-foreground mb-3">
+          <h2 className="font-space-grotesk text-4xl font-bold text-foreground mb-3 max-w-2xl mx-auto">
             New logo animation
           </h2>
         </div>
@@ -3088,8 +3138,8 @@ export default function LoadingAnimationsPage() {
               </div>
               ) : null}
 
-              {/* Color Picker - Hidden when color picker is open */}
-              {!showColorPicker ? (
+              {/* Color Picker - Hidden when color picker is open on desktop, visible on mobile */}
+              {!showColorPicker || isMobile ? (
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <div ref={colorPickerButtonRef} className="relative group/pickcolour">
                   <button
@@ -3104,10 +3154,25 @@ export default function LoadingAnimationsPage() {
                     onMouseDown={(e) => {
                       e.stopPropagation();
                     }}
-                    className={`relative flex items-center justify-center gap-1 rounded-full border border-border/60 bg-background hover:bg-muted/50 hover:border-border/90 dark:hover:border-border/70 focus:outline-none focus:ring-0 transition-colors cursor-pointer ${showColorPicker && !isMobile ? 'p-1 aspect-square w-7 h-7 sm:w-8 sm:h-8 md:p-1 md:aspect-square md:w-8 md:h-8 lg:px-2 lg:py-1 lg:aspect-auto lg:w-auto lg:h-auto' : 'px-2 py-1 sm:p-1 sm:aspect-square sm:w-7 sm:h-7 md:px-2 md:py-1 md:aspect-auto md:w-auto md:h-auto lg:px-2 lg:py-1 lg:aspect-auto lg:w-auto lg:h-auto'}`}
+                    className={`relative flex items-center justify-center gap-1 rounded-full border border-border/60 bg-background hover:bg-muted/50 hover:border-border/90 dark:hover:border-border/70 focus:outline-none focus:ring-0 transition-colors cursor-pointer ${
+                      showColorPicker && isMobile 
+                        ? 'p-1 aspect-square w-7 h-7' 
+                        : showColorPicker && !isMobile 
+                        ? 'p-1 aspect-square w-7 h-7 sm:w-8 sm:h-8 md:p-1 md:aspect-square md:w-8 md:h-8 lg:px-2 lg:py-1 lg:aspect-auto lg:w-auto lg:h-auto' 
+                        : 'px-2 py-1 sm:p-1 sm:aspect-square sm:w-7 sm:h-7 md:px-2 md:py-1 md:aspect-auto md:w-auto md:h-auto lg:px-2 lg:py-1 lg:aspect-auto lg:w-auto lg:h-auto'
+                    }`}
                     aria-label={showColorPicker ? "Close color picker" : "Open color picker"}
                   >
-                    <span className={`text-xs sm:text-sm text-foreground font-mono pr-1 ${showColorPicker && !isMobile ? 'hidden sm:hidden md:hidden lg:block' : 'block sm:hidden md:block lg:block'}`}>
+                    <span 
+                      className={`text-xs sm:text-sm text-foreground font-mono pr-1 ${
+                        showColorPicker && isMobile 
+                          ? '!hidden' 
+                          : showColorPicker && !isMobile 
+                          ? 'hidden sm:hidden md:hidden lg:block' 
+                          : 'block sm:hidden md:block lg:block'
+                      }`}
+                      style={showColorPicker && isMobile ? { display: 'none' } : undefined}
+                    >
                       {logoColor.toUpperCase()}
                     </span>
                     <div
@@ -3151,6 +3216,7 @@ export default function LoadingAnimationsPage() {
             generatingVariant={generatingVariant}
             allAnimationGroups={allAnimationGroups}
             colorPickerOpen={showColorPicker && !isMobile}
+            isMobile={isMobile}
           />
           <AnimationGroup
             baseVariant="scale"
@@ -3168,6 +3234,7 @@ export default function LoadingAnimationsPage() {
             generatingVariant={generatingVariant}
             allAnimationGroups={allAnimationGroups}
             colorPickerOpen={showColorPicker && !isMobile}
+            isMobile={isMobile}
           />
           <AnimationGroup
             baseVariant="rotate"
@@ -3185,6 +3252,7 @@ export default function LoadingAnimationsPage() {
             generatingVariant={generatingVariant}
             allAnimationGroups={allAnimationGroups}
             colorPickerOpen={showColorPicker && !isMobile}
+            isMobile={isMobile}
           />
           <AnimationGroup
             baseVariant="morph"
@@ -3201,6 +3269,7 @@ export default function LoadingAnimationsPage() {
             customVariantCSS={customVariantCSS}
             allAnimationGroups={allAnimationGroups}
             colorPickerOpen={showColorPicker && !isMobile}
+            isMobile={isMobile}
           />
           <AnimationGroup
             baseVariant="wave"
@@ -3218,6 +3287,7 @@ export default function LoadingAnimationsPage() {
             generatingVariant={generatingVariant}
             allAnimationGroups={allAnimationGroups}
             colorPickerOpen={showColorPicker && !isMobile}
+            isMobile={isMobile}
           />
           <AnimationGroup
             baseVariant="pulse"
@@ -3234,6 +3304,7 @@ export default function LoadingAnimationsPage() {
             customVariantCSS={customVariantCSS}
             allAnimationGroups={allAnimationGroups}
             colorPickerOpen={showColorPicker && !isMobile}
+            isMobile={isMobile}
           />
           <AnimationGroup
             baseVariant="float"
@@ -3251,6 +3322,7 @@ export default function LoadingAnimationsPage() {
             generatingVariant={generatingVariant}
             allAnimationGroups={allAnimationGroups}
             colorPickerOpen={showColorPicker && !isMobile}
+            isMobile={isMobile}
           />
           
           {/* Custom generated animation sets */}
@@ -3266,6 +3338,8 @@ export default function LoadingAnimationsPage() {
               onCreateVariant={handleCreateVariant}
               generatingVariant={generatingVariant}
               colorPickerOpen={showColorPicker && !isMobile}
+              isMobile={isMobile}
+              headingRef={getCustomSetRef(animSet.id)}
             />
           ))}
           
@@ -3413,6 +3487,67 @@ export default function LoadingAnimationsPage() {
                 colorFormat={colorFormat}
                 onFormatChange={setColorFormat}
               />
+              {/* Divider */}
+              <div className="border-t border-border my-4"></div>
+              {/* Theme Toggle */}
+              <div className="flex items-center justify-center mb-4">
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2 px-1.5 sm:px-2 h-[28px] sm:h-[30px] rounded-full border border-border/80 bg-background hover:bg-background/80 transition-all py-0" suppressHydrationWarning>
+                    <div className="relative group/lightmode py-0 flex items-center">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setTheme("light");
+                        }}
+                        className="cursor-pointer hover:opacity-80 transition-opacity p-0.5 flex items-center justify-center"
+                        aria-label="Switch to light mode"
+                      >
+                        <Sun className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${resolvedTheme === "light" ? "text-foreground fill-foreground" : "text-muted-foreground"}`} />
+                      </button>
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 text-xs font-medium text-popover-foreground bg-popover border border-border rounded shadow-lg whitespace-nowrap opacity-0 group-hover/lightmode:opacity-100 transition-opacity duration-200 delay-500 pointer-events-none z-50">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-transparent border-b-border"></div>
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[1px] w-0 h-0 border-l-[4px] border-r-[4px] border-b-[4px] border-transparent border-b-popover"></div>
+                        Light
+                      </div>
+                    </div>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleTheme();
+                      }}
+                      className={`w-7 h-3.5 sm:w-8 sm:h-4 rounded-full relative transition-colors cursor-pointer hover:opacity-80 ${
+                        resolvedTheme === "dark" ? "bg-foreground" : ""
+                      }`}
+                      style={resolvedTheme === "dark" ? {} : { backgroundColor: 'var(--muted-foreground)' }}
+                      aria-label="Toggle theme"
+                    >
+                      <div
+                        className={`absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-card transition-transform ${
+                          resolvedTheme === "dark" ? "translate-x-4 sm:translate-x-[18px] border-0" : "translate-x-0.5 border border-border/50"
+                        }`}
+                        suppressHydrationWarning
+                      />
+                    </button>
+                    <div className="relative group/darkmode py-0 flex items-center">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setTheme("dark");
+                        }}
+                        className="cursor-pointer hover:opacity-80 transition-opacity p-0.5 flex items-center justify-center"
+                        aria-label="Switch to dark mode"
+                      >
+                        <Moon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${resolvedTheme === "dark" ? "text-foreground fill-foreground" : "text-muted-foreground"}`} />
+                      </button>
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 text-xs font-medium text-popover-foreground bg-popover border border-border rounded shadow-lg whitespace-nowrap opacity-0 group-hover/darkmode:opacity-100 transition-opacity duration-200 delay-500 pointer-events-none z-50">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-transparent border-b-border"></div>
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[1px] w-0 h-0 border-l-[4px] border-r-[4px] border-b-[4px] border-transparent border-b-popover"></div>
+                        Dark
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
