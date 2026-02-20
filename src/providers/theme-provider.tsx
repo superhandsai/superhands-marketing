@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
 
 type Theme = "light" | "dark" | "system";
 type ResolvedTheme = "light" | "dark";
@@ -22,27 +22,24 @@ function getSystemTheme(): ResolvedTheme {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Initialize with "dark" to match SSR default
-  const [theme, setThemeState] = useState<Theme>("dark");
+  // Initialize with stable defaults to avoid hydration mismatch
+  const [theme, setThemeState] = useState<Theme>("system");
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage or default to dark
+  // After mount: read theme from localStorage (resolvedTheme is then set by the effect below)
   useEffect(() => {
     setMounted(true);
     const stored = localStorage.getItem("theme") as Theme | null;
     if (stored && (stored === "light" || stored === "dark" || stored === "system")) {
       setThemeState(stored);
     } else {
-      // Default to system preference if available, otherwise dark
-      const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       setThemeState("system");
-      setResolvedTheme(systemPrefersDark ? "dark" : "light");
     }
   }, []);
 
-  // Update resolved theme based on current theme preference
-  useEffect(() => {
+  // Apply theme to DOM (useLayoutEffect so it runs before paint and light mode is visible immediately)
+  useLayoutEffect(() => {
     if (!mounted) return;
 
     let currentResolvedTheme: ResolvedTheme;

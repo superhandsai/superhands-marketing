@@ -58,8 +58,21 @@ export default function RootLayout({
   const intercomAppId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID;
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
       <body className={`font-sans antialiased flex flex-col min-h-screen`}>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  var resolved = theme === 'light' ? 'light' : theme === 'dark' ? 'dark' : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                  document.documentElement.classList.toggle('dark', resolved === 'dark');
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         <PostHogProvider>
           <ThemeProvider>
             <main className="flex-1">

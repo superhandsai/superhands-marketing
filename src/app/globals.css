@@ -88,15 +88,49 @@ body {
     "Noto Color Emoji";
 }
 
+/* Explicit Inter for tooltips and popovers */
+.font-inter {
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Headings on loading-animations page */
+.font-space-grotesk {
+  font-family: var(--font-space-grotesk), sans-serif;
+}
+
+/* Hide native number input spinners (colour picker) */
+input.input-no-spinner[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input.input-no-spinner[type="number"]::-webkit-outer-spin-button,
+input.input-no-spinner[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  height: 0;
+}
+
 /* Text selection styling */
 ::selection {
   background-color: var(--primary);
-  color: #ffffff;
+  color: var(--primary-foreground);
 }
 
 ::-moz-selection {
   background-color: var(--primary);
-  color: #ffffff;
+  color: var(--primary-foreground);
+}
+
+/* Nav back-to-top logo: animation removed - no flash on hover */
+.nav-backtotop-logo,
+.nav-backtotop-logo *,
+.nav-backtotop-path {
+  animation: none !important;
+  transition: none !important;
+  opacity: 1 !important;
 }
 
 /* Background pattern utilities */
@@ -365,6 +399,27 @@ body {
   opacity: 0;
   transform: scale(0);
   animation: pulseInPathLoop4 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+/* Subtle motion (no opacity change, slight movement only) */
+.logo-anim-float {
+  animation: floatLoop 3s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+.logo-anim-float2 {
+  animation: floatLoop2 2.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+.logo-anim-float3 {
+  animation: floatLoop3 3.5s ease-in-out 0s infinite;
+  transform-origin: center;
+}
+
+.logo-anim-float4 {
+  animation: floatLoop4 4s ease-in-out 0s infinite;
   transform-origin: center;
 }
 
@@ -981,6 +1036,51 @@ body {
   100% {
     opacity: 0;
     transform: scale(0);
+  }
+}
+
+@keyframes floatLoop {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes floatLoop2 {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+@keyframes floatLoop3 {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(2px);
+  }
+  75% {
+    transform: translateX(-2px);
+  }
+}
+
+@keyframes floatLoop4 {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-2px) scale(1.02);
+  }
+  50% {
+    transform: translateY(0) scale(1);
+  }
+  75% {
+    transform: translateY(2px) scale(0.98);
   }
 }
 
