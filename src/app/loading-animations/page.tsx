@@ -2882,7 +2882,7 @@ export default function LoadingAnimationsPage() {
   }, [randomGeneratorAnimation, logoColorWithAlpha]);
 
   // Create refs for custom animation sets dynamically
-  const customSetRefs = useRef<Map<string, React.RefObject<HTMLHeadingElement>>>(new Map());
+  const customSetRefs = useRef<Map<string, React.RefObject<HTMLHeadingElement | null>>>(new Map());
   
   // Get or create ref for a custom set
   const getCustomSetRef = (id: string) => {
