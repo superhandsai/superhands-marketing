@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useState } from "react";
 
 type Theme = "light" | "dark" | "system";
 type ResolvedTheme = "light" | "dark";
@@ -22,23 +22,24 @@ function getSystemTheme(): ResolvedTheme {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  // Initialize with stable defaults to avoid hydration mismatch
   const [theme, setThemeState] = useState<Theme>("system");
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
   const [mounted, setMounted] = useState(false);
 
-  // Initialize theme from localStorage or default to dark
+  // After mount: read theme from localStorage (resolvedTheme is then set by the effect below)
   useEffect(() => {
     setMounted(true);
     const stored = localStorage.getItem("theme") as Theme | null;
     if (stored && (stored === "light" || stored === "dark" || stored === "system")) {
       setThemeState(stored);
     } else {
-      setThemeState("dark");
+      setThemeState("system");
     }
   }, []);
 
-  // Update resolved theme based on current theme preference
-  useEffect(() => {
+  // Apply theme to DOM (useLayoutEffect so it runs before paint and light mode is visible immediately)
+  useLayoutEffect(() => {
     if (!mounted) return;
 
     let currentResolvedTheme: ResolvedTheme;
@@ -115,13 +116,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setThemeState(newTheme);
   };
 
-  // Prevent flash by not rendering until mounted
-  if (!mounted) {
-    return <div style={{ visibility: "hidden" }}>{children}</div>;
-  }
+  // Always provide the context, but use default values during SSR to prevent errors
+  const contextValue = mounted
+    ? { theme, resolvedTheme, toggleTheme, setTheme }
+    : { 
+        theme: "dark" as Theme, 
+        resolvedTheme: "dark" as ResolvedTheme, 
+        toggleTheme: () => {}, 
+        setTheme: () => {} 
+      };
 
   return (
-    <ThemeContext.Provider value={{ theme, resolvedTheme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
