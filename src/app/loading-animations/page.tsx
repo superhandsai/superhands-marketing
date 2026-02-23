@@ -1159,7 +1159,7 @@ function AnimationGroup({
           ...variations
         ].map((item, index) => {
           // Find the group index in allAnimationGroups
-          const groupIndex = allAnimationGroups.findIndex(g => g.groupTitle === title);
+          const groupIndex = allAnimationGroups?.findIndex(g => g.groupTitle === title) ?? -1;
           return (
             <LogoAnimation 
               key={item.variant} 
