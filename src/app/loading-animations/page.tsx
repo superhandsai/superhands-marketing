@@ -31,7 +31,7 @@ function LogoAnimation({ variant, title }: LogoAnimationProps) {
     paths.forEach((path) => {
       path.className.baseVal = path.className.baseVal
         .split(" ")
-        .filter((cls) => !cls.startsWith("logo-anim-"))
+        .filter((cls: string) => !cls.startsWith("logo-anim-"))
         .join(" ");
       path.style.animation = "";
       path.style.animationDelay = "";
