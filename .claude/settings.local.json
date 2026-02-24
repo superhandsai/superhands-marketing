@@ -6,7 +6,13 @@
       "mcp__dev-inspector__dev_logs_search",
       "mcp__dev-inspector__dev_screenshot",
       "mcp__dev-inspector__dev_selected_element",
-      "mcp__figma__*"
+      "mcp__figma__*",
+      "Bash(tail:*)"
     ]
-  }
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "dev-inspector",
+    "figma"
+  ]
 }

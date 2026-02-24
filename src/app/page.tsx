@@ -11,11 +11,13 @@ import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Copy, Ch
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 
-// Hero text with mouse-tracking gradient effect
+// Hero text with mouse-tracking gradient effect and word-by-word reveal
 function GradientTextHero() {
   const textRef = useRef<HTMLHeadingElement>(null);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [isTracking, setIsTracking] = useState(false);
+
+  const words = ["Vibe", "code", "on", "your", "team's", "existing", "product"];
 
   useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => {
@@ -47,7 +49,7 @@ function GradientTextHero() {
   return (
     <h2
       ref={textRef}
-      className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 relative cursor-default"
+      className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] relative cursor-default"
       style={{
         backgroundImage: isTracking
           ? `radial-gradient(circle 400px at ${mousePos.x}% ${mousePos.y}%, rgba(255, 255, 255, 0.95) 0%, rgba(200, 200, 200, 0.7) 25%, rgba(150, 150, 150, 0.4) 50%, var(--foreground) 70%)`
@@ -58,7 +60,15 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Vibe code on your team's existing product
+      {words.map((word, i) => (
+        <span
+          key={i}
+          className="hero-word-reveal inline-block"
+          style={{ animationDelay: `${100 + i * 80}ms` }}
+        >
+          {word}&nbsp;
+        </span>
+      ))}
     </h2>
   );
 }
