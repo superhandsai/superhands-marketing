@@ -994,18 +994,6 @@ function LandingPageContent() {
                 question: "How does Superhands work with my existing codebase?",
                 answer: "Superhands connects to your team's production codebase and lets you explore, test changes, and propose updates in a safe environment. You can experiment with new features and bug fixes without affecting your live product or needing to set up a local development environment."
               },
-              {
-                question: "How can I use Superhands to validate product ideas?",
-                answer: "Superhands lets you build functional prototypes directly on your production codebase. Describe the feature or change you want to test, and our AI helps you build it in minutes. You can then share a link to your prototype with users or stakeholders to gather feedback, all before writing a single engineering ticket or PRD."
-              },
-              {
-                question: "Is Superhands free to use?",
-                answer: "We'll be launching with a free tier that includes everything you need to get started. Premium plans with advanced features will be available for teams and power users."
-              },
-              {
-                question: "When will Superhands be available?",
-                answer: "We're currently in early access. Join the waitlist to be among the first to try Superhands and help shape the product with your feedback!"
-              }
             ].map((faq, index) => (
               <div
                 key={index}
