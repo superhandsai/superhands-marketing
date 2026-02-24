@@ -997,7 +997,8 @@ function LandingPageContent() {
             ].map((faq, index) => (
               <div
                 key={index}
-                className="border border-border rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm"
+                className={`border border-border rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm animate-fade-in-up opacity-0 animation-delay-${(index + 1) * 100}`}
+                style={{ animationFillMode: 'forwards' }}
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
