@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "superhands-preview",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-lc",
+        "DEV_SCRIPT=\"dev\"\nexport PORT=3001\nif [ -x \"node_modules/.bin/next\" ] || command -v next >/dev/null 2>&1 || grep -q '\"next\"' package.json 2>/dev/null; then\n  bun run \"$DEV_SCRIPT\" -- --port 3001 --hostname 0.0.0.0\nelse\n  bun run \"$DEV_SCRIPT\" -- --port 3001 --host 0.0.0.0\nfi"
+      ],
+      "cwd": ".",
+      "port": 3001,
+      "autoPort": false
+    }
+  ]
+}

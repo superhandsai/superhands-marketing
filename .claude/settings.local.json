@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__dev-inspector__dev_status",
+      "mcp__dev-inspector__dev_logs_tail",
+      "mcp__dev-inspector__dev_logs_search",
+      "mcp__dev-inspector__dev_screenshot",
+      "mcp__dev-inspector__dev_selected_element",
+      "mcp__figma__*"
+    ]
+  }
+}
