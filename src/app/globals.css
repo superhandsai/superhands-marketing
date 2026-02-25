@@ -9,7 +9,7 @@ body {
 
 /* Light mode (default) */
 :root {
-  --background: #fafafa;
+  --background: #ff0000;
   --foreground: #1a1a1a;
   --card: #ffffff;
   --card-foreground: #1a1a1a;
