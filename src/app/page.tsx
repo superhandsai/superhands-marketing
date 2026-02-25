@@ -387,6 +387,7 @@ function LandingPageContent() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [faqSearch, setFaqSearch] = useState("");
   const [videoError, setVideoError] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const videoContainerRef = useRef<HTMLDivElement>(null);
@@ -980,6 +981,44 @@ function LandingPageContent() {
           <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
             Frequently Asked Questions
           </h3>
+
+          {/* Search/Filter Input */}
+          <div className="max-w-3xl mx-auto mb-6">
+            <div className="relative">
+              <Input
+                type="text"
+                placeholder="Search FAQs..."
+                value={faqSearch}
+                onChange={(e) => setFaqSearch(e.target.value)}
+                className="!bg-secondary h-12 transition-all duration-200 pl-12 pr-4 rounded-xl text-base ring-0 focus-visible:ring-0 border border-border focus:border-foreground !opacity-100 w-full"
+              />
+              <svg
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              {faqSearch && (
+                <button
+                  onClick={() => setFaqSearch("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Clear search"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
+
           <div className="max-w-3xl mx-auto space-y-3">
             {[
               {
@@ -1006,33 +1045,84 @@ function LandingPageContent() {
                 question: "When will Superhands be available?",
                 answer: "We're currently in early access. Join the waitlist to be among the first to try Superhands and help shape the product with your feedback!"
               }
-            ].map((faq, index) => (
-              <div
-                key={index}
-                className="border border-border rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm"
-              >
-                <button
-                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
-                  className="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer hover:bg-secondary/50 transition-colors"
+            ];
+
+            const filteredFaqs = [
+              {
+                question: "What is Superhands?",
+                answer: "Superhands empowers product managers, designers, and non-technical team members to prototype features, test ideas with users, and validate concepts. All on your production codebase, directly in the browser. Stop waiting for engineering. Start learning from users today."
+              },
+              {
+                question: "Do I need coding experience to use Superhands?",
+                answer: "No coding experience is required! Superhands is designed for product managers, designers, and anyone on the team who wants to contribute. With AI assistance built right into your browser, you can make changes to your existing product just by describing what you want to update."
+              },
+              {
+                question: "How does Superhands work with my existing codebase?",
+                answer: "Superhands connects to your team's production codebase and lets you explore, test changes, and propose updates in a safe environment. You can experiment with new features and bug fixes without affecting your live product or needing to set up a local development environment."
+              },
+              {
+                question: "How can I use Superhands to validate product ideas?",
+                answer: "Superhands lets you build functional prototypes directly on your production codebase. Describe the feature or change you want to test, and our AI helps you build it in minutes. You can then share a link to your prototype with users or stakeholders to gather feedback, all before writing a single engineering ticket or PRD."
+              },
+              {
+                question: "Is Superhands free to use?",
+                answer: "We'll be launching with a free tier that includes everything you need to get started. Premium plans with advanced features will be available for teams and power users."
+              },
+              {
+                question: "When will Superhands be available?",
+                answer: "We're currently in early access. Join the waitlist to be among the first to try Superhands and help shape the product with your feedback!"
+              }
+            ].filter((faq) => {
+              if (!faqSearch) return true;
+              const searchLower = faqSearch.toLowerCase();
+              return (
+                faq.question.toLowerCase().includes(searchLower) ||
+                faq.answer.toLowerCase().includes(searchLower)
+              );
+            });
+
+            return filteredFaqs.length > 0 ? (
+              filteredFaqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="border border-border rounded-xl overflow-hidden bg-card/50 backdrop-blur-sm"
                 >
-                  <span className="font-medium text-foreground pr-4">{faq.question}</span>
-                  <ChevronDown 
-                    className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${
-                      openFaq === index ? "rotate-180" : ""
+                  <button
+                    onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    className="w-full px-6 py-4 flex items-center justify-between text-left cursor-pointer hover:bg-secondary/50 transition-colors"
+                  >
+                    <span className="font-medium text-foreground pr-4">{faq.question}</span>
+                    <ChevronDown
+                      className={`w-5 h-5 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${
+                        openFaq === index ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-200 ease-in-out ${
+                      openFaq === index ? "max-h-96" : "max-h-0"
                     }`}
-                  />
-                </button>
-                <div 
-                  className={`overflow-hidden transition-all duration-200 ease-in-out ${
-                    openFaq === index ? "max-h-96" : "max-h-0"
-                  }`}
-                >
-                  <p className="px-6 pb-4 text-muted-foreground">
-                    {faq.answer}
-                  </p>
+                  >
+                    <p className="px-6 pb-4 text-muted-foreground">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </div>
+              ))
+            ) : (
+              <div className="text-center py-12 px-6">
+                <p className="text-muted-foreground text-lg mb-2">No FAQs found</p>
+                <p className="text-muted-foreground/60 text-sm">
+                  Try a different search term or{" "}
+                  <button
+                    onClick={() => setFaqSearch("")}
+                    className="text-foreground hover:underline cursor-pointer"
+                  >
+                    clear your search
+                  </button>
+                </p>
               </div>
-            ))}
+            )}
           </div>
         </div>
 
