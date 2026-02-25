@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Vibe code on your team's existing product
+      hello
     </h2>
   );
 }
