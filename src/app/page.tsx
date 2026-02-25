@@ -1020,7 +1020,8 @@ function LandingPageContent() {
           </div>
 
           <div className="max-w-3xl mx-auto space-y-3">
-            {[
+            {(() => {
+              const faqs = [
               {
                 question: "What is Superhands?",
                 answer: "Superhands empowers product managers, designers, and non-technical team members to prototype features, test ideas with users, and validate concepts. All on your production codebase, directly in the browser. Stop waiting for engineering. Start learning from users today."
@@ -1047,32 +1048,7 @@ function LandingPageContent() {
               }
             ];
 
-            const filteredFaqs = [
-              {
-                question: "What is Superhands?",
-                answer: "Superhands empowers product managers, designers, and non-technical team members to prototype features, test ideas with users, and validate concepts. All on your production codebase, directly in the browser. Stop waiting for engineering. Start learning from users today."
-              },
-              {
-                question: "Do I need coding experience to use Superhands?",
-                answer: "No coding experience is required! Superhands is designed for product managers, designers, and anyone on the team who wants to contribute. With AI assistance built right into your browser, you can make changes to your existing product just by describing what you want to update."
-              },
-              {
-                question: "How does Superhands work with my existing codebase?",
-                answer: "Superhands connects to your team's production codebase and lets you explore, test changes, and propose updates in a safe environment. You can experiment with new features and bug fixes without affecting your live product or needing to set up a local development environment."
-              },
-              {
-                question: "How can I use Superhands to validate product ideas?",
-                answer: "Superhands lets you build functional prototypes directly on your production codebase. Describe the feature or change you want to test, and our AI helps you build it in minutes. You can then share a link to your prototype with users or stakeholders to gather feedback, all before writing a single engineering ticket or PRD."
-              },
-              {
-                question: "Is Superhands free to use?",
-                answer: "We'll be launching with a free tier that includes everything you need to get started. Premium plans with advanced features will be available for teams and power users."
-              },
-              {
-                question: "When will Superhands be available?",
-                answer: "We're currently in early access. Join the waitlist to be among the first to try Superhands and help shape the product with your feedback!"
-              }
-            ].filter((faq) => {
+            const filteredFaqs = faqs.filter((faq) => {
               if (!faqSearch) return true;
               const searchLower = faqSearch.toLowerCase();
               return (
@@ -1122,7 +1098,8 @@ function LandingPageContent() {
                   </button>
                 </p>
               </div>
-            )}
+            );
+            })()}
           </div>
         </div>
 
