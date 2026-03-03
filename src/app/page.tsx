@@ -825,16 +825,26 @@ function LandingPageContent() {
                   </div>
                   <Button
                     type="submit"
-                    className="relative h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-primary-foreground font-medium rounded-[8px] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn"
+                    className="relative h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-primary-foreground font-medium rounded-[8px] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_30px_rgba(255,255,255,0.4),0_0_60px_rgba(255,255,255,0.2)] hover:scale-[1.05] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn before:absolute before:inset-0 before:rounded-[8px] before:p-[2px] before:bg-gradient-to-r before:from-white/0 before:via-white/40 before:to-white/0 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 before:-z-10 before:blur-[2px]"
                     disabled={loading}
                     onMouseEnter={triggerConfetti}
                   >
+                    {/* Animated border gradient */}
+                    <span className="absolute inset-0 rounded-[8px] bg-gradient-to-r from-white/20 via-white/60 to-white/20 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300 blur-sm -z-10 animate-[spin_3s_linear_infinite]"
+                      style={{
+                        maskImage: 'linear-gradient(transparent, transparent), linear-gradient(white, white)',
+                        maskClip: 'padding-box, border-box',
+                        maskComposite: 'exclude'
+                      }}
+                    />
                     {/* Shimmer effect */}
-                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out" />
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 ease-out" />
+                    {/* Pulsing glow rings */}
+                    <span className="absolute inset-0 rounded-[8px] opacity-0 group-hover/btn:opacity-100 group-hover/btn:animate-[ping_1.5s_ease-out_infinite] bg-white/20 -z-10" />
                     {loading ? (
                       <Loader2 className="h-5 w-5 animate-spin relative z-10" />
                     ) : (
-                      <span className="relative z-10">Get started</span>
+                      <span className="relative z-10 group-hover/btn:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-300">Get started</span>
                     )}
                   </Button>
                 </div>
