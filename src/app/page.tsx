@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Vibe code on your team's existing product
+      test 123
     </h2>
   );
 }
@@ -356,6 +356,257 @@ function FloatingGradient() {
             top: "100px",
           }}
         />
+      </div>
+    </div>
+  );
+}
+
+// Animated computer screen with product demo mockup
+function AnimatedScreen() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const sidebarItems = [
+    { icon: "~", label: "Dashboard", active: false },
+    { icon: ">", label: "Projects", active: true },
+    { icon: "#", label: "Components", active: false },
+    { icon: "*", label: "Settings", active: false },
+  ];
+
+  const codeLines = [
+    { indent: 0, content: '<div className="card">' },
+    { indent: 1, content: '<h2>{title}</h2>' },
+    { indent: 1, content: '<p>{description}</p>' },
+    { indent: 1, content: '<Button variant="primary">' },
+    { indent: 2, content: "Get Started" },
+    { indent: 1, content: "</Button>" },
+    { indent: 0, content: "</div>" },
+  ];
+
+  const aiPrompt = "Add a progress bar below the description";
+
+  return (
+    <div ref={sectionRef} className="w-full mt-24">
+      {/* Monitor frame */}
+      <div className="max-w-4xl mx-auto">
+        {/* Screen bezel */}
+        <div
+          className="rounded-t-2xl border border-white/[0.08] bg-[#1a1a1a] p-1.5 shadow-2xl shadow-black/40"
+        >
+          {/* Browser chrome */}
+          <div className="rounded-t-xl bg-[#0f0f0f] overflow-hidden">
+            {/* Title bar */}
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-[#161616] border-b border-white/[0.06]">
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+                <div className="w-2.5 h-2.5 rounded-full bg-white/10" />
+              </div>
+              <div className="flex-1 flex justify-center">
+                <div
+                  className={`h-6 w-64 rounded-md bg-white/[0.05] flex items-center justify-center text-[11px] text-white/30 transition-opacity duration-500 ${
+                    isVisible ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  app.superhands.ai/editor
+                </div>
+              </div>
+              <div className="w-16" />
+            </div>
+
+            {/* App body */}
+            <div className="flex min-h-[320px] sm:min-h-[380px]">
+              {/* Sidebar */}
+              <div className="w-40 sm:w-48 border-r border-white/[0.06] bg-[#111111] py-3 px-2 hidden sm:block">
+                <div className="mb-3 px-2">
+                  <div
+                    className={`text-[10px] uppercase tracking-wider text-white/20 transition-all duration-500 ${
+                      isVisible
+                        ? "opacity-100 translate-x-0"
+                        : "opacity-0 -translate-x-3"
+                    }`}
+                  >
+                    Navigation
+                  </div>
+                </div>
+                {sidebarItems.map((item, i) => (
+                  <div
+                    key={item.label}
+                    className={`flex items-center gap-2 px-2 py-1.5 rounded-md text-xs mb-0.5 transition-all duration-500 ${
+                      item.active
+                        ? "bg-white/[0.06] text-white/80"
+                        : "text-white/30"
+                    }`}
+                    style={{
+                      opacity: isVisible ? 1 : 0,
+                      transform: isVisible
+                        ? "translateX(0)"
+                        : "translateX(-12px)",
+                      transitionDelay: `${300 + i * 100}ms`,
+                    }}
+                  >
+                    <span className="font-mono text-[10px] w-4 text-center opacity-50">
+                      {item.icon}
+                    </span>
+                    {item.label}
+                  </div>
+                ))}
+              </div>
+
+              {/* Main content area */}
+              <div className="flex-1 flex flex-col relative">
+                {/* File tabs */}
+                <div className="flex border-b border-white/[0.06] bg-[#0d0d0d]">
+                  <div
+                    className={`px-4 py-2 text-[11px] text-white/50 border-b border-white/20 bg-[#0f0f0f] transition-all duration-500 ${
+                      isVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 -translate-y-2"
+                    }`}
+                    style={{ transitionDelay: "200ms" }}
+                  >
+                    Card.tsx
+                  </div>
+                  <div
+                    className={`px-4 py-2 text-[11px] text-white/25 transition-all duration-500 ${
+                      isVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 -translate-y-2"
+                    }`}
+                    style={{ transitionDelay: "300ms" }}
+                  >
+                    index.tsx
+                  </div>
+                </div>
+
+                {/* Code area */}
+                <div className="flex-1 p-4 font-mono text-[11px] sm:text-xs leading-relaxed overflow-hidden">
+                  {codeLines.map((line, i) => (
+                    <div
+                      key={i}
+                      className="flex transition-all duration-500"
+                      style={{
+                        paddingLeft: `${line.indent * 16}px`,
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible
+                          ? "translateY(0)"
+                          : "translateY(8px)",
+                        transitionDelay: `${400 + i * 80}ms`,
+                      }}
+                    >
+                      <span className="w-6 text-right mr-3 text-white/15 select-none text-[10px]">
+                        {i + 1}
+                      </span>
+                      <span
+                        className={`${
+                          line.content.startsWith("<")
+                            ? "text-white/50"
+                            : line.content.startsWith("{")
+                              ? "text-white/40"
+                              : "text-white/60"
+                        }`}
+                      >
+                        {line.content}
+                      </span>
+                    </div>
+                  ))}
+
+                  {/* Highlighted new line that appears after AI prompt */}
+                  <div
+                    className="flex transition-all duration-700"
+                    style={{
+                      paddingLeft: "16px",
+                      opacity: isVisible ? 1 : 0,
+                      maxHeight: isVisible ? "24px" : "0px",
+                      transform: isVisible
+                        ? "translateY(0)"
+                        : "translateY(4px)",
+                      transitionDelay: "2200ms",
+                    }}
+                  >
+                    <span className="w-6 text-right mr-3 text-white/15 select-none text-[10px]">
+                      8
+                    </span>
+                    <span className="bg-emerald-500/10 text-emerald-400/70 px-1 rounded-sm">
+                      {"<ProgressBar value={progress} />"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* AI prompt overlay */}
+                <div
+                  className="absolute bottom-3 left-3 right-3 transition-all duration-600"
+                  style={{
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible
+                      ? "translateY(0)"
+                      : "translateY(10px)",
+                    transitionDelay: "1600ms",
+                    transitionDuration: "500ms",
+                  }}
+                >
+                  <div className="rounded-lg border border-white/[0.08] bg-[#1a1a1a]/95 backdrop-blur-sm p-3 shadow-lg">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <div className="w-4 h-4 rounded-full bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center text-[8px] text-white/50">
+                        AI
+                      </div>
+                      <span className="text-[10px] text-white/30">
+                        Superhands
+                      </span>
+                    </div>
+                    <div className="text-xs text-white/60 overflow-hidden">
+                      <span
+                        className="inline-block overflow-hidden whitespace-nowrap"
+                        style={{
+                          width: isVisible ? `${aiPrompt.length}ch` : "0",
+                          transition: "width 1.5s steps(40, end)",
+                          transitionDelay: "1800ms",
+                        }}
+                      >
+                        {aiPrompt}
+                      </span>
+                      <span
+                        className="inline-block w-[2px] h-3 bg-white/50 ml-0.5 align-middle"
+                        style={{
+                          animation: isVisible
+                            ? "blinkCursor 1s step-end infinite"
+                            : "none",
+                          animationDelay: "1800ms",
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Monitor stand / chin */}
+        <div className="flex justify-center">
+          <div className="w-32 h-1.5 bg-[#1a1a1a] rounded-b-lg border-x border-b border-white/[0.06]" />
+        </div>
+        <div className="flex justify-center">
+          <div className="w-20 h-4 bg-[#161616] rounded-b-lg border-x border-b border-white/[0.05]" />
+        </div>
       </div>
     </div>
   );
@@ -917,6 +1168,9 @@ function LandingPageContent() {
             </div>
           </div>
         </div>
+
+        {/* Animated Screen Section */}
+        <AnimatedScreen />
 
         {/* FAQ Section */}
         <div className="w-full mt-24 animate-fade-in-up animation-delay-500">
