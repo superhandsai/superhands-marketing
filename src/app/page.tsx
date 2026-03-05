@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      hello
+      GRANT TEST
     </h2>
   );
 }
