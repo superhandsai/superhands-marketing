@@ -979,7 +979,7 @@ function LandingPageContent() {
         {/* Hero Section */}
         <div className="text-center mb-8">
           <GradientTextHero />
-          <p className="text-xl sm:text-2xl text-green-500 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
+          <p className="text-xl sm:text-2xl text-pink-500 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
             Stop waiting for engineering. Prototype, test, and validate ideas yourself.
           </p>
         </div>
