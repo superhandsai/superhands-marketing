@@ -45,7 +45,7 @@ function GradientTextHero() {
   }, []);
 
   return (
-    <h2
+    <h2 data-sh-diff="c1"
       ref={textRef}
       className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 relative cursor-default"
       style={{
@@ -404,7 +404,7 @@ function AnimatedScreen() {
   const aiPrompt = "Add a progress bar below the description";
 
   return (
-    <div ref={sectionRef} className="w-full mt-24">
+    <div data-sh-diff="c2" ref={sectionRef} className="w-full mt-24">
       {/* Monitor frame */}
       <div className="max-w-4xl mx-auto">
         {/* Screen bezel */}
@@ -979,7 +979,7 @@ function LandingPageContent() {
         {/* Hero Section */}
         <div className="text-center mb-8">
           <GradientTextHero />
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
+          <p className="text-xl sm:text-2xl text-yellow-500 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
             Stop waiting for engineering. Prototype, test, and validate ideas yourself.
           </p>
         </div>
@@ -1073,7 +1073,7 @@ function LandingPageContent() {
                       </p>
                     )}
                   </div>
-                  <Button
+                  <Button data-sh-diff="c3"
                     type="submit"
                     className="relative h-12 px-8 w-full sm:w-[160px] text-base bg-red-600 text-white font-medium rounded-[8px] transition-all duration-300 hover:bg-red-700 hover:shadow-[0_0_20px_rgba(255,0,0,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn"
                     disabled={loading}
@@ -1170,7 +1170,7 @@ function LandingPageContent() {
         </div>
 
         {/* Animated Screen Section */}
-        <AnimatedScreen />
+        <AnimatedScreen data-sh-diff="c4" />
 
         {/* FAQ Section */}
         <div className="w-full mt-24 animate-fade-in-up animation-delay-500">
