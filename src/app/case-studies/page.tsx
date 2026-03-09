@@ -100,9 +100,9 @@ export default function CaseStudiesPage() {
 
         {/* Case studies */}
         <div className="space-y-8">
-          {caseStudies.map((study, index) => (
+          {caseStudies.map((study) => (
             <div
-              key={index}
+              key={study.company}
               className="border border-border rounded-xl bg-card/50 backdrop-blur-sm p-8 sm:p-10 animate-fade-in-up"
               style={{ animationDelay: `${300 + index * 100}ms` }}
             >
