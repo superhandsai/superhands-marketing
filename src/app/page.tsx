@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Copy, Check } from "lucide-react";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 
@@ -717,12 +718,20 @@ function LandingPageContent() {
               Superhands
             </h1>
           </div>
-          <a
-            href="https://app.superhands.ai/login"
-            className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
-          >
-            Login
-          </a>
+          <nav className="flex items-center gap-6">
+            <Link href="/case-studies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Case Studies
+            </Link>
+            <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Contact
+            </Link>
+            <a
+              href="https://app.superhands.ai/login"
+              className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
+            >
+              Login
+            </a>
+          </nav>
         </div>
 
         {/* Hero Section */}
