@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Case Studies - Superhands",
+  description: "See how product teams use Superhands to move faster, validate smarter, and ship with confidence.",
+};
 
 const caseStudies = [
   {
