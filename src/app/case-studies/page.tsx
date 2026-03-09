@@ -100,7 +100,7 @@ export default function CaseStudiesPage() {
 
         {/* Case studies */}
         <div className="space-y-8">
-          {caseStudies.map((study) => (
+          {caseStudies.map((study, index) => (
             <div
               key={study.company}
               className="border border-border rounded-xl bg-card/50 backdrop-blur-sm p-8 sm:p-10 animate-fade-in-up"
