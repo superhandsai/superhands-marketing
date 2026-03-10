@@ -45,7 +45,7 @@ function GradientTextHero() {
   }, []);
 
   return (
-    <h2 data-sh-diff="c1" data-sh-diff="c1" data-sh-diff="c1"
+    <h2 data-sh-diff="c1" data-sh-diff="c1" data-sh-diff="c1" data-sh-diff="c1"
       ref={textRef}
       className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 relative cursor-default"
       style={{
@@ -404,7 +404,7 @@ function AnimatedScreen() {
   const aiPrompt = "Add a progress bar below the description";
 
   return (
-    <div data-sh-diff="c2" data-sh-diff="c2" data-sh-diff="c2" ref={sectionRef} className="w-full mt-24">
+    <div data-sh-diff="c2" data-sh-diff="c2" data-sh-diff="c2" data-sh-diff="c2" ref={sectionRef} className="w-full mt-24">
       {/* Monitor frame */}
       <div className="max-w-4xl mx-auto">
         {/* Screen bezel */}
@@ -1073,7 +1073,7 @@ function LandingPageContent() {
                       </p>
                     )}
                   </div>
-                  <Button data-sh-diff="c3" data-sh-diff="c3" data-sh-diff="c3"
+                  <Button data-sh-diff="c3" data-sh-diff="c3" data-sh-diff="c3" data-sh-diff="c3"
                     type="submit"
                     className="relative h-12 px-8 w-full sm:w-[160px] text-base bg-orange-600 text-white font-medium rounded-[8px] transition-all duration-300 hover:bg-orange-700 hover:shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn"
                     disabled={loading}
@@ -1170,11 +1170,11 @@ function LandingPageContent() {
         </div>
 
         {/* Animated Screen Section */}
-        <AnimatedScreen data-sh-diff="c4" data-sh-diff="c4" data-sh-diff="c4" />
+        <AnimatedScreen data-sh-diff="c4" data-sh-diff="c4" data-sh-diff="c4" data-sh-diff="c4" />
 
         {/* FAQ Section */}
         <div className="w-full mt-24 animate-fade-in-up animation-delay-500">
-          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
+          <h3 className="text-3xl sm:text-4xl font-bold text-foreground mb-8 text-center">
             Frequently Asked Questions
           </h3>
           <div className="max-w-3xl mx-auto space-y-3">
