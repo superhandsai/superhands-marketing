@@ -1039,7 +1039,7 @@ function LandingPageContent() {
         {/* Email Us Section */}
         <div className="w-full mt-20 animate-fade-in-up animation-delay-600">
           <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
-            Get in Touch
+            Get in Touch Today
           </h3>
           <div className="max-w-3xl mx-auto flex justify-center">
             <EmailCopy />
