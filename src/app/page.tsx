@@ -718,7 +718,7 @@ function LandingPageContent() {
               Superhands
             </h1>
           </div>
-          <nav className="flex items-center gap-6">
+          <nav data-sh-diff="c5" className="flex items-center gap-6">
             <Link href="/case-studies" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Case Studies
             </Link>

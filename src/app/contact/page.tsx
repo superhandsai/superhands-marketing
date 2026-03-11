@@ -19,7 +19,7 @@ function EmailCopy() {
   };
 
   return (
-    <button
+    <button data-sh-diff="c3"
       onClick={copyToClipboard}
       className={`inline-flex items-center gap-3 px-6 py-4 bg-card/50 backdrop-blur-sm border rounded-xl transition-all cursor-pointer ${
         copied

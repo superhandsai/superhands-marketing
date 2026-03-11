@@ -45,7 +45,7 @@ const caseStudies = [
 
 export default function CaseStudiesPage() {
   return (
-    <div className="min-h-svh w-full bg-dot-pattern bg-background relative">
+    <div data-sh-diff="c1" className="min-h-svh w-full bg-dot-pattern bg-background relative">
       <div className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-12 animate-fade-in-up">
