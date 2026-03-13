@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Visual editor for PRs
+      test
     </h2>
   );
 }
