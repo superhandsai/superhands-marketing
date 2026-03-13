@@ -58,7 +58,7 @@ function GradientTextHero() {
         color: "var(--foreground)",
       }}
     >
-      Vibe code on your team's existing product
+      Visual editor for PRs
     </h2>
   );
 }
@@ -717,12 +717,20 @@ function LandingPageContent() {
               Superhands
             </h1>
           </div>
-          <a
-            href="https://app.superhands.ai/login"
-            className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
-          >
-            Login
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="/contact"
+              className="inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Contact
+            </a>
+            <a
+              href="https://app.superhands.ai/login"
+              className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
+            >
+              Login
+            </a>
+          </div>
         </div>
 
         {/* Hero Section */}
@@ -915,63 +923,6 @@ function LandingPageContent() {
                 <Maximize className="w-5 h-5" />
               </button>
             </div>
-          </div>
-        </div>
-
-        {/* How It Works Section */}
-        <div className="w-full mt-24 animate-fade-in-up animation-delay-450">
-          <div className="text-center mb-16">
-            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground/60 mb-4 font-medium">The Process</p>
-            <h3 className="text-4xl sm:text-5xl font-bold text-foreground tracking-tight">
-              From Idea to Validated Feature
-            </h3>
-            <p className="text-lg text-muted-foreground mt-4">
-              The fastest teams don't plan more. They learn faster.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 max-w-6xl mx-auto">
-            {[
-              {
-                step: "01",
-                title: "Build",
-                subtitle: "Describe what you want",
-                description: "AI transforms your words into functional prototypes on your real codebase. No coding required."
-              },
-              {
-                step: "02",
-                title: "Test",
-                subtitle: "Share instantly",
-                description: "Generate shareable links. Get your prototype in front of users, stakeholders, anyone in seconds."
-              },
-              {
-                step: "03",
-                title: "Learn",
-                subtitle: "Decide with confidence",
-                description: "Shorten the loop between idea and insight. Kill bad bets in days, not quarters."
-              }
-            ].map((item) => (
-              <div key={item.step} className="relative group text-center">
-                {/* Large step number - editorial style */}
-                <div className="relative mb-6">
-                  <span
-                    className="text-[120px] md:text-[140px] font-black leading-none text-transparent bg-clip-text select-none pointer-events-none"
-                    style={{
-                      WebkitTextStroke: '1px rgba(255,255,255,0.08)',
-                    }}
-                  >
-                    {item.step}
-                  </span>
-                  {/* Title overlaid */}
-                  <h4 className="absolute bottom-4 left-0 right-0 text-3xl md:text-4xl font-bold text-foreground tracking-tight">
-                    {item.title}
-                  </h4>
-                </div>
-
-                <p className="text-sm uppercase tracking-[0.15em] text-foreground/40 mb-4 font-medium">{item.subtitle}</p>
-                <p className="text-muted-foreground text-base leading-relaxed max-w-xs mx-auto">{item.description}</p>
-              </div>
-            ))}
           </div>
         </div>
 
