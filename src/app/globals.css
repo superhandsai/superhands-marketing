@@ -1114,3 +1114,30 @@ input.input-no-spinner[type="number"]::-webkit-inner-spin-button {
     transform: scale(0);
   }
 }
+
+/* Get Started button pulse animation */
+@keyframes buttonPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+}
+
+@keyframes buttonGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2),
+                0 0 40px rgba(255, 255, 255, 0.1),
+                0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.4),
+                0 0 60px rgba(255, 255, 255, 0.2),
+                0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.animate-button-pulse {
+  animation: buttonPulse 2s ease-in-out infinite, buttonGlow 2s ease-in-out infinite;
+}
