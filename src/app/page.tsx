@@ -56,6 +56,7 @@ function GradientTextHero() {
         backgroundClip: "text",
         WebkitTextFillColor: isTracking ? "transparent" : "var(--foreground)",
         color: "var(--foreground)",
+        animation: "fadeInUp 0.6s ease-out 100ms forwards, headerPulse 2s ease-in-out infinite",
       }}
     >
       test
