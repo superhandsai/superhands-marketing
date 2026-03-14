@@ -45,7 +45,7 @@ function GradientTextHero() {
   }, []);
 
   return (
-    <h2 data-sh-diff="d_1ultdhq"
+    <h2
       ref={textRef}
       className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 relative cursor-default"
       style={{
@@ -717,7 +717,7 @@ function LandingPageContent() {
               Superhands
             </h1>
           </div>
-          <div data-sh-diff="d_9jvgtt" className="flex items-center gap-3">
+          <div className="flex items-center gap-3">
             <a
               href="/contact"
               className="inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -830,7 +830,7 @@ function LandingPageContent() {
                       </p>
                     )}
                   </div>
-                  <Button data-sh-diff="d_1qbwhpm"
+                  <Button
                     type="submit"
                     className={`relative h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-primary-foreground font-medium rounded-[8px] hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn ${!loading ? 'animate-button-pulse' : ''}`}
                     disabled={loading}
