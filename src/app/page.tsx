@@ -47,7 +47,7 @@ function GradientTextHero() {
   return (
     <h2
       ref={textRef}
-      className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 relative cursor-default"
+      className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 animate-header-pulse relative cursor-default"
       style={{
         backgroundImage: isTracking
           ? `radial-gradient(circle 400px at ${mousePos.x}% ${mousePos.y}%, rgba(255, 255, 255, 0.95) 0%, rgba(200, 200, 200, 0.7) 25%, rgba(150, 150, 150, 0.4) 50%, var(--foreground) 70%)`
