@@ -768,7 +768,7 @@ function LandingPageContent() {
               <div className="flex flex-col gap-3">
                 <Label
                   htmlFor="email"
-                  className="text-base font-medium text-foreground block text-center"
+                  className="text-base font-medium text-foreground block text-center animate-header-pulse"
                 >
                   Get early access
                 </Label>
