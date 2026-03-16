@@ -59,7 +59,7 @@ function GradientTextHero() {
         animation: "fadeInUp 0.6s ease-out 100ms forwards, headerPulse 2s ease-in-out infinite",
       }}
     >
-      test
+      ghello
     </h2>
   );
 }
