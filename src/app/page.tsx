@@ -737,7 +737,22 @@ function LandingPageContent() {
         {/* Hero Section */}
         <div className="text-center mb-8">
           <GradientTextHero />
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200" style={{ color: '#0000eb' }}>
+          <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200" style={{
+            color: '#0000eb',
+            marginLeft: '140px',
+            fontSize: '58px',
+            backgroundColor: '#280101',
+            borderTopWidth: '0px',
+            borderBottomRightRadius: '92px',
+            borderBottomLeftRadius: '93px',
+            borderTopRightRadius: '94px',
+            borderTopLeftRadius: '97px',
+            outlineColor: '#845e43',
+            outlineWidth: '8px',
+            outlineStyle: 'solid',
+            transform: 'matrix(4, 0, 0, 1, 0, 0)',
+            opacity: 0.31
+          }}>
             Stop waiting for engineering. Prototype, test, and validate ideas yourself.
           </p>
         </div>
