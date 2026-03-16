@@ -848,7 +848,7 @@ function LandingPageContent() {
                   </div>
                   <Button
                     type="submit"
-                    className={`relative h-12 px-8 w-full sm:w-[160px] text-base bg-pink-500 text-white font-medium rounded-[8px] hover:bg-pink-600 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn ${!loading ? 'animate-button-pulse' : ''}`}
+                    className={`relative h-12 px-8 w-full sm:w-[160px] text-base bg-green-500 text-white font-medium rounded-[8px] hover:bg-green-600 hover:shadow-[0_0_20px_rgba(34,197,94,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn ${!loading ? 'animate-button-pulse' : ''}`}
                     disabled={loading}
                     onMouseEnter={triggerConfetti}
                   >
