@@ -45,7 +45,7 @@ function GradientTextHero() {
   }, []);
 
   return (
-    <h2
+    <h2 data-sh-diff="d_ussuf6" data-sh-diff="d_argw0u" data-sh-diff="d_272cfg"
       ref={textRef}
       className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 animate-header-pulse relative cursor-default"
       style={{
@@ -718,7 +718,7 @@ function LandingPageContent() {
               Superhands
             </h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div data-sh-diff="d_1vb3t9f" className="flex items-center gap-3">
             <a
               href="/contact"
               className="inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -737,7 +737,7 @@ function LandingPageContent() {
         {/* Hero Section */}
         <div className="text-center mb-8">
           <GradientTextHero />
-          <p className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200" style={{
+          <p data-sh-diff="d_13rbhbo" className="text-xl sm:text-2xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up animation-delay-200" style={{
             color: '#0000eb',
             marginLeft: '140px',
             fontSize: '58px',
@@ -781,7 +781,7 @@ function LandingPageContent() {
               )}
 
               <div className="flex flex-col gap-3">
-                <Label
+                <Label data-sh-diff="d_b0jxw6"
                   htmlFor="email"
                   className="text-base font-medium text-foreground block text-center animate-header-pulse"
                 >
@@ -846,9 +846,9 @@ function LandingPageContent() {
                       </p>
                     )}
                   </div>
-                  <Button
+                  <Button data-sh-diff="d_61vqpa"
                     type="submit"
-                    className={`relative h-12 px-8 w-full sm:w-[160px] text-base bg-yellow-600 text-white font-medium rounded-[8px] hover:bg-yellow-700 hover:shadow-[0_0_20px_rgba(202,138,4,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn ${!loading ? 'animate-button-pulse' : ''}`}
+                    className={`relative h-12 px-8 w-full sm:w-[160px] text-base bg-pink-600 text-white font-medium rounded-[8px] hover:bg-pink-700 hover:shadow-[0_0_20px_rgba(236,72,153,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn ${!loading ? 'animate-button-pulse' : ''}`}
                     disabled={loading}
                     onMouseEnter={triggerConfetti}
                   >
