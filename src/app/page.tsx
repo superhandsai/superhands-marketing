@@ -824,7 +824,7 @@ function LandingPageContent() {
                   </div>
                   <Button
                     type="submit"
-                    className="relative h-12 px-8 w-full sm:w-[160px] text-base bg-primary text-primary-foreground font-medium rounded-[8px] transition-all duration-300 hover:bg-primary/90 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn"
+                    className="relative h-12 px-8 w-full sm:w-[160px] text-base bg-yellow-500 text-black font-medium rounded-[8px] transition-all duration-300 hover:bg-yellow-600 hover:shadow-[0_0_20px_rgba(255,215,0,0.5)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn"
                     disabled={loading}
                     onMouseEnter={triggerConfetti}
                   >
@@ -1038,7 +1038,7 @@ function LandingPageContent() {
 
         {/* Email Us Section */}
         <div className="w-full mt-20 animate-fade-in-up animation-delay-600">
-          <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
+          <h3 data-sh-diff="d_1xeet0u" className="text-2xl sm:text-3xl font-bold text-foreground mb-8 text-center">
             Get in Touch Today
           </h3>
           <div className="max-w-3xl mx-auto flex justify-center">
