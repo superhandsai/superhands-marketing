@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Volume2, VolumeX, Maximize, Play, Pause, ChevronDown, Copy, Check } from "lucide-react";
+import { DemoRequestModal } from "@/components/demo-request-modal";
 import { useSearchParams } from "next/navigation";
 import confetti from "canvas-confetti";
 
@@ -717,12 +718,19 @@ function LandingPageContent() {
               Superhands
             </h1>
           </div>
-          <a
-            href="https://app.superhands.ai/login"
-            className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
-          >
-            Login
-          </a>
+          <div className="flex items-center gap-3">
+            <DemoRequestModal>
+              <button className="inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md border border-border text-foreground transition-all hover:bg-secondary cursor-pointer">
+                Request a Demo
+              </button>
+            </DemoRequestModal>
+            <a
+              href="https://app.superhands.ai/login"
+              className="login-btn inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
+            >
+              Login
+            </a>
+          </div>
         </div>
 
         {/* Hero Section */}
