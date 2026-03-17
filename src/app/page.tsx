@@ -45,7 +45,7 @@ function GradientTextHero() {
   }, []);
 
   return (
-    <h2 data-sh-diff="d_ussuf6" data-sh-diff="d_argw0u" data-sh-diff="d_272cfg"
+    <h2 data-sh-diff="d_1owcauu" data-sh-diff="d_ussuf6" data-sh-diff="d_argw0u" data-sh-diff="d_272cfg"
       ref={textRef}
       className="text-4xl sm:text-6xl font-bold mb-4 leading-[1.1] animate-fade-in-up animation-delay-100 animate-header-pulse relative cursor-default"
       style={{
@@ -59,7 +59,7 @@ function GradientTextHero() {
         animation: "fadeInUp 0.6s ease-out 100ms forwards, headerPulse 2s ease-in-out infinite",
       }}
     >
-      test
+      bla
     </h2>
   );
 }
@@ -781,7 +781,7 @@ function LandingPageContent() {
               )}
 
               <div className="flex flex-col gap-3">
-                <Label data-sh-diff="d_b0jxw6"
+                <Label data-sh-diff="d_mxdl12" data-sh-diff="d_b0jxw6"
                   htmlFor="email"
                   className="text-base font-medium text-foreground block text-center animate-header-pulse"
                 >
@@ -846,7 +846,7 @@ function LandingPageContent() {
                       </p>
                     )}
                   </div>
-                  <Button data-sh-diff="d_61vqpa"
+                  <Button data-sh-diff="d_ub2d1a" data-sh-diff="d_61vqpa"
                     type="submit"
                     className={`relative h-12 px-8 w-full sm:w-[160px] text-base bg-blue-600 text-white font-medium rounded-[8px] hover:bg-blue-700 hover:shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center cursor-pointer whitespace-nowrap overflow-hidden group/btn ${!loading ? 'animate-button-pulse' : ''}`}
                     disabled={loading}
