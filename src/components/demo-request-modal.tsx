@@ -33,6 +33,7 @@ export function DemoRequestModal({ children }: { children: React.ReactNode }) {
 
   const form = useForm<DemoRequestFormData>({
     resolver: zodResolver(demoRequestSchema),
+    mode: "onBlur",
     defaultValues: {
       name: "",
       email: "",
