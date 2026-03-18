@@ -57,6 +57,9 @@ function GradientTextHero() {
         backgroundClip: "text",
         WebkitTextFillColor: isTracking ? "transparent" : "var(--foreground)",
         color: "var(--foreground)",
+        marginTop: "-40px",
+        paddingLeft: "128px",
+        paddingBottom: "118px",
       }}
     >
       Vibe code on your team's existing product
@@ -718,7 +721,7 @@ function LandingPageContent() {
               Superhands
             </h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div data-sh-diff="d_1wp1tqa" className="flex items-center gap-3">
             <DemoRequestModal>
               <button className="inline-flex items-center justify-center h-9 px-4 py-2 text-sm font-medium rounded-md border border-border text-foreground transition-all hover:bg-secondary cursor-pointer">
                 Request a Demo
