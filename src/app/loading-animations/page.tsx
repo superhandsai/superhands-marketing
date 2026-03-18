@@ -46,6 +46,7 @@ const ModalAnimationSVG = React.forwardRef<SVGSVGElement, {
   useEffect(() => {
     const svg = ref && 'current' in ref ? ref.current : null;
     if (!svg) return;
+    ensureAnimationCSSInjected(variant, customVariantCSS);
 
     const paths = Array.from(svg.querySelectorAll("path")) as SVGPathElement[];
     
@@ -116,6 +117,7 @@ const ModalAnimationSVG = React.forwardRef<SVGSVGElement, {
         case "pulse2":
         case "pulse3":
         case "pulse4":
+        case "pulse-snappy":
           delay = index * 0.08;
           break;
         case "float":
@@ -548,6 +550,22 @@ function getAnimationCSS(variant: string, customCSS?: Record<string, string>): s
   94% { opacity: 0; transform: scale(0); }
   100% { opacity: 0; transform: scale(0); }
 }`,
+    "pulse-snappy": `.logo-anim-pulse-snappy {
+  opacity: 0;
+  transform: scale(0.2);
+  animation: pulseInPathLoopSnappy 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s infinite;
+  transform-origin: center;
+}
+
+@keyframes pulseInPathLoopSnappy {
+  0% { opacity: 0; transform: scale(0.2); }
+  8% { opacity: 1; transform: scale(1.18); }
+  14% { opacity: 1; transform: scale(1); }
+  70% { opacity: 1; transform: scale(1); }
+  86% { opacity: 1; transform: scale(1.08); }
+  97% { opacity: 0.2; transform: scale(0.7); }
+  100% { opacity: 0; transform: scale(0.2); }
+}`,
     float: `.logo-anim-float {
   animation: floatLoop 3s ease-in-out 0s infinite;
   transform-origin: center;
@@ -590,6 +608,26 @@ function getAnimationCSS(variant: string, customCSS?: Record<string, string>): s
   };
 
   return cssMap[variant] || '';
+}
+
+function ensureAnimationCSSInjected(variant: string, customCSS?: Record<string, string>) {
+  if (typeof document === 'undefined') return;
+
+  const cssCode = getAnimationCSS(variant, customCSS);
+  if (!cssCode) return;
+
+  const styleId = 'runtime-animation-css';
+  let styleElement = document.getElementById(styleId) as HTMLStyleElement | null;
+  if (!styleElement) {
+    styleElement = document.createElement('style');
+    styleElement.id = styleId;
+    document.head.appendChild(styleElement);
+  }
+
+  const classMarker = `.logo-anim-${variant}`;
+  if (!styleElement.textContent?.includes(classMarker)) {
+    styleElement.textContent = `${styleElement.textContent || ''}\n\n${cssCode}`;
+  }
 }
 
 function LogoAnimation({ variant, title, logoColor, customVariantCSS, groupTitle, allVariants, currentIndex, allGroups, currentGroupIndex, isMobile }: LogoAnimationProps & { customVariantCSS?: Record<string, string> }) {
@@ -760,6 +798,7 @@ function LogoAnimation({ variant, title, logoColor, customVariantCSS, groupTitle
   useEffect(() => {
     const svg = svgRef.current;
     if (!svg) return;
+    ensureAnimationCSSInjected(variant, customVariantCSS);
 
     const paths = Array.from(svg.querySelectorAll("path")) as SVGPathElement[];
     
@@ -830,6 +869,7 @@ function LogoAnimation({ variant, title, logoColor, customVariantCSS, groupTitle
         case "pulse2":
         case "pulse3":
         case "pulse4":
+        case "pulse-snappy":
           delay = index * 0.08;
           break;
         case "float":
@@ -1143,7 +1183,7 @@ function AnimationGroup({
 }) {
   const spacingClass = hideHeading 
     ? (colorPickerOpen ? 'space-y-6' : 'space-y-0') 
-    : (colorPickerOpen ? 'space-y-6' : 'space-y-12');
+    : (colorPickerOpen ? 'space-y-6' : 'space-y-6');
   return (
     <div ref={hideHeading ? headingRef as React.RefObject<HTMLDivElement> : undefined} className={`${spacingClass} !pt-0 !mt-0 ${className || ''}`}>
       <div className={`flex items-center justify-between ${hideHeading ? '!mt-0 !mb-0 h-0 overflow-hidden' : '!mt-0'}`}>
@@ -1177,26 +1217,6 @@ function AnimationGroup({
           );
         })}
       </div>
-      {onCreateVariant && (
-        <button
-          onClick={() => onCreateVariant(baseVariant)}
-          disabled={generatingVariant === baseVariant}
-          className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground bg-transparent border border-border rounded-md hover:bg-muted/30 hover:text-foreground hover:border-border transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          aria-label="New variant"
-        >
-          {generatingVariant === baseVariant ? (
-            <>
-              <div className="w-3.5 h-3.5 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
-              Creating...
-            </>
-          ) : (
-            <>
-              New variant
-              <Plus className="w-4 h-4" />
-            </>
-          )}
-        </button>
-      )}
     </div>
   );
 }
@@ -1855,7 +1875,7 @@ export default function LoadingAnimationsPage() {
       'rotate', 'rotate2', 'rotate3', 'rotate4',
       'morph', 'morph2', 'morph3', 'morph4',
       'wave', 'wave2', 'wave3', 'wave4',
-      'pulse', 'pulse2', 'pulse3', 'pulse4',
+      'pulse', 'pulse2', 'pulse3', 'pulse4', 'pulse-snappy',
       'float', 'float2', 'float3', 'float4'
     ];
     return variants[Math.floor(Math.random() * variants.length)];
@@ -2366,7 +2386,7 @@ export default function LoadingAnimationsPage() {
         'rotate', 'rotate2', 'rotate3', 'rotate4',
         'morph', 'morph2', 'morph3', 'morph4',
         'wave', 'wave2', 'wave3', 'wave4',
-        'pulse', 'pulse2', 'pulse3', 'pulse4',
+        'pulse', 'pulse2', 'pulse3', 'pulse4', 'pulse-snappy',
         'float', 'float2', 'float3', 'float4'
       ];
       
@@ -2476,7 +2496,7 @@ export default function LoadingAnimationsPage() {
       'rotate', 'rotate2', 'rotate3', 'rotate4',
       'morph', 'morph2', 'morph3', 'morph4',
       'wave', 'wave2', 'wave3', 'wave4',
-      'pulse', 'pulse2', 'pulse3', 'pulse4',
+      'pulse', 'pulse2', 'pulse3', 'pulse4', 'pulse-snappy',
       'float', 'float2', 'float3', 'float4'
     ];
     
@@ -2951,6 +2971,7 @@ export default function LoadingAnimationsPage() {
         { variant: "pulse2", title: "Strong" },
         { variant: "pulse3", title: "Gentle" },
         { variant: "pulse4", title: "Quick" },
+        { variant: "pulse-snappy", title: "Snappy Loop" },
         ...(dynamicVariations["pulse"] || [])
       ]
     },
@@ -3296,6 +3317,7 @@ export default function LoadingAnimationsPage() {
               { variant: "pulse2", title: "Strong" },
               { variant: "pulse3", title: "Gentle" },
               { variant: "pulse4", title: "Quick" },
+              { variant: "pulse-snappy", title: "Snappy Loop" },
               ...(dynamicVariations["pulse"] || [])
             ]}
             logoColor={logoColorWithAlpha}
@@ -3342,42 +3364,6 @@ export default function LoadingAnimationsPage() {
               headingRef={getCustomSetRef(animSet.id)}
             />
           ))}
-          
-          {/* Generator section */}
-          <div className="pt-8 pb-4">
-            <button
-              onClick={handleGenerateNewSet}
-              className="w-full flex flex-col items-center justify-center gap-6 py-12 px-6 text-sm font-medium text-muted-foreground bg-card/50 backdrop-blur-sm border border-border rounded-xl hover:bg-card/70 hover:text-foreground hover:shadow-sm dark:hover:shadow-lg transition-all cursor-pointer"
-              aria-label="Generate new animation set"
-            >
-              <div className="flex flex-col items-center gap-3 text-center">
-                <div className="w-16 h-16 flex items-center justify-center">
-                  <svg
-                    ref={generatorLogoRef}
-                    width="64"
-                    height="64"
-                    viewBox="0 0 132 132"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-full h-full"
-                  >
-                    {logoPaths.map((path, index) => (
-                      <path
-                        key={index}
-                        d={path}
-                        fill={logoColorWithAlpha || hexToRgba(getDefaultColor(), hsl.a)}
-                        className="logo-path"
-                      />
-                    ))}
-                  </svg>
-                </div>
-                <div className="flex items-center justify-center gap-2 font-space-grotesk text-lg font-semibold text-foreground">
-                  Generate new set
-                  <Plus className="w-4 h-4" />
-                </div>
-              </div>
-            </button>
-          </div>
           
           {/* Bottom gradient fade */}
           <div 
