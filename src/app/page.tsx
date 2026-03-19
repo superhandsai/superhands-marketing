@@ -49,8 +49,7 @@ function HeroSection() {
         where the code does
       </h1>
       <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-        GitHub shows engineers what code changed. Superhands shows designers what it looks like,
-        how it feels — and lets them refine it before it goes live.
+        Every PR changes your product. Your designers have never been in the room. Until now.
       </p>
       <div className="flex flex-col items-center gap-3">
         <a href="https://app.superhands.ai/signup">
@@ -348,9 +347,12 @@ function FeaturesSection() {
     <section className="mx-auto max-w-6xl px-6 py-24 animate-fade-in-up animation-delay-400">
       <div className="text-center mb-16">
         <h2 className="font-space-grotesk text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-          Design reviews for every product update before it&apos;s live
+          Design-approved, every time
         </h2>
         <p className="text-lg text-muted-foreground">
+          Not a builder. Not a Figma plugin. The review layer your design team has always been missing.
+        </p>
+        <p className="text-lg text-muted-foreground mt-2">
           Your engineer connects the repo once. Then you get:
         </p>
       </div>
@@ -380,11 +382,11 @@ function FeaturesSection() {
         {/* Feature 2 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="order-2 md:order-1">
-            <h3 className="text-2xl font-semibold mb-3">Review and refine</h3>
+            <h3 className="text-2xl font-semibold mb-3">Don&apos;t just flag it – fix it</h3>
             <p className="text-muted-foreground mb-5">
-              Don&apos;t just flag it — fix it. The Superhands editor is like Lovable for
-              design review — describe what you want to change and watch it happen, right in
-              the browser.
+              Review and refine it yourself before it goes live. The Superhands editor is like
+              Lovable for design review — describe what you want to change and watch it happen,
+              right in the browser.
             </p>
             <ul className="space-y-3">
               {[
@@ -515,7 +517,7 @@ function BottomCTA() {
       <p className="text-muted-foreground mb-8">Start seeing what&apos;s shipping.</p>
       <a href="https://app.superhands.ai/signup">
         <Button size="lg" className="rounded-md px-8 text-base h-12">
-          Get started
+          Let&apos;s go
         </Button>
       </a>
     </section>

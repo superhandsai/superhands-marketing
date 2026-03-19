@@ -116,16 +116,16 @@ function WorkflowSection() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-24 animate-fade-in-up animation-delay-300">
       <h2 className="font-space-grotesk text-3xl sm:text-4xl font-bold tracking-tight text-center mb-4">
-        Level up your workflow
+        Catch it before it ships
       </h2>
       <p className="text-lg text-muted-foreground text-center mb-12">
-        Design feedback moves from after the fact to before it ships.
+        Move design review upstream — where fixing things is still free.
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-10">
         {/* Before */}
         <div className="rounded-xl border border-border bg-card p-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
-            Before
+            Before: guessing
           </p>
           <div className="space-y-3">
             {["PR merged", "Designer sees it in production", "Slack message", "Rework"].map(
@@ -143,12 +143,12 @@ function WorkflowSection() {
         {/* After */}
         <div className="rounded-xl border border-primary/30 bg-primary/5 p-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-foreground mb-4">
-            With Superhands
+            After: no surprises
           </p>
           <div className="space-y-3">
             {[
               "PR opened",
-              "Designer reviews inside it",
+              "Reviewed in Superhands",
               "Refines if needed",
               "Ships right",
             ].map((step, i) => (
@@ -226,11 +226,11 @@ function BottomCTA() {
         Finally on the same cadence.
       </h2>
       <p className="text-muted-foreground mb-8">
-        Set up once, then every design change gets reviewed before it ships.
+        Set up once. Your designers handle the rest. Your PRs move faster.
       </p>
       <a href="https://app.superhands.ai/signup">
         <Button size="lg" className="rounded-md px-8 text-base h-12">
-          Get started
+          Let&apos;s go
         </Button>
       </a>
     </section>
