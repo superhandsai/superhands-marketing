@@ -8,14 +8,14 @@ function Header() {
     <header className="w-full border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
       <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-8">
-          <Link href="/home-v2" className="flex items-center gap-2.5">
+          <Link href="/" className="flex items-center gap-2.5">
             <img src="/logo.svg" alt="Superhands" className="w-8 h-8 logo-invert" />
             <span className="text-lg font-semibold tracking-tight">Superhands</span>
           </Link>
         </div>
         <div className="flex items-center gap-3">
           <Link
-            href="/home-v2"
+            href="/"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:inline-flex"
           >
             For Designers
