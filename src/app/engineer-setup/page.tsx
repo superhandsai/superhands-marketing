@@ -1,47 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { MarketingHeader } from "@/components/marketing-header";
 import { Button } from "@/components/ui/button";
-
-function Header() {
-  return (
-    <header className="w-full border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo.svg" alt="Superhands" className="w-8 h-8 logo-invert" />
-            <span className="text-lg font-semibold tracking-tight">Superhands</span>
-          </Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:inline-flex"
-          >
-            For Designers
-          </Link>
-          <a
-            href="https://app.superhands.ai/login"
-            className="login-btn inline-flex items-center justify-center h-9 px-4 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
-          >
-            Log in
-          </a>
-          <a href="https://app.superhands.ai/signup">
-            <Button size="sm" className="rounded-md">
-              Get started
-            </Button>
-          </a>
-        </div>
-      </div>
-    </header>
-  );
-}
 
 function HeroSection() {
   return (
     <section className="mx-auto max-w-4xl px-6 pt-24 pb-16 text-center animate-fade-in-up">
       <p className="text-sm font-medium text-muted-foreground mb-6">For engineering teams</p>
-      <h1 className="font-space-grotesk text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+      <h1 className="font-space-grotesk text-4xl sm:text-5xl md:text-6xl font-bold leading-[110%] tracking-tight mb-6">
         Design review inside the PR.{" "}
         <br className="hidden sm:block" />
         Not scattered across Slack and Figma.
@@ -51,11 +19,15 @@ function HeroSection() {
         themselves in the Superhands editor — no change to how you work.
       </p>
       <div className="flex flex-col items-center gap-3">
-        <a href="https://app.superhands.ai/signup">
-          <Button size="lg" className="rounded-md px-8 text-base h-12">
-            Get started
-          </Button>
-        </a>
+        <Button asChild size="lg" className="group rounded-md px-8 text-base h-12">
+          <a href="https://app.superhands.ai/signup">
+            Request Access
+            <ArrowRight
+              className="size-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+              aria-hidden
+            />
+          </a>
+        </Button>
         <p className="text-xs text-muted-foreground">
           Takes about 5 minutes · No changes to your codebase
         </p>
@@ -163,11 +135,15 @@ function WorkflowSection() {
         </div>
       </div>
       <div className="text-center">
-        <a href="https://app.superhands.ai/signup">
-          <Button size="lg" className="rounded-md px-8 text-base h-12">
-            Get started
-          </Button>
-        </a>
+        <Button asChild size="lg" className="group rounded-md px-8 text-base h-12">
+          <a href="https://app.superhands.ai/signup">
+            Request Access
+            <ArrowRight
+              className="size-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
+              aria-hidden
+            />
+          </a>
+        </Button>
       </div>
     </section>
   );
@@ -228,11 +204,9 @@ function BottomCTA() {
       <p className="text-muted-foreground mb-8">
         Set up once. Your designers handle the rest. Your PRs move faster.
       </p>
-      <a href="https://app.superhands.ai/signup">
-        <Button size="lg" className="rounded-md px-8 text-base h-12">
-          Let&apos;s go
-        </Button>
-      </a>
+      <Button asChild size="lg" className="rounded-md px-8 text-base h-12">
+        <a href="https://app.superhands.ai/signup">Let&apos;s go</a>
+      </Button>
     </section>
   );
 }
@@ -240,7 +214,16 @@ function BottomCTA() {
 export default function EngineerSetupPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header />
+      <MarketingHeader
+        trailingNav={
+          <Link
+            href="/"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:inline-flex"
+          >
+            For Designers
+          </Link>
+        }
+      />
       <HeroSection />
       <TwoColumnSection />
       <WorkflowSection />

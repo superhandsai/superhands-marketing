@@ -1,296 +1,191 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight, Check, X } from "lucide-react";
+import { LogoMark } from "@/components/logo-mark";
+import { LogoMarkPageBackground } from "@/components/logo-mark-background";
+import { FooterContent } from "@/components/footer";
+import { MarketingHeader } from "@/components/marketing-header";
 import { Button } from "@/components/ui/button";
-
-function Header() {
-  return (
-    <header className="w-full border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-      <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2.5">
-            <img src="/logo.svg" alt="Superhands" className="w-8 h-8 logo-invert" />
-            <span className="text-lg font-semibold tracking-tight">Superhands</span>
-          </Link>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link
-            href="/engineer-setup"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors hidden sm:inline-flex"
-          >
-            For Engineers
-          </Link>
-          <a
-            href="https://app.superhands.ai/login"
-            className="login-btn inline-flex items-center justify-center h-9 px-4 text-sm font-medium rounded-md bg-secondary text-secondary-foreground transition-all"
-          >
-            Log in
-          </a>
-          <a href="https://app.superhands.ai/signup">
-            <Button size="sm" className="rounded-md">
-              Get started
-            </Button>
-          </a>
-        </div>
-      </div>
-    </header>
-  );
-}
+import { cn } from "@/lib/utils";
 
 function HeroSection() {
   return (
-    <section className="mx-auto max-w-4xl px-6 pt-24 pb-16 text-center animate-fade-in-up">
-      <p className="text-sm font-medium text-muted-foreground mb-6">
-        Design review for the AI era
-      </p>
-      <h1 className="font-space-grotesk text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
-        Design review that lives{" "}
-        <br className="hidden sm:block" />
-        where the code does
+    <section className="mx-auto max-w-6xl px-6 pt-12 pb-20 text-center animate-fade-in-up">
+      <h1 className="font-space-grotesk text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-bold leading-[110%] tracking-tight mb-6">
+        Design review that ships
+        <br />
+        with the code
       </h1>
-      <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10">
-        Every PR changes your product. Your designers have never been in the room. Until now.
+      <p className="max-w-2xl mx-auto text-[22px] leading-[140%] text-muted-foreground mb-10">
+        See what&apos;s changing in each pull request and make final design edits before merge.
       </p>
       <div className="flex flex-col items-center gap-3">
-        <a href="https://app.superhands.ai/signup">
-          <Button size="lg" className="rounded-md px-8 text-base h-12">
-            Get started
-          </Button>
-        </a>
-        <p className="text-xs text-muted-foreground">
-          No credit card required · Connect your repo in minutes
-        </p>
+        <Button
+          asChild
+          size="lg"
+          className="w-[240px] rounded-[14px] px-20 has-[>svg]:px-20 text-base h-12 hover:scale-[0.98]"
+        >
+          <a href="https://app.superhands.ai/signup" data-hero-cta>
+            Request Access
+            <ArrowRight className="size-4 shrink-0" aria-hidden />
+          </a>
+        </Button>
       </div>
     </section>
   );
 }
 
-function PRTag({ children, className }: { children: React.ReactNode; className?: string }) {
+function ProductDemoMockup() {
   return (
-    <span
-      className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium ${className ?? "bg-secondary text-secondary-foreground"}`}
-    >
-      {children}
-    </span>
+    <section className="mx-auto max-w-6xl px-6 animate-fade-in-up animation-delay-200">
+      <div
+        className="w-full rounded-2xl border border-border bg-muted/50 p-2 shadow-xl"
+        role="img"
+        aria-label="Product demo placeholder"
+      >
+        <div className="aspect-[16/10] w-full rounded-xl bg-zinc-100 dark:bg-zinc-950/80" />
+      </div>
+    </section>
   );
 }
 
-function ProductDemoMockup() {
+function PullRequestFlowSection() {
+  const flowArrow = (
+    <span
+      className="text-muted-foreground/60 select-none shrink-0 text-lg md:text-xl leading-none -translate-y-1"
+      aria-hidden
+    >
+      →
+    </span>
+  );
+
   return (
-    <section className="mx-auto max-w-6xl px-6 pb-24 animate-fade-in-up animation-delay-200">
-      <div className="rounded-2xl border border-border bg-card shadow-xl overflow-hidden">
-        {/* Top: two-panel layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr]">
-          {/* Left panel — PR list */}
-          <div className="border-b lg:border-b-0 lg:border-r border-border bg-card">
-            {/* Sidebar header */}
-            <div className="px-4 pt-4 pb-3 border-b border-border">
-              <div className="flex items-center gap-2 mb-3">
-                <img src="/logo.svg" alt="" className="w-5 h-5 logo-invert" />
-                <span className="text-sm font-semibold">Superhands</span>
-              </div>
-              <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                <span>acme/web-app</span>
-                <span className="px-1.5 py-0.5 rounded bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 text-[10px] font-semibold">
-                  JS
-                </span>
-              </div>
-            </div>
-            {/* PR list header */}
-            <div className="px-4 pt-4 pb-2">
-              <div className="flex items-center justify-between mb-1">
-                <h3 className="text-sm font-semibold">Pull Requests</h3>
-              </div>
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs text-muted-foreground">acme/web-app</span>
-                <button className="text-[11px] font-medium text-primary flex items-center gap-1">
-                  <span>+</span>Start a change
-                </button>
-              </div>
-              <div className="flex gap-1 mb-3">
-                {["All", "Needs Review", "Reviewed"].map((tab, i) => (
-                  <span
-                    key={tab}
-                    className={`text-[11px] px-2.5 py-1 rounded-md font-medium ${i === 0 ? "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground"}`}
-                  >
-                    {tab}
-                  </span>
-                ))}
-              </div>
-            </div>
-            {/* PR items */}
-            <div className="divide-y divide-border">
-              {[
-                {
-                  title: "Redesign checkout flow for mobile",
-                  tags: ["User flow & journey", "Interactive elements"],
-                  author: "MC",
-                  time: "4d",
-                  files: 12,
-                  active: true,
-                },
-                {
-                  title: "Fix mobile nav menu overlap",
-                  tags: ["Layout & spacing", "Visual style"],
-                  author: "SP",
-                  time: "2d",
-                  files: 4,
-                },
-                {
-                  title: "Update onboarding welcome copy",
-                  tags: ["Copy & content"],
-                  author: "JL",
-                  time: "1d",
-                  files: 2,
-                },
-                {
-                  title: "Add profile settings page",
-                  tags: ["Component changes"],
-                  author: "NP",
-                  time: "3d",
-                  files: 9,
-                  isNew: true,
-                },
-              ].map((pr) => (
-                <div
-                  key={pr.title}
-                  className={`px-4 py-3 cursor-default ${pr.active ? "bg-secondary/60" : "hover:bg-secondary/30"}`}
-                >
-                  <div className="flex items-start justify-between gap-2 mb-1.5">
-                    <p className="text-sm font-medium leading-snug">{pr.title}</p>
-                    {pr.isNew && (
-                      <span className="shrink-0 text-[10px] font-semibold text-green-600 dark:text-green-400 bg-green-500/15 px-1.5 py-0.5 rounded">
-                        New
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex flex-wrap gap-1.5 mb-1.5">
-                    {pr.tags.map((tag) => (
-                      <PRTag key={tag}>{tag}</PRTag>
-                    ))}
-                  </div>
-                  <p className="text-[11px] text-muted-foreground">
-                    {pr.author} · {pr.time} · {pr.files} files
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right panel — PR detail */}
-          <div className="bg-card">
-            {/* Preview bar */}
-            <div className="px-5 pt-4 pb-3 border-b border-border">
-              <div className="flex items-center gap-3 mb-3">
-                <div className="flex rounded-md overflow-hidden border border-border text-[11px] font-medium">
-                  <span className="px-3 py-1 bg-secondary text-foreground">Before</span>
-                  <span className="px-3 py-1 bg-primary text-primary-foreground">New</span>
-                </div>
-                <span className="text-xs text-muted-foreground font-mono">feat/checkout-redesign</span>
-              </div>
-              {/* Mock browser preview */}
-              <div className="rounded-lg border border-border bg-background overflow-hidden">
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary/50 border-b border-border">
-                  <div className="flex gap-1">
-                    <div className="w-2 h-2 rounded-full bg-red-400/60" />
-                    <div className="w-2 h-2 rounded-full bg-yellow-400/60" />
-                    <div className="w-2 h-2 rounded-full bg-green-400/60" />
-                  </div>
-                  <span className="text-[10px] text-muted-foreground font-mono ml-2">preview.superhands.dev</span>
-                </div>
-                <div className="p-6 flex flex-col items-center gap-3">
-                  <div className="w-full max-w-[200px] h-8 rounded-md border border-border bg-secondary/30 flex items-center px-3">
-                    <span className="text-[11px] text-muted-foreground">autocomplete</span>
-                  </div>
-                  <div className="px-6 py-2 rounded-md bg-primary text-primary-foreground text-xs font-medium">
-                    Complete order
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* PR detail content */}
-            <div className="px-5 py-4">
-              <h3 className="text-base font-semibold mb-1">Redesign checkout flow</h3>
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-[11px] font-mono text-muted-foreground bg-secondary px-2 py-0.5 rounded">
-                  feat/checkout-redesign
-                </span>
-              </div>
-              <div className="flex items-center gap-2 mb-4">
-                <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-[11px] font-semibold">
-                  MC
-                </div>
-                <div>
-                  <p className="text-sm font-medium">Marcus Chen</p>
-                  <p className="text-[11px] text-muted-foreground">4 days ago</p>
-                </div>
-              </div>
-              <div className="mb-4">
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1.5">
-                  What changed
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Checkout restructured to single page. Address autocomplete added. Fields stacked on mobile.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-1.5 mb-5">
-                <PRTag>User flow &amp; journey</PRTag>
-                <PRTag>Interactive elements</PRTag>
-                <PRTag>Layout &amp; spacing</PRTag>
-              </div>
-              <div className="flex flex-wrap gap-2 mb-5">
-                <button className="text-xs font-medium px-3 py-1.5 rounded-md border border-border hover:bg-secondary transition-colors">
-                  ✏ Edit in Superhands
-                </button>
-                <button className="text-xs font-medium px-3 py-1.5 rounded-md bg-green-500/15 text-green-600 dark:text-green-400 border border-green-500/20">
-                  ✓ Looks good
-                </button>
-                <button className="text-xs font-medium px-3 py-1.5 rounded-md bg-orange-500/15 text-orange-600 dark:text-orange-400 border border-orange-500/20">
-                  ⚑ Flag changes
-                </button>
-              </div>
-              {/* File list */}
-              <div>
-                <p className="text-xs font-semibold mb-2">Files</p>
-                <div className="text-[12px] font-mono text-muted-foreground space-y-0.5">
-                  <p className="font-medium text-foreground">src/components/</p>
-                  <p className="pl-4">CheckoutForm.tsx</p>
-                  <p className="pl-4">AddressInput.tsx</p>
-                  <p className="pl-4">OrderSummary.tsx</p>
-                  <p className="font-medium text-foreground mt-1.5">src/styles/</p>
-                  <p className="pl-4">checkout.module.css</p>
-                </div>
-              </div>
-            </div>
+    <section className="mx-auto max-w-6xl px-6 pt-20 pb-24 animate-fade-in-up animation-delay-250">
+      <h2 className="font-space-grotesk text-3xl sm:text-4xl font-bold tracking-tight text-center mb-12 max-w-3xl mx-auto text-balance">
+        Move the design review, upstream, where fixing things is still free.
+      </h2>
+      <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+        <div className="rounded-2xl border border-border bg-card px-8 md:px-10 py-12 md:py-14">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-8 text-center">
+            Old way
+          </p>
+          <div className="flex flex-wrap items-end justify-center gap-x-5 gap-y-4 text-base md:text-lg font-medium text-center tracking-tight">
+            <span>Open</span>
+            {flowArrow}
+            <span>Merge</span>
+            {flowArrow}
+            <span>Live</span>
+            {flowArrow}
+            <span className="inline-flex flex-col items-center gap-1">
+              <span
+                className="inline-flex items-center justify-center rounded-full bg-muted size-5 md:size-6 shrink-0 text-foreground shadow-sm"
+                aria-hidden
+              >
+                <X className="size-[55%] stroke-[3]" strokeWidth={3} aria-hidden />
+              </span>
+              <span>Feedback</span>
+            </span>
           </div>
         </div>
-
-        {/* Bottom editor bar */}
-        <div className="border-t border-border bg-card">
-          <div className="grid grid-cols-1 lg:grid-cols-[340px_1fr]">
-            {/* Left: mini preview */}
-            <div className="border-b lg:border-b-0 lg:border-r border-border p-4">
-              <span className="text-[11px] font-mono text-muted-foreground mb-2 block">feat/checkout-redesign</span>
-              <div className="rounded-lg border border-border bg-background p-4 flex justify-center">
-                <div className="px-5 py-1.5 rounded-md bg-primary text-primary-foreground text-xs font-medium">
-                  Complete order
-                </div>
-              </div>
+        <div className="rounded-2xl border border-primary/30 bg-primary/5 px-8 md:px-10 py-12 md:py-14">
+          <p className="text-xs font-semibold uppercase tracking-wider text-foreground mb-8 text-center">
+            New way
+          </p>
+          <div className="flex flex-wrap items-end justify-center gap-x-5 gap-y-4 text-base md:text-lg font-medium text-center tracking-tight">
+            <span>Open</span>
+            {flowArrow}
+            <span className="inline-flex flex-col items-center gap-1">
+              <LogoMark
+                className="h-5 w-5 md:h-6 md:w-6 shrink-0 logo-invert"
+                decorative
+              />
+              <span>Feedback</span>
+            </span>
+            {flowArrow}
+            <span>Merge</span>
+            {flowArrow}
+            <span className="inline-flex flex-col items-center gap-1">
+              <span
+                className="inline-flex items-center justify-center rounded-full bg-primary size-5 md:size-6 shrink-0 text-primary-foreground shadow-sm"
+                aria-hidden
+              >
+                <Check className="size-[55%] stroke-[2.75]" strokeWidth={2.75} aria-hidden />
+              </span>
+              <span>Live</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="mt-32">
+        <h3 className="font-space-grotesk text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight max-w-4xl mx-auto text-balance text-center">
+          Give your designers
+          <br />
+          Superhands
+        </h3>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-6 text-center text-balance">
+          Set up your repo once. Then designers can review every UI change in the PR, refine it in
+          Superhands, and approve before merge.
+        </p>
+        <div className="mt-16 md:mt-20 space-y-20 md:space-y-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center text-left rounded-2xl border border-border bg-card p-6 md:p-8">
+            <div
+              className="aspect-[4/3] w-full rounded-2xl border border-border bg-muted/40"
+              role="img"
+              aria-label="Demo placeholder"
+            />
+            <div>
+              <h4 className="font-space-grotesk text-2xl sm:text-3xl font-bold tracking-tight mb-5">
+                Demo what&apos;s changing
+              </h4>
+              <ul className="space-y-3 text-muted-foreground">
+                {["Preview changes", "Compare with live"].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-base">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-foreground shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-            {/* Right: editor */}
-            <div className="p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <img src="/logo.svg" alt="" className="w-4 h-4 logo-invert" />
-                <span className="text-xs font-semibold">Superhands</span>
-              </div>
-              <p className="text-sm font-medium mb-2">Describe what you want to change</p>
-              <div className="rounded-lg border border-border bg-secondary/30 px-4 py-3 mb-3">
-                <p className="text-sm text-muted-foreground">Describe a change...</p>
-              </div>
-              <p className="text-[11px] text-muted-foreground">
-                Raise PR — you&apos;re done here
-              </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center text-left rounded-2xl border border-border bg-card p-6 md:p-8">
+            <div
+              className="aspect-[4/3] w-full rounded-2xl border border-border bg-muted/40 md:order-2"
+              role="img"
+              aria-label="Demo placeholder"
+            />
+            <div className="md:order-1">
+              <h4 className="font-space-grotesk text-2xl sm:text-3xl font-bold tracking-tight mb-5">
+                Don&apos;t just flag it, fix it
+              </h4>
+              <ul className="space-y-3 text-muted-foreground">
+                {["Inspect UI details", "Edit yourself"].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-base">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-foreground shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-12 items-center text-left rounded-2xl border border-border bg-card p-6 md:p-8">
+            <div
+              className="aspect-[4/3] w-full rounded-2xl border border-border bg-muted/40"
+              role="img"
+              aria-label="Demo placeholder"
+            />
+            <div>
+              <h4 className="font-space-grotesk text-2xl sm:text-3xl font-bold tracking-tight mb-5">
+                Approve, ship right first time
+              </h4>
+              <ul className="space-y-3 text-muted-foreground">
+                {["Track all updates", "Raise product quality"].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-base">
+                    <span className="mt-2 w-1.5 h-1.5 rounded-full bg-foreground shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
@@ -301,15 +196,15 @@ function ProductDemoMockup() {
 
 function ProblemSection() {
   return (
-    <section className="mx-auto max-w-6xl px-6 py-24 animate-fade-in-up animation-delay-300">
+    <section className="mx-auto max-w-6xl px-6 py-24 border-t border-border animate-fade-in-up animation-delay-300">
       <div className="text-center mb-16">
-        <h2 className="font-space-grotesk text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+        <h2 className="font-space-grotesk text-2xl sm:text-3xl font-bold tracking-tight max-w-4xl mx-auto text-balance leading-snug mb-6">
+          You&apos;re out of the loop. Updates are being shipped. You open the product to find more
+          broken windows. More messages and more tickets.
+        </h2>
+        <h2 className="font-space-grotesk text-3xl sm:text-4xl font-bold tracking-tight">
           Design reviews shouldn&apos;t be a retrospective
         </h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Great design teams shouldn&apos;t find out what shipped by opening the product. But for
-          most teams, that&apos;s exactly what happens.
-        </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {[
@@ -337,6 +232,21 @@ function ProblemSection() {
             </p>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function CatchBeforeShipsSection() {
+  return (
+    <section className="mx-auto max-w-6xl px-6 py-24 animate-fade-in-up animation-delay-350">
+      <div className="text-center">
+        <h2 className="font-space-grotesk text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+          Catch it before it ships
+        </h2>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          Move the design review, upstream, where fixing things is still free.
+        </p>
       </div>
     </section>
   );
@@ -508,32 +418,68 @@ function ForEngineersSection() {
 
 function BottomCTA() {
   return (
-    <section className="mx-auto max-w-4xl px-6 py-24 text-center">
-      <h2 className="font-space-grotesk text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-        Designers and engineers.{" "}
-        <br className="hidden sm:block" />
-        Finally on the same cadence.
-      </h2>
-      <p className="text-muted-foreground mb-8">Start seeing what&apos;s shipping.</p>
-      <a href="https://app.superhands.ai/signup">
-        <Button size="lg" className="rounded-md px-8 text-base h-12">
-          Let&apos;s go
+    <>
+      <section className="mx-auto max-w-4xl px-6 py-24 text-center">
+        <h2 className="font-space-grotesk text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+          Designers and engineers.{" "}
+          <br className="hidden sm:block" />
+          Finally on the same cadence.
+        </h2>
+        <p className="text-muted-foreground mb-8">
+          See what&apos;s shipping, start fixing all those broken windows today
+        </p>
+        <Button
+          asChild
+          size="lg"
+          className="w-[200px] rounded-[14px] px-4 has-[>svg]:px-3 text-base h-12 hover:scale-[0.98] justify-center"
+        >
+          <a href="https://app.superhands.ai/signup" data-hero-cta>
+            Let&apos;s go
+            <ArrowRight className="size-4 shrink-0" aria-hidden />
+          </a>
         </Button>
-      </a>
-    </section>
+      </section>
+      <div className="w-full border-t border-border bg-background mt-16">
+        <FooterContent className="py-6 sm:py-8" />
+        <div className="border-t border-border">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-12 sm:pb-16 text-center">
+            <h2 className="font-space-grotesk text-4xl sm:text-5xl md:text-6xl font-bold leading-[110%] tracking-tight mb-6">
+              Design review inside the PR. Not scattered across Slack and Figma.
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Connect your repo once. After that, designers can see every UI change and refine it
+              themselves in the Superhands editor — no change to how you work.
+            </p>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Header />
-      <HeroSection />
-      <ProductDemoMockup />
-      <ProblemSection />
-      <FeaturesSection />
-      <ForEngineersSection />
-      <BottomCTA />
+    <div
+      className={cn(
+        "relative isolate min-h-screen text-foreground",
+        "has-[a[data-hero-cta]:hover]:[&_.logo-page-bg]:bg-muted/40",
+        "dark:has-[a[data-hero-cta]:hover]:[&_.logo-page-bg]:bg-muted/20",
+        "has-[a[data-hero-cta]:hover]:[&_.logo-page-watermark]:brightness-110",
+        "dark:has-[a[data-hero-cta]:hover]:[&_.logo-page-watermark]:brightness-125"
+      )}
+    >
+      <LogoMarkPageBackground />
+      <div className="relative z-10">
+        <MarketingHeader />
+        <HeroSection />
+        <ProductDemoMockup />
+        <PullRequestFlowSection />
+        <BottomCTA />
+        <ProblemSection />
+        <CatchBeforeShipsSection />
+        <FeaturesSection />
+        <ForEngineersSection />
+      </div>
     </div>
   );
 }

@@ -178,8 +178,16 @@ input.input-no-spinner[type="number"]::-webkit-inner-spin-button {
   animation-delay: 200ms;
 }
 
+.animation-delay-250 {
+  animation-delay: 250ms;
+}
+
 .animation-delay-300 {
   animation-delay: 300ms;
+}
+
+.animation-delay-350 {
+  animation-delay: 350ms;
 }
 
 .animation-delay-400 {
@@ -192,6 +200,30 @@ input.input-no-spinner[type="number"]::-webkit-inner-spin-button {
 
 .animation-delay-600 {
   animation-delay: 600ms;
+}
+
+/* Logo watermark (home hero): slow drift only — no opacity reveal (keeps mark visible) */
+@keyframes logoWatermarkDrift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(0.32vmin, -0.38vmin);
+  }
+  66% {
+    transform: translate(-0.26vmin, 0.3vmin);
+  }
+}
+
+.animate-logo-watermark-drift {
+  animation: logoWatermarkDrift 26s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-logo-watermark-drift {
+    animation: none;
+  }
 }
 
 /* Subtle pulse animation for glow effects */
@@ -208,21 +240,6 @@ input.input-no-spinner[type="number"]::-webkit-inner-spin-button {
 
 .animate-subtle-pulse {
   animation: subtlePulse 4s ease-in-out infinite;
-}
-
-/* Login button hover states */
-.login-btn {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.login-btn:hover {
-  background-color: #e4e4e7;
-  color: #1a1a1a;
-}
-
-.dark .login-btn:hover {
-  background-color: #3a3a3a;
-  color: #f5f5f5;
 }
 
 /* Logo invert for dark mode */
