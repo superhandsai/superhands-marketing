@@ -1992,22 +1992,6 @@ export default function LoadingAnimationsPage() {
   }, [showColorPicker, isMobile]);
 
   useEffect(() => {
-    // Hide footer on this page
-    const footer = document.querySelector('footer');
-    if (footer) {
-      footer.style.display = 'none';
-    }
-    
-    return () => {
-      // Restore footer when leaving page
-      const footer = document.querySelector('footer');
-      if (footer) {
-        footer.style.display = '';
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     const sentinel = stickySentinelRef.current;
     if (!sentinel) return;
 

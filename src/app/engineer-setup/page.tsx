@@ -19,15 +19,15 @@ function HeroSection() {
         themselves in the Superhands editor — no change to how you work.
       </p>
       <div className="flex flex-col items-center gap-3">
-        <Button asChild size="lg" className="group rounded-md px-8 text-base h-12">
-          <a href="https://app.superhands.ai/signup">
+        <a href="https://app.superhands.ai/signup">
+          <Button size="lg" className="group rounded-md px-8 text-base h-12">
             Request Access
             <ArrowRight
               className="size-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
               aria-hidden
             />
-          </a>
-        </Button>
+          </Button>
+        </a>
         <p className="text-xs text-muted-foreground">
           Takes about 5 minutes · No changes to your codebase
         </p>
@@ -135,15 +135,15 @@ function WorkflowSection() {
         </div>
       </div>
       <div className="text-center">
-        <Button asChild size="lg" className="group rounded-md px-8 text-base h-12">
-          <a href="https://app.superhands.ai/signup">
+        <a href="https://app.superhands.ai/signup">
+          <Button size="lg" className="group rounded-md px-8 text-base h-12">
             Request Access
             <ArrowRight
               className="size-4 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-0.5"
               aria-hidden
             />
-          </a>
-        </Button>
+          </Button>
+        </a>
       </div>
     </section>
   );
@@ -204,9 +204,11 @@ function BottomCTA() {
       <p className="text-muted-foreground mb-8">
         Set up once. Your designers handle the rest. Your PRs move faster.
       </p>
-      <Button asChild size="lg" className="rounded-md px-8 text-base h-12">
-        <a href="https://app.superhands.ai/signup">Let&apos;s go</a>
-      </Button>
+      <a href="https://app.superhands.ai/signup">
+        <Button size="lg" className="rounded-md px-8 text-base h-12">
+          Let&apos;s go
+        </Button>
+      </a>
     </section>
   );
 }

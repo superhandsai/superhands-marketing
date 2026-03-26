@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
 export function FooterContent({ className }: { className?: string }) {
@@ -9,8 +10,7 @@ export function FooterContent({ className }: { className?: string }) {
   return (
     <div className={cn('max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8', className)}>
       <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <img src="/logo.svg" alt="Superhands" className="w-6 h-6 logo-invert" />
+        <div className="flex items-center">
           <span className="text-sm text-muted-foreground">
             © {currentYear} Superhands. All rights reserved.
           </span>
@@ -44,8 +44,17 @@ export function FooterContent({ className }: { className?: string }) {
 }
 
 export function Footer() {
+  const pathname = usePathname();
+
+  if (pathname === '/loading-animations' || pathname === '/') {
+    return null;
+  }
+
   return (
-    <footer className="w-full border-t border-border bg-background mt-auto">
+    <footer
+      className="w-full border-t border-border bg-background mt-auto"
+      style={{ display: 'block' }}
+    >
       <FooterContent />
     </footer>
   );

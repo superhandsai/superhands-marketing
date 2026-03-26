@@ -10,13 +10,10 @@ import { cn } from "@/lib/utils";
 export function LogoMarkPageBackground({ className }: { className?: string }) {
   return (
     <>
-      <div
-        className="logo-page-bg fixed inset-0 z-0 bg-background transition-colors duration-500 ease-out motion-reduce:transition-none"
-        aria-hidden
-      />
+      <div className="fixed inset-0 z-0 bg-background" aria-hidden />
       <div
         className={cn(
-          "logo-page-watermark pointer-events-none fixed inset-0 z-[1] flex items-start justify-end overflow-hidden pt-0 pr-0 transition-[filter,opacity] duration-500 ease-out motion-reduce:transition-none",
+          "pointer-events-none fixed inset-0 z-[1] flex items-start justify-end overflow-hidden pt-0 pr-0",
           className
         )}
         aria-hidden
