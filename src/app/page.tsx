@@ -108,7 +108,7 @@ function PullRequestFlowSection() {
 
 function ForEngineersInlineSection() {
   return (
-    <section className="w-full bg-muted py-24 animate-fade-in-up animation-delay-275">
+    <section className="w-full bg-muted py-32 animate-fade-in-up animation-delay-275">
       <div className="mx-auto max-w-6xl px-6 text-center">
         <div
           className="mx-auto mb-4 h-20 w-20 rounded-full bg-background/70"
@@ -118,10 +118,12 @@ function ForEngineersInlineSection() {
         <p className="mx-auto inline-flex rounded-full bg-primary/10 px-3 py-1 text-sm font-semibold tracking-wide text-primary/90">
           For engineers
         </p>
-        <h3 className="mt-3 font-space-grotesk text-2xl sm:text-3xl font-bold tracking-tight">
-          Integrates with your current GitHub workflow
-        </h3>
-        <p className="mx-auto mt-5 max-w-2xl text-base text-muted-foreground leading-relaxed">
+        <h2 className="mt-6 font-space-grotesk text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.15]">
+          Integrates with your current
+          <br />
+          GitHub workflow
+        </h2>
+        <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground leading-relaxed">
           Keep your existing pull request process. Superhands adds design approval in the same
           flow, so engineers can see what has been approved before merging.
         </p>
