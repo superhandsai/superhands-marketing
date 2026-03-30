@@ -12,12 +12,19 @@ function useScrollProgress(ref: React.RefObject<HTMLElement | null>) {
     const onScroll = () => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // 0 when section center enters viewport bottom
-      // 1 when section center reaches 60% from top (completes quickly)
       const sectionCenter = rect.top + rect.height / 2;
-      const start = vh;       // center at viewport bottom
-      const end = vh * 0.6;   // center at 60% from top
-      const p = Math.min(1, Math.max(0, (start - sectionCenter) / (start - end)));
+      const start = vh;
+      const end = vh * 0.6;
+      const scrollP = Math.min(1, Math.max(0, (start - sectionCenter) / (start - end)));
+
+      // Also check if user is near the bottom of the page (mobile fallback)
+      const scrollY = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - vh;
+      const bottomP = maxScroll > 0 ? scrollY / maxScroll : 0;
+      // If within last 10% of page, ramp to 1
+      const bottomBoost = bottomP > 0.9 ? (bottomP - 0.9) / 0.1 : 0;
+
+      const p = Math.min(1, Math.max(scrollP, bottomBoost));
       setProgress(p);
     };
 
@@ -33,6 +40,7 @@ function SuperhandsTile({ progress }: { progress: number }) {
   const [flickerOpacity, setFlickerOpacity] = useState(0);
   const flickering = useRef(false);
   const settled = useRef(false);
+  const idleInterval = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (progress < 0.95) {
@@ -40,11 +48,15 @@ function SuperhandsTile({ progress }: { progress: number }) {
         settled.current = false;
         flickering.current = false;
         setFlickerOpacity(0);
+        if (idleInterval.current) {
+          clearInterval(idleInterval.current);
+          idleInterval.current = null;
+        }
       }
       return;
     }
     if (flickering.current || settled.current) return;
-    // progress passed threshold
+    // progress passed threshold — initial burst
     flickering.current = true;
 
     const seq = [0.45, 0.38, 0.4];
@@ -55,10 +67,25 @@ function SuperhandsTile({ progress }: { progress: number }) {
         if (i === seq.length - 1) {
           flickering.current = false;
           settled.current = true;
+          // Start idle looping flicker
+          let tick = 0;
+          idleInterval.current = setInterval(() => {
+            tick++;
+            // Gentle pulse between 0.35 and 0.42
+            const v = 0.385 + Math.sin(tick * 0.5) * 0.035;
+            setFlickerOpacity(v);
+          }, 200);
         }
       }, ms);
     });
   }, [progress]);
+
+  // Cleanup interval on unmount
+  useEffect(() => {
+    return () => {
+      if (idleInterval.current) clearInterval(idleInterval.current);
+    };
+  }, []);
 
   return (
     <div className="relative w-full" style={{ aspectRatio: "1 / 1" }} aria-hidden="true">
@@ -291,8 +318,10 @@ export function SetupFlowSection() {
           <SuperhandsTile progress={tileProgress} />
         </div>
 
-        {/* Bottom vertical connector: dot travels up toward tile */}
-        <ConnectorVertical className="w-6 h-20" progress={1 - dotProgress} id="cv-bottom" />
+        {/* Bottom vertical connector: dot travels up toward tile (path is top-to-bottom, so reverse progress and flip visually) */}
+        <div className="rotate-180">
+          <ConnectorVertical className="w-6 h-20" progress={dotProgress} id="cv-bottom" />
+        </div>
 
         <div className="self-end text-right">
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
