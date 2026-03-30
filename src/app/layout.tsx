@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
-import { ThemeProvider } from "@/providers/theme-provider";
 import { PostHogProvider } from "@/providers/posthog-provider";
 import { Footer } from "@/components/footer";
 
@@ -15,6 +15,19 @@ const inter = Inter({
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
+  display: "swap",
+});
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-plus-jakarta",
+  display: "swap",
+});
+
+const roobert = localFont({
+  src: "../../public/fonts/RoobertTRIAL-SemiBold-BF67243fd54213d.otf",
+  weight: "600",
+  variable: "--font-roobert",
   display: "swap",
 });
 
@@ -58,28 +71,13 @@ export default function RootLayout({
   const intercomAppId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID;
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${plusJakartaSans.variable} ${roobert.variable}`}>
       <body className={`font-sans antialiased flex flex-col min-h-screen`}>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function() {
-                try {
-                  var theme = localStorage.getItem('theme');
-                  var resolved = theme === 'light' ? 'light' : theme === 'dark' ? 'dark' : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-                  document.documentElement.classList.toggle('dark', resolved === 'dark');
-                } catch (e) {}
-              })();
-            `,
-          }}
-        />
         <PostHogProvider>
-          <ThemeProvider>
-            <main className="flex-1">
-              {children}
-            </main>
-            <Footer />
-          </ThemeProvider>
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
         </PostHogProvider>
         {intercomAppId && (
           <>

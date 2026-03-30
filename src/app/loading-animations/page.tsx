@@ -2,8 +2,8 @@
 
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Heart, Moon, Sun, Copy, Check, Code, X, ChevronDown, ChevronLeft, ChevronRight, Shuffle, RotateCcw, Plus, Sparkles, ZoomIn } from "lucide-react";
-import { useTheme } from "@/providers/theme-provider";
+import { Heart, Copy, Check, Code, X, ChevronDown, ChevronLeft, ChevronRight, Shuffle, RotateCcw, Plus, Sparkles, ZoomIn } from "lucide-react";
+
 
 // Logo motif paths (nav / logo.svg viewBox 0 0 76 80)
 const logoMotifPaths = [
@@ -915,7 +915,7 @@ function LogoAnimation({ variant, title, logoColor, customVariantCSS, groupTitle
   return (
     <>
       <div
-        className="flex flex-col items-center gap-4 p-6 bg-card/50 backdrop-blur-sm border border-border rounded-xl relative cursor-zoom-in hover:bg-card/70 hover:shadow-sm dark:hover:shadow-lg transition-all"
+        className="flex flex-col items-center gap-4 p-6 bg-card/50 backdrop-blur-sm border border-border rounded-xl relative cursor-zoom-in hover:bg-card/70 hover:shadow-sm transition-all"
         onClick={handleOpenModal}
       >
       <div className="flex items-center justify-between w-full gap-4">
@@ -1567,7 +1567,7 @@ function ColorPickerComponent({
             <button
               type="button"
               onClick={() => setShowFormatDropdown(!showFormatDropdown)}
-              className="text-xs px-2 py-2 border border-border/60 rounded-md bg-background text-foreground hover:bg-muted/50 transition-colors flex items-center gap-1.5 min-w-[60px] focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70"
+              className="text-xs px-2 py-2 border border-border/60 rounded-md bg-background text-foreground hover:bg-muted/50 transition-colors flex items-center gap-1.5 min-w-[60px] focus:outline-none focus:ring-0 focus:border-border/90"
             >
               <span>{formatOptions.find(opt => opt.value === colorFormat)?.label}</span>
               <ChevronDown className={`w-3 h-3 transition-transform ${showFormatDropdown ? 'rotate-180' : ''}`} />
@@ -1604,7 +1604,7 @@ function ColorPickerComponent({
                   }
                 }}
                 onFocus={(e) => e.target.select()}
-                className="flex-1 min-w-0 px-2 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70"
+                className="flex-1 min-w-0 px-2 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90"
                 placeholder="000000"
               />
               <div className="flex items-center gap-0.5 shrink-0">
@@ -1627,7 +1627,7 @@ function ColorPickerComponent({
                     }
                   }}
                   onFocus={(e) => e.target.select()}
-                  className="w-9 pl-1 pr-1 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70 text-left"
+                  className="w-9 pl-1 pr-1 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 text-left"
                   placeholder="%"
                   title="Opacity %"
                 />
@@ -1649,7 +1649,7 @@ function ColorPickerComponent({
                 onFocus={(e) => e.target.select()}
                 min="0"
                 max="255"
-                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70"
+                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90"
                 placeholder="R"
               />
               <input
@@ -1664,7 +1664,7 @@ function ColorPickerComponent({
                 onFocus={(e) => e.target.select()}
                 min="0"
                 max="255"
-                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70"
+                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90"
                 placeholder="G"
               />
               <input
@@ -1679,7 +1679,7 @@ function ColorPickerComponent({
                 onFocus={(e) => e.target.select()}
                 min="0"
                 max="255"
-                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70"
+                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90"
                 placeholder="B"
               />
               <div className="flex items-center gap-0.5 shrink-0">
@@ -1690,7 +1690,7 @@ function ColorPickerComponent({
                   onFocus={(e) => e.target.select()}
                   min="0"
                   max="100"
-                  className="input-no-spinner w-9 pl-1 pr-1 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70 text-left"
+                  className="input-no-spinner w-9 pl-1 pr-1 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 text-left"
                   placeholder="A"
                 />
                 <span className="text-xs text-muted-foreground">%</span>
@@ -1706,7 +1706,7 @@ function ColorPickerComponent({
                 onFocus={(e) => e.target.select()}
                 min="0"
                 max="360"
-                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70"
+                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90"
                 placeholder="H"
               />
               <input
@@ -1716,7 +1716,7 @@ function ColorPickerComponent({
                 onFocus={(e) => e.target.select()}
                 min="0"
                 max="100"
-                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70"
+                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90"
                 placeholder="S"
               />
               <input
@@ -1726,7 +1726,7 @@ function ColorPickerComponent({
                 onFocus={(e) => e.target.select()}
                 min="0"
                 max="100"
-                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70"
+                className="input-no-spinner flex-1 min-w-0 px-1.5 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90"
                 placeholder="L"
               />
               <div className="flex items-center gap-0.5 shrink-0">
@@ -1737,7 +1737,7 @@ function ColorPickerComponent({
                   onFocus={(e) => e.target.select()}
                   min="0"
                   max="100"
-                  className="input-no-spinner w-9 pl-1 pr-1 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 dark:focus:border-border/70 text-left"
+                  className="input-no-spinner w-9 pl-1 pr-1 py-2 text-xs border border-border/60 rounded-md bg-background text-foreground focus:outline-none focus:ring-0 focus:border-border/90 text-left"
                   placeholder="A"
                 />
                 <span className="text-xs text-muted-foreground">%</span>
@@ -1751,7 +1751,7 @@ function ColorPickerComponent({
 }
 
 export default function LoadingAnimationsPage() {
-  const { resolvedTheme, toggleTheme, setTheme } = useTheme();
+
   const [isNavStuck, setIsNavStuck] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
   // Initialize color picker state from localStorage, default to false
@@ -1783,12 +1783,7 @@ export default function LoadingAnimationsPage() {
   const pulseRef = useRef<HTMLHeadingElement>(null);
   const subtleRef = useRef<HTMLHeadingElement>(null);
   
-  // Default colors based on theme - flipped between modes
-  // Light mode: logo uses dark color (like foreground text)
-  // Dark mode: logo uses light color (like foreground text)
-  // These match the CSS variables: --foreground in light mode is dark, in dark mode is light
-  const defaultLightColor = "#1a1a1a"; // Dark color for light mode (matches --foreground in light mode)
-  const defaultDarkColor = "#f5f5f5"; // Light color for dark mode (matches --foreground in dark mode)
+  const defaultLogoColor = "#1a1a1a";
   
   // Initialize with defaults to avoid hydration mismatch; sync from localStorage after mount
   const [logoColor, setLogoColor] = useState<string>("");
@@ -1796,7 +1791,6 @@ export default function LoadingAnimationsPage() {
 
   const [mounted, setMounted] = useState(false);
   const hasInitializedThemeAndLogoRef = useRef(false);
-  const previousThemeRef = useRef<string | null>(null);
 
   // Track if this is a reload
   const isReloadRef = useRef<boolean | null>(null);
@@ -1883,24 +1877,21 @@ export default function LoadingAnimationsPage() {
   
   const generatorLogoRef = useRef<SVGSVGElement>(null);
   
-  // After mount: run once — on reload reset logo/theme; otherwise restore from localStorage or set default
+  // After mount: run once — on reload reset logo; otherwise restore from localStorage or set default
   useEffect(() => {
     if (typeof window === 'undefined' || hasInitializedThemeAndLogoRef.current) return;
     hasInitializedThemeAndLogoRef.current = true;
     const navEntry = performance.getEntriesByType?.("navigation")[0] as PerformanceNavigationTiming | undefined;
     if (navEntry?.type === "reload") {
       localStorage.removeItem("logo-color-override");
-      // Clear animation caches on hard reload
       localStorage.removeItem("custom-animations-cache");
       localStorage.removeItem("dynamic-variations-cache");
       localStorage.removeItem("custom-variant-css-cache");
       localStorage.removeItem("custom-animation-counter");
       localStorage.removeItem("used-animation-styles");
-      setTheme("system");
       isReloadRef.current = true;
       setUserHasSetColor(false);
-      setLogoColor(""); // Clear logoColor immediately on reload
-      // Reset state to empty
+      setLogoColor(defaultLogoColor);
       setCustomAnimations([]);
       setDynamicVariations({});
       setCustomVariantCSS({});
@@ -1913,10 +1904,10 @@ export default function LoadingAnimationsPage() {
         setUserHasSetColor(true);
       } else {
         setUserHasSetColor(false);
-        // Don't set logoColor here - wait for resolvedTheme to be available
+        setLogoColor(defaultLogoColor);
       }
     }
-  }, [setTheme]);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -2217,33 +2208,14 @@ export default function LoadingAnimationsPage() {
   const [hsl, setHsl] = useState(currentHsl);
   const colorChangeFromPickerRef = useRef(false);
 
-  // Set default color based on theme if user hasn't set one
-  // This runs when resolvedTheme becomes available or changes
+  // Set default color on mount if user hasn't set one
   useEffect(() => {
-    if (!mounted || !resolvedTheme) return;
-    
-    const defaultColor = resolvedTheme === "dark" ? defaultDarkColor : defaultLightColor;
-    
-    // On reload, always reset to default color based on resolvedTheme
-    if (isReloadRef.current === true) {
-      setLogoColor(defaultColor);
-      isReloadRef.current = null; // Reset flag after handling reload
-      previousThemeRef.current = resolvedTheme;
-      return;
+    if (!mounted) return;
+
+    if (!userHasSetColor && !logoColor) {
+      setLogoColor(defaultLogoColor);
     }
-    
-    // If user hasn't manually set a color, always use the default for current theme
-    if (!userHasSetColor) {
-      const themeChanged = previousThemeRef.current && previousThemeRef.current !== resolvedTheme;
-      
-      // Set default if: logoColor is empty, or theme changed (user hasn't manually set color, so update to new theme default)
-      if (!logoColor || themeChanged) {
-        setLogoColor(defaultColor);
-      }
-    }
-    
-    previousThemeRef.current = resolvedTheme;
-  }, [resolvedTheme, userHasSetColor, mounted]);
+  }, [mounted]);
 
   // Update HSL when logoColor changes from a source that doesn't go through onHslChange (e.g. hex input).
   // Skip when hex is white/black so we don't overwrite picker position with s:0.
@@ -2271,20 +2243,15 @@ export default function LoadingAnimationsPage() {
   };
 
   const handleResetColor = () => {
-    const defaultColor = resolvedTheme === "dark" ? defaultDarkColor : defaultLightColor;
-    const defaultHsl = hexToHsl(defaultColor);
-    setLogoColor(defaultColor);
-    setHsl({ ...defaultHsl, a: hsl.a }); // Keep current alpha
+    const defaultHsl = hexToHsl(defaultLogoColor);
+    setLogoColor(defaultLogoColor);
+    setHsl({ ...defaultHsl, a: hsl.a });
     setUserHasSetColor(false);
     localStorage.removeItem("logo-color-override");
   };
 
-  // Get default color based on current theme
   const getDefaultColor = () => {
-    if (resolvedTheme === "dark") return defaultDarkColor;
-    if (resolvedTheme === "light") return defaultLightColor;
-    // Fallback to system preference if theme not resolved yet
-    return typeof window !== 'undefined' && window.matchMedia("(prefers-color-scheme: dark)").matches ? defaultDarkColor : defaultLightColor;
+    return defaultLogoColor;
   };
 
   // Generate a new variant based on an existing base variant
@@ -3079,70 +3046,6 @@ export default function LoadingAnimationsPage() {
 
             {/* Logo Color Picker and Background Toggle Grouped */}
             <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-wrap justify-end flex-shrink-0">
-              {/* Theme Toggle - Hidden when color picker is open */}
-              {!showColorPicker ? (
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="flex items-center gap-1.5 sm:gap-2 px-1.5 sm:px-2 h-[28px] sm:h-[30px] rounded-full border border-border/80 bg-background hover:bg-background/80 transition-all py-0" suppressHydrationWarning>
-                  <div className="relative group/lightmode py-0 flex items-center">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setTheme("light");
-                      }}
-                      className="cursor-pointer hover:opacity-80 transition-opacity p-0.5 flex items-center justify-center"
-                      aria-label="Switch to light mode"
-                    >
-                      <Sun className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${resolvedTheme === "light" ? "text-foreground fill-foreground" : "text-muted-foreground"}`} />
-                    </button>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 text-xs font-medium text-popover-foreground bg-popover border border-border rounded shadow-lg whitespace-nowrap opacity-0 group-hover/lightmode:opacity-100 transition-opacity duration-200 delay-500 pointer-events-none z-50">
-                      {/* Border triangle */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-transparent border-b-border"></div>
-                      {/* Background triangle */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[1px] w-0 h-0 border-l-[4px] border-r-[4px] border-b-[4px] border-transparent border-b-popover"></div>
-                      Light
-                    </div>
-                  </div>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleTheme();
-                    }}
-                    className={`w-7 h-3.5 sm:w-8 sm:h-4 rounded-full relative transition-colors cursor-pointer hover:opacity-80 ${
-                      resolvedTheme === "dark" ? "bg-foreground" : ""
-                    }`}
-                    style={resolvedTheme === "dark" ? {} : { backgroundColor: 'var(--muted-foreground)' }}
-                    aria-label="Toggle theme"
-                  >
-                    <div
-                      className={`absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-card transition-transform ${
-                        resolvedTheme === "dark" ? "translate-x-4 sm:translate-x-[18px] border-0" : "translate-x-0.5 border border-border/50"
-                      }`}
-                      suppressHydrationWarning
-                    />
-                  </button>
-                  <div className="relative group/darkmode py-0 flex items-center">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setTheme("dark");
-                      }}
-                      className="cursor-pointer hover:opacity-80 transition-opacity p-0.5 flex items-center justify-center"
-                      aria-label="Switch to dark mode"
-                    >
-                      <Moon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${resolvedTheme === "dark" ? "text-foreground fill-foreground" : "text-muted-foreground"}`} />
-                    </button>
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 text-xs font-medium text-popover-foreground bg-popover border border-border rounded shadow-lg whitespace-nowrap opacity-0 group-hover/darkmode:opacity-100 transition-opacity duration-200 delay-500 pointer-events-none z-50">
-                      {/* Border triangle */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-transparent border-b-border"></div>
-                      {/* Background triangle */}
-                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[1px] w-0 h-0 border-l-[4px] border-r-[4px] border-b-[4px] border-transparent border-b-popover"></div>
-                      Dark
-                    </div>
-                  </div>
-                </div>
-              </div>
-              ) : null}
-
               {/* Color Picker - Hidden when color picker is open on desktop, visible on mobile */}
               {!showColorPicker || isMobile ? (
               <div className="flex items-center gap-1.5 sm:gap-2">
@@ -3159,7 +3062,7 @@ export default function LoadingAnimationsPage() {
                     onMouseDown={(e) => {
                       e.stopPropagation();
                     }}
-                    className={`relative flex items-center justify-center gap-1 rounded-full border border-border/60 bg-background hover:bg-muted/50 hover:border-border/90 dark:hover:border-border/70 focus:outline-none focus:ring-0 transition-colors cursor-pointer ${
+                    className={`relative flex items-center justify-center gap-1 rounded-full border border-border/60 bg-background hover:bg-muted/50 hover:border-border/90 focus:outline-none focus:ring-0 transition-colors cursor-pointer ${
                       showColorPicker && isMobile 
                         ? 'p-1 aspect-square w-7 h-7' 
                         : showColorPicker && !isMobile 
@@ -3457,67 +3360,6 @@ export default function LoadingAnimationsPage() {
                 colorFormat={colorFormat}
                 onFormatChange={setColorFormat}
               />
-              {/* Divider */}
-              <div className="border-t border-border my-4"></div>
-              {/* Theme Toggle */}
-              <div className="flex items-center justify-center mb-4">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <div className="flex items-center gap-1.5 sm:gap-2 px-1.5 sm:px-2 h-[28px] sm:h-[30px] rounded-full border border-border/80 bg-background hover:bg-background/80 transition-all py-0" suppressHydrationWarning>
-                    <div className="relative group/lightmode py-0 flex items-center">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setTheme("light");
-                        }}
-                        className="cursor-pointer hover:opacity-80 transition-opacity p-0.5 flex items-center justify-center"
-                        aria-label="Switch to light mode"
-                      >
-                        <Sun className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${resolvedTheme === "light" ? "text-foreground fill-foreground" : "text-muted-foreground"}`} />
-                      </button>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 text-xs font-medium text-popover-foreground bg-popover border border-border rounded shadow-lg whitespace-nowrap opacity-0 group-hover/lightmode:opacity-100 transition-opacity duration-200 delay-500 pointer-events-none z-50">
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-transparent border-b-border"></div>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[1px] w-0 h-0 border-l-[4px] border-r-[4px] border-b-[4px] border-transparent border-b-popover"></div>
-                        Light
-                      </div>
-                    </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleTheme();
-                      }}
-                      className={`w-7 h-3.5 sm:w-8 sm:h-4 rounded-full relative transition-colors cursor-pointer hover:opacity-80 ${
-                        resolvedTheme === "dark" ? "bg-foreground" : ""
-                      }`}
-                      style={resolvedTheme === "dark" ? {} : { backgroundColor: 'var(--muted-foreground)' }}
-                      aria-label="Toggle theme"
-                    >
-                      <div
-                        className={`absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-card transition-transform ${
-                          resolvedTheme === "dark" ? "translate-x-4 sm:translate-x-[18px] border-0" : "translate-x-0.5 border border-border/50"
-                        }`}
-                        suppressHydrationWarning
-                      />
-                    </button>
-                    <div className="relative group/darkmode py-0 flex items-center">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setTheme("dark");
-                        }}
-                        className="cursor-pointer hover:opacity-80 transition-opacity p-0.5 flex items-center justify-center"
-                        aria-label="Switch to dark mode"
-                      >
-                        <Moon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${resolvedTheme === "dark" ? "text-foreground fill-foreground" : "text-muted-foreground"}`} />
-                      </button>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 text-xs font-medium text-popover-foreground bg-popover border border-border rounded shadow-lg whitespace-nowrap opacity-0 group-hover/darkmode:opacity-100 transition-opacity duration-200 delay-500 pointer-events-none z-50">
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-transparent border-b-border"></div>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[1px] w-0 h-0 border-l-[4px] border-r-[4px] border-b-[4px] border-transparent border-b-popover"></div>
-                        Dark
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -3621,67 +3463,6 @@ export default function LoadingAnimationsPage() {
                 colorFormat={colorFormat}
                 onFormatChange={setColorFormat}
               />
-              {/* Divider */}
-              <div className="w-full border-t border-border my-4"></div>
-              {/* Theme Toggle */}
-              <div className="flex items-center justify-center">
-                <div className="flex items-center gap-1.5 sm:gap-2">
-                  <div className="flex items-center gap-1.5 sm:gap-2 px-1.5 sm:px-2 h-[28px] sm:h-[30px] rounded-full border border-border/80 bg-background hover:bg-background/80 transition-all py-0" suppressHydrationWarning>
-                    <div className="relative group/lightmode py-0 flex items-center">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setTheme("light");
-                        }}
-                        className="cursor-pointer hover:opacity-80 transition-opacity p-0.5 flex items-center justify-center"
-                        aria-label="Switch to light mode"
-                      >
-                        <Sun className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${resolvedTheme === "light" ? "text-foreground fill-foreground" : "text-muted-foreground"}`} />
-                      </button>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 text-xs font-medium text-popover-foreground bg-popover border border-border rounded shadow-lg whitespace-nowrap opacity-0 group-hover/lightmode:opacity-100 transition-opacity duration-200 delay-500 pointer-events-none z-50">
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-transparent border-b-border"></div>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[1px] w-0 h-0 border-l-[4px] border-r-[4px] border-b-[4px] border-transparent border-b-popover"></div>
-                        Light
-                      </div>
-                    </div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleTheme();
-                      }}
-                      className={`w-7 h-3.5 sm:w-8 sm:h-4 rounded-full relative transition-colors cursor-pointer hover:opacity-80 ${
-                        resolvedTheme === "dark" ? "bg-foreground" : ""
-                      }`}
-                      style={resolvedTheme === "dark" ? {} : { backgroundColor: 'var(--muted-foreground)' }}
-                      aria-label="Toggle theme"
-                    >
-                      <div
-                        className={`absolute top-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-card transition-transform ${
-                          resolvedTheme === "dark" ? "translate-x-4 sm:translate-x-[18px] border-0" : "translate-x-0.5 border border-border/50"
-                        }`}
-                        suppressHydrationWarning
-                      />
-                    </button>
-                    <div className="relative group/darkmode py-0 flex items-center">
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setTheme("dark");
-                        }}
-                        className="cursor-pointer hover:opacity-80 transition-opacity p-0.5 flex items-center justify-center"
-                        aria-label="Switch to dark mode"
-                      >
-                        <Moon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors ${resolvedTheme === "dark" ? "text-foreground fill-foreground" : "text-muted-foreground"}`} />
-                      </button>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1.5 px-2 py-1 text-xs font-medium text-popover-foreground bg-popover border border-border rounded shadow-lg whitespace-nowrap opacity-0 group-hover/darkmode:opacity-100 transition-opacity duration-200 delay-500 pointer-events-none z-50">
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[5px] border-r-[5px] border-b-[5px] border-transparent border-b-border"></div>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-[1px] w-0 h-0 border-l-[4px] border-r-[4px] border-b-[4px] border-transparent border-b-popover"></div>
-                        Dark
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         )}

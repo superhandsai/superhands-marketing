@@ -35,7 +35,7 @@ export function MarketingHeader({ trailingNav }: MarketingHeaderProps) {
       <div className="mx-auto max-w-6xl flex items-center justify-between px-6 py-3">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2.5">
-            <LogoMark className="h-7 w-7 logo-invert" decorative />
+            <LogoMark className="h-7 w-7" decorative />
             <span className="text-lg font-medium tracking-tight">Superhands</span>
           </Link>
         </div>
@@ -43,13 +43,13 @@ export function MarketingHeader({ trailingNav }: MarketingHeaderProps) {
           {trailingNav}
           <a
             href="https://app.superhands.ai/login"
-            className="inline-flex items-center h-9 px-2 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground dark:text-white dark:hover:text-white/70"
+            className="inline-flex items-center h-9 px-2 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground"
           >
             Log in
           </a>
           <a
             href="https://app.superhands.ai/signup"
-            className="group inline-flex items-center gap-1 h-9 px-2 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground dark:text-white dark:hover:text-white/70"
+            className="group inline-flex items-center gap-1 h-9 px-2 text-sm font-medium text-foreground transition-colors hover:text-muted-foreground"
           >
             Request Access
             <ArrowRight
