@@ -1,5 +1,17 @@
 @import "tailwindcss";
 
+/* Hide video controls on superwhite HDR video */
+video.superwhite-video::-webkit-media-controls,
+video.superwhite-video::-webkit-media-controls-enclosure,
+video.superwhite-video::-webkit-media-controls-panel,
+video.superwhite-video::-webkit-media-controls-start-playback-button,
+video.superwhite-video::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 /* Fallback font stack for when Next.js font optimization is disabled */
 body {
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
