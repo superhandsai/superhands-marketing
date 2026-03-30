@@ -92,6 +92,63 @@ function SuperhandsTile({ progress }: { progress: number }) {
   );
 }
 
+// Vertical connector for mobile: straight line down
+const CV_PATH = "M12 0V120";
+
+function ConnectorVertical({ className, progress, id }: { className?: string; progress: number; id: string }) {
+  const pathRef = useRef<SVGPathElement>(null);
+  const [pos, setPos] = useState({ x: 12, y: 0 });
+
+  const updatePos = useCallback(() => {
+    const path = pathRef.current;
+    if (!path) return;
+    const len = path.getTotalLength();
+    const pt = path.getPointAtLength(progress * len);
+    setPos({ x: pt.x, y: pt.y });
+  }, [progress]);
+
+  useEffect(() => {
+    updatePos();
+  }, [updatePos]);
+
+  return (
+    <svg
+      className={className}
+      viewBox="-8 -8 40 136"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <filter id={`${id}-glow`} x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" colorInterpolationFilters="sRGB">
+          <feFlood floodOpacity="0" result="bg" />
+          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="a" />
+          <feOffset />
+          <feGaussianBlur stdDeviation="4" />
+          <feComposite in2="a" operator="out" />
+          <feColorMatrix type="matrix" values="0 0 0 0 0.749 0 0 0 0 0.933 0 0 0 0 0.988 0 0 0 1 0" />
+          <feBlend mode="normal" in2="bg" result="shadow" />
+          <feBlend mode="normal" in="SourceGraphic" in2="shadow" result="shape" />
+        </filter>
+        <radialGradient id={`${id}-dot`} cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) rotate(90) scale(4)">
+          <stop stopColor="#7AD7F0" />
+          <stop offset="1" stopColor="#31C1E8" />
+        </radialGradient>
+      </defs>
+      <path
+        ref={pathRef}
+        d={CV_PATH}
+        stroke="var(--landing-divider, #29292B)"
+        strokeOpacity="0.1"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <g filter={`url(#${id}-glow)`} transform={`translate(${pos.x}, ${pos.y})`} opacity={progress > 0.9 ? Math.max(0, (1 - progress) / 0.1) : 1}>
+        <circle cx="0" cy="0" r="4" fill={`url(#${id}-dot)`} />
+      </g>
+    </svg>
+  );
+}
+
 const CL_PATH = "M12 13V104C12 121.673 26.327 136 44 136H266";
 
 function ConnectorLeft({ className, progress }: { className?: string; progress: number }) {
@@ -215,25 +272,33 @@ export function SetupFlowSection() {
 
   return (
     <section ref={sectionRef} className="relative px-6 md:px-10 lg:px-16 py-16 md:py-24 max-w-[960px] mx-auto">
-      {/* Mobile: stacked layout */}
-      <div className="flex flex-col items-center gap-8 md:hidden">
+      {/* Mobile: stacked layout with vertical connectors */}
+      <div className="flex flex-col items-center md:hidden">
         <div className="self-start">
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             To set up
           </p>
-          <h2 className="mt-2 text-[28px] font-semibold leading-[1.1] font-heading">
+          <h2 className="mt-2 text-[24px] font-semibold leading-[1.1] font-heading">
             <span className="text-[var(--landing-fg)]">Connect Superhands to </span>
             <span className="text-[#51caeb]">GitHub</span>
           </h2>
         </div>
 
-        <SuperhandsTile progress={tileProgress} />
+        {/* Top vertical connector: dot travels down toward tile */}
+        <ConnectorVertical className="w-6 h-20" progress={dotProgress} id="cv-top" />
+
+        <div className="relative z-10 w-[130px]">
+          <SuperhandsTile progress={tileProgress} />
+        </div>
+
+        {/* Bottom vertical connector: dot travels up toward tile */}
+        <ConnectorVertical className="w-6 h-20" progress={1 - dotProgress} id="cv-bottom" />
 
         <div className="self-end text-right">
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             and bring
           </p>
-          <h2 className="mt-2 text-[28px] font-semibold leading-[1.1] font-heading">
+          <h2 className="mt-2 text-[24px] font-semibold leading-[1.1] font-heading">
             <span className="text-[#51caeb]">designers</span>
             <span className="text-[var(--landing-fg)]"> into the pull request flow.</span>
           </h2>
@@ -267,7 +332,7 @@ export function SetupFlowSection() {
         {/* Center tile */}
         <div
           className="absolute z-10 flex items-center justify-center"
-          style={{ left: "42.4%", right: `${100 - 57.6}%`, top: "50%", transform: "translateY(-50%)" }}
+          style={{ left: "39.7%", right: `${100 - 60.3}%`, top: "50%", transform: "translateY(-50%)" }}
         >
           <SuperhandsTile progress={tileProgress} />
         </div>
