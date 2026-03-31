@@ -72,22 +72,22 @@ const PAIN_POINTS = [
 
 export function ProblemSection() {
   return (
-    <section className="relative flex flex-col md:flex-row md:items-start gap-10 md:gap-16 lg:gap-24 px-6 md:px-10 pt-10 pb-8 md:pt-10 md:pb-20 max-w-[960px] mx-auto">
+    <section className="relative flex flex-col md:flex-row md:items-start gap-10 md:gap-20 px-6 md:px-10 pt-10 pb-8 md:pt-10 md:pb-20 max-w-[960px] mx-auto">
       {/* Heading */}
-      <h2 className="text-[28px] font-semibold leading-[1.1] font-heading max-w-[313px] shrink-0">
+      <h2 className="flex flex-col text-[28px] font-semibold leading-[1.1] font-heading md:flex-1">
         <span className="text-[var(--landing-fg)]">
           Design review is broken.{" "}
         </span>
-        <span className="text-[var(--landing-fg)]/50">
+        <span className="text-[var(--landing-fg)]/50 max-w-[260px]">
           It happens too late to matter.
         </span>
       </h2>
 
       {/* Pain points */}
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-8 md:flex-1 pt-2">
         {PAIN_POINTS.map(({ icon: Icon, text }) => (
-          <div key={text} className="flex items-start gap-4">
-            <Icon className="size-6 shrink-0 text-[var(--landing-fg)]" />
+          <div key={text} className="group flex items-start gap-4">
+            <Icon className="size-[22px] shrink-0 text-[var(--landing-fg)] transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-6" />
             <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[266px]">
               {text}
             </p>

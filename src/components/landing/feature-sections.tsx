@@ -26,7 +26,7 @@ function FeatureLayout({
             {subtext}
           </p>
         </div>
-        <div className="order-1 md:order-none shrink-0">{mockup}</div>
+        <div className="order-1 md:order-none shrink-0 overflow-hidden">{mockup}</div>
       </div>
     </section>
   );
@@ -46,7 +46,7 @@ function SeeMockup() {
       alt="Superhands PR list showing open design changes"
       width={410}
       height={410}
-      className="w-[410px] h-[410px]"
+      className="w-[410px] h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />
@@ -77,7 +77,7 @@ function ReviewMockup() {
       alt="Superhands browser inspection interface reviewing a live UI"
       width={410}
       height={410}
-      className="w-[410px] h-[410px]"
+      className="w-[410px] h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />
@@ -109,7 +109,7 @@ function FixMockup() {
       alt="Superhands style editor panel for refining UI without code"
       width={410}
       height={410}
-      className="w-[410px] h-[410px]"
+      className="w-[410px] h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />

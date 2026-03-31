@@ -8,24 +8,27 @@ import {
   FixSection,
 } from "@/components/landing/feature-sections";
 import { GitHubSection } from "@/components/landing/github-section";
+import { CtaSection } from "@/components/landing/cta-section";
 import { LandingFooter } from "@/components/landing/landing-footer";
 
 export default function HomePage() {
   return (
     <LandingShell>
       <section className="px-6 pt-8 pb-10 md:px-10 md:pt-10 md:pb-10 max-w-[960px] mx-auto">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/Header.png"
-          srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
-          sizes="(min-width: 768px) calc(100vw - var(--sidebar-w) - 80px), calc(100vw - 48px)"
-          alt="Superhands product interface showing design review workflow"
-          width={1524}
-          height={978}
-          className="w-full h-auto"
-          fetchPriority="high"
-          decoding="async"
-        />
+        <div className="overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/Header.png"
+            srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
+            sizes="(min-width: 768px) calc(100vw - var(--sidebar-w) - 80px), calc(100vw - 48px)"
+            alt="Superhands product interface showing design review workflow"
+            width={1524}
+            height={978}
+            className="w-full h-auto transition-transform duration-300 ease-out hover:scale-[1.01]"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </div>
       </section>
       <ProblemSection />
       <SetupFlowSection />
@@ -33,6 +36,7 @@ export default function HomePage() {
       <ReviewSection />
       <FixSection />
       <GitHubSection />
+      <CtaSection />
       <LandingFooter />
     </LandingShell>
   );
