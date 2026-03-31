@@ -1,6 +1,5 @@
 import "./landing.css";
 import { LandingShell } from "@/components/landing/landing-shell";
-import { HeroMockup } from "@/components/landing/hero-mockup";
 import { ProblemSection } from "@/components/landing/problem-section";
 import { SetupFlowSection } from "@/components/landing/setup-flow-section";
 import {
@@ -15,7 +14,18 @@ export default function HomePage() {
   return (
     <LandingShell>
       <section className="px-6 pt-8 pb-12 md:px-10 md:pt-10 md:pb-16">
-        <HeroMockup />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/Header.png"
+          srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
+          sizes="(min-width: 768px) calc(100vw - var(--sidebar-w) - 80px), calc(100vw - 48px)"
+          alt="Superhands product interface showing design review workflow"
+          width={1524}
+          height={978}
+          className="w-full h-auto"
+          fetchPriority="high"
+          decoding="async"
+        />
       </section>
       <ProblemSection />
       <SetupFlowSection />
