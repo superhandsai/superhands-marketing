@@ -227,10 +227,20 @@ input.input-no-spinner[type="number"]::-webkit-inner-spin-button {
 /* Tile HDR glow: soft opacity pulse (Chrome / non-Safari) */
 @keyframes tileGlowPulseSDR {
   0%, 100% {
-    opacity: 1;
+    opacity: 0.45;
   }
   50% {
-    opacity: 0.9;
+    opacity: 0.3;
+  }
+}
+
+/* Tile box shadow pulse for SDR active state */
+@keyframes tileBoxGlowPulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(81, 202, 235, 0.4), 0 0 60px rgba(81, 202, 235, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(81, 202, 235, 0.55), 0 0 80px rgba(81, 202, 235, 0.3);
   }
 }
 
