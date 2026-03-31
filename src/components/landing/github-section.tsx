@@ -8,7 +8,7 @@ function GitHubMockup() {
       alt="GitHub PR review showing Superhands bot approval with design changes"
       width={820}
       height={410}
-      className="w-full max-w-[840px] h-auto"
+      className="w-full h-auto"
       loading="lazy"
       decoding="async"
     />
@@ -29,7 +29,7 @@ export function GitHubSection() {
           opacity: 0.5,
         }}
       />
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col">
         <div>
           <p className="text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             For engineers
@@ -41,7 +41,7 @@ export function GitHubSection() {
 
         <GitHubMockup />
 
-        <p className="text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[291px] self-end md:text-right">
+        <p className="mt-12 text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[291px] self-end text-left">
           The design review happens in the PR, so your team doesn&rsquo;t need to change how they work.
         </p>
       </div>

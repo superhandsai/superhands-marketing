@@ -25,20 +25,22 @@ export function LandingFooter() {
 
       <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-6">
         <div className="flex items-center gap-6">
-          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] transition-opacity hover:opacity-70">
+          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             LinkedIn
           </a>
-          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] transition-opacity hover:opacity-70">
+          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             Privacy Policy
           </a>
-          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] transition-opacity hover:opacity-70">
+          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             Terms of Service
           </a>
         </div>
 
-        <p className="text-[14px] font-medium font-body text-[var(--landing-fg-secondary)]">
-          &copy; 2026&ensp;|&ensp;Shipped with Superhands
-        </p>
+        <div className="flex items-center gap-2 text-[14px] font-medium font-body text-[var(--landing-fg-secondary)]">
+          <span>&copy; 2026</span>
+          <span className="text-[10px]">|</span>
+          <span>Shipped with Superhands</span>
+        </div>
       </div>
     </footer>
   );

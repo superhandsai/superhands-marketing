@@ -39,25 +39,25 @@ const roobertMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Superhands - Stop waiting for engineering. Prototype, test, and validate ideas yourself.",
-  description: "Stop waiting for engineering. Prototype, test, and validate ideas yourself. Build and share interactive prototypes directly in your browser—no coding required.",
+  title: "Superhands — Pull requests for designers",
+  description: "Review and refine product changes before they ship. Superhands brings designers into your GitHub pull request workflow — see what's changing, review the UI in your browser, and fix it without writing code.",
   openGraph: {
-    title: "Superhands - Stop waiting for engineering. Prototype, test, and validate ideas yourself.",
-    description: "Stop waiting for engineering. Prototype, test, and validate ideas yourself. Build and share interactive prototypes directly in your browser—no coding required.",
+    title: "Superhands — Pull requests for designers",
+    description: "Review and refine product changes before they ship. Superhands brings designers into your GitHub pull request workflow — see what's changing, review the UI in your browser, and fix it without writing code.",
     type: "website",
     images: [
       {
         url: "/og.png",
         width: 1200,
         height: 630,
-        alt: "Superhands",
+        alt: "Superhands — Pull requests for designers",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Superhands - Stop waiting for engineering. Prototype, test, and validate ideas yourself.",
-    description: "Stop waiting for engineering. Prototype, test, and validate ideas yourself. Build and share interactive prototypes directly in your browser—no coding required.",
+    title: "Superhands — Pull requests for designers",
+    description: "Review and refine product changes before they ship. Superhands brings designers into your GitHub pull request workflow — see what's changing, review the UI in your browser, and fix it without writing code.",
     images: ["/og.png"],
   },
   icons: {

@@ -59,7 +59,7 @@ export function LandingSidebar() {
             opacity: 0.5,
           }}
         />
-        <div className="flex items-center gap-6 text-base font-medium leading-[1.44] text-[var(--landing-fg)] font-body">
+        <div className="flex items-center gap-[30px] text-base font-medium leading-[1.44] text-[var(--landing-fg)] font-body">
           <a
             href={LANDING_URLS.bookDemo}
             className="transition-opacity hover:opacity-70"
