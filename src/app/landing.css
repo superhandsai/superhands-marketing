@@ -16,6 +16,10 @@
   font-family: var(--font-roobert), sans-serif;
 }
 
+[data-landing] .font-heading-mono {
+  font-family: var(--font-roobert-mono), monospace;
+}
+
 [data-landing] .font-body {
   font-family: var(--font-plus-jakarta), sans-serif;
 }

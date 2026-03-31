@@ -15,7 +15,7 @@ export function LandingSidebar() {
             decorative
           />
           <span
-            className="text-lg font-medium tracking-[-0.36px] text-[var(--landing-fg)] font-heading"
+            className="text-lg font-medium tracking-[-0.7px] text-[var(--landing-fg)] font-heading-mono"
           >
             Superhands
           </span>
@@ -32,7 +32,7 @@ export function LandingSidebar() {
 
         {/* Subline */}
         <p
-          className="mt-2.5 text-base leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[266px]"
+          className="mt-2.5 text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[266px]"
         >
           Review and refine product changes before they ship.
         </p>
@@ -40,7 +40,7 @@ export function LandingSidebar() {
         {/* CTA */}
         <a
           href={LANDING_URLS.waitlist}
-          className="mt-5 inline-flex items-center justify-center self-start rounded-[14px] border border-[var(--landing-cta-border)] bg-gradient-to-b from-[var(--landing-cta-from)] to-[var(--landing-cta-to)] px-4 py-3 text-base font-semibold leading-[1.44] text-[var(--landing-cta-text)] font-body transition-opacity hover:opacity-90"
+          className="mt-5 inline-flex items-center justify-center self-start rounded-[14px] border border-[var(--landing-cta-border)] bg-gradient-to-b from-[var(--landing-cta-from)] to-[var(--landing-cta-to)] px-4 py-3 text-base font-semibold leading-[1.44] text-[var(--landing-cta-text)] font-body transition-all hover:opacity-90 hover:shadow-[0_4px_12px_rgba(3,22,28,0.04)]"
         >
           Join the Waitlist
         </a>
@@ -56,7 +56,7 @@ export function LandingSidebar() {
             backgroundSize: "8px 3px",
             backgroundRepeat: "repeat-x",
             height: "3px",
-            opacity: 0.25,
+            opacity: 0.5,
           }}
         />
         <div className="flex items-center gap-6 text-base font-medium leading-[1.44] text-[var(--landing-fg)] font-body">

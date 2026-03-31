@@ -10,7 +10,7 @@ export function LandingMobileHeader() {
           decorative
         />
         <span
-          className="text-base font-medium tracking-[-0.36px] text-[var(--landing-fg)] font-heading"
+          className="text-base font-medium tracking-[-0.7px] text-[var(--landing-fg)] font-heading-mono"
         >
           Superhands
         </span>

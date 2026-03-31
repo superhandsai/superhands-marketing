@@ -31,6 +31,13 @@ const roobert = localFont({
   display: "swap",
 });
 
+const roobertMono = localFont({
+  src: "../../public/fonts/RoobertMonoTRIAL-SemiBold-BF67243fd2c0028.otf",
+  weight: "600",
+  variable: "--font-roobert-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Superhands - Stop waiting for engineering. Prototype, test, and validate ideas yourself.",
   description: "Stop waiting for engineering. Prototype, test, and validate ideas yourself. Build and share interactive prototypes directly in your browser—no coding required.",
@@ -71,7 +78,7 @@ export default function RootLayout({
   const intercomAppId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID;
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${plusJakartaSans.variable} ${roobert.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${plusJakartaSans.variable} ${roobert.variable} ${roobertMono.variable}`}>
       <body className={`font-sans antialiased flex flex-col min-h-screen`}>
         <PostHogProvider>
           <main className="flex-1">

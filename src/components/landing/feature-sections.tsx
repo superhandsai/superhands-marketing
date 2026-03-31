@@ -1,21 +1,5 @@
 import type { ReactNode } from "react";
 
-function DottedDivider() {
-  return (
-    <div
-      className="absolute bottom-0 left-6 right-6 md:left-10 md:right-10 lg:left-16 lg:right-16"
-      style={{
-        backgroundImage:
-          "radial-gradient(circle, var(--landing-divider) 1px, transparent 1px)",
-        backgroundSize: "8px 3px",
-        backgroundRepeat: "repeat-x",
-        height: "3px",
-        opacity: 0.25,
-      }}
-    />
-  );
-}
-
 function FeatureLayout({
   heading,
   subtext,
@@ -44,7 +28,6 @@ function FeatureLayout({
         </div>
         <div className="order-1 md:order-none shrink-0">{mockup}</div>
       </div>
-      <DottedDivider />
     </section>
   );
 }

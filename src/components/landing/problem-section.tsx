@@ -103,7 +103,7 @@ export function ProblemSection() {
           backgroundSize: "8px 3px",
           backgroundRepeat: "repeat-x",
           height: "3px",
-          opacity: 0.25,
+          opacity: 0.5,
         }}
       />
     </section>
