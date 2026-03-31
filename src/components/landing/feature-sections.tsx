@@ -12,7 +12,7 @@ function FeatureLayout({
   reversed?: boolean;
 }) {
   return (
-    <section className="relative px-6 md:px-10 lg:px-16 py-20 md:py-28 max-w-[960px] mx-auto">
+    <section className="relative px-6 md:px-10 pt-10 pb-8 md:pt-20 md:pb-20 max-w-[960px] mx-auto">
       <div
         className={`flex flex-col items-center gap-10 md:gap-16 lg:gap-24 md:items-start ${
           reversed ? "md:flex-row-reverse" : "md:flex-row"

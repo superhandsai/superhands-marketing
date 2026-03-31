@@ -1,6 +1,6 @@
 export function LandingFooter() {
   return (
-    <footer className="px-6 md:px-10 lg:px-16 pb-10 pt-0 max-w-[960px] mx-auto relative overflow-visible">
+    <footer className="px-6 md:px-10 pb-10 pt-0 max-w-[960px] mx-auto relative overflow-visible">
       <div
         style={{
           backgroundImage:

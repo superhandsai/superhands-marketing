@@ -17,7 +17,18 @@ function GitHubMockup() {
 
 export function GitHubSection() {
   return (
-    <section className="relative px-6 md:px-10 lg:px-16 py-20 md:py-28 max-w-[960px] mx-auto">
+    <section className="relative px-6 md:px-10 pt-10 pb-8 md:pt-20 md:pb-[164px] max-w-[960px] mx-auto">
+      <div
+        className="absolute top-0 left-6 right-6 md:left-10 md:right-10"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, var(--landing-divider) 1px, transparent 1px)",
+          backgroundSize: "8px 3px",
+          backgroundRepeat: "repeat-x",
+          height: "3px",
+          opacity: 0.5,
+        }}
+      />
       <div className="flex flex-col gap-8">
         <div>
           <p className="text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">

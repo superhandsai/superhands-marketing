@@ -13,7 +13,7 @@ import { LandingFooter } from "@/components/landing/landing-footer";
 export default function HomePage() {
   return (
     <LandingShell>
-      <section className="px-6 pt-8 pb-12 md:px-10 md:pt-10 md:pb-16">
+      <section className="px-6 pt-8 pb-10 md:px-10 md:pt-10 md:pb-10">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/images/Header.png"

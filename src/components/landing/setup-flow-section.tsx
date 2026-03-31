@@ -466,7 +466,7 @@ export function SetupFlowSection() {
   const handleGlow = useCallback((opacity: number) => setGlowOpacity(opacity), []);
 
   return (
-    <section ref={sectionRef} className="relative px-6 md:px-10 lg:px-16 py-16 md:py-24 max-w-[960px] mx-auto">
+    <section ref={sectionRef} className="relative px-6 md:px-10 pt-10 pb-8 md:pt-20 md:pb-20 max-w-[960px] mx-auto">
       {/* Mobile: stacked layout with vertical connectors */}
       <div className="flex flex-col items-center md:hidden">
         <div className="self-start">
@@ -505,7 +505,7 @@ export function SetupFlowSection() {
       {/* Desktop: positioned illustration */}
       <div
         className="relative hidden md:block w-full"
-        style={{ aspectRatio: "816 / 470" }}
+        style={{ aspectRatio: "816 / 430" }}
       >
         {/* Top-left text */}
         <div className="absolute left-0 top-0 w-[34.3%]">
@@ -596,7 +596,7 @@ export function SetupFlowSection() {
 
       {/* Dotted divider */}
       <div
-        className="absolute bottom-0 left-6 right-6 md:left-10 md:right-10 lg:left-16 lg:right-16"
+        className="absolute bottom-0 left-6 right-6 md:left-10 md:right-10"
         style={{
           backgroundImage:
             "radial-gradient(circle, var(--landing-divider) 1px, transparent 1px)",

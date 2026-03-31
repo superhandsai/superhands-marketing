@@ -72,7 +72,7 @@ const PAIN_POINTS = [
 
 export function ProblemSection() {
   return (
-    <section className="relative flex flex-col md:flex-row md:items-start gap-10 md:gap-16 lg:gap-24 px-6 md:px-10 lg:px-16 py-20 md:py-28 max-w-[960px] mx-auto">
+    <section className="relative flex flex-col md:flex-row md:items-start gap-10 md:gap-16 lg:gap-24 px-6 md:px-10 pt-10 pb-8 md:pt-10 md:pb-20 max-w-[960px] mx-auto">
       {/* Heading */}
       <h2 className="text-[28px] font-semibold leading-[1.1] font-heading max-w-[313px] shrink-0">
         <span className="text-[var(--landing-fg)]">
@@ -96,7 +96,7 @@ export function ProblemSection() {
       </div>
       {/* Dotted divider */}
       <div
-        className="absolute bottom-0 left-6 right-6 md:left-10 md:right-10 lg:left-16 lg:right-16"
+        className="absolute bottom-0 left-6 right-6 md:left-10 md:right-10"
         style={{
           backgroundImage:
             "radial-gradient(circle, var(--landing-divider) 1px, transparent 1px)",
