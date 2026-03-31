@@ -214,6 +214,26 @@ input.input-no-spinner[type="number"]::-webkit-inner-spin-button {
   }
 }
 
+/* Tile HDR glow: soft opacity pulse (Safari) */
+@keyframes tileGlowPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* Tile HDR glow: soft opacity pulse (Chrome / non-Safari) */
+@keyframes tileGlowPulseSDR {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
 /* Subtle pulse animation for glow effects */
 @keyframes subtlePulse {
   0%, 100% {

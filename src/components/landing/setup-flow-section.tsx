@@ -61,82 +61,23 @@ const SafariHDRVideo = memo(function SafariHDRVideo() {
   );
 });
 
-function SuperhandsTile({ progress, isSafari, onGlow, onToggle }: { progress: number; isSafari: boolean; onGlow?: (opacity: number) => void; onToggle?: (off: boolean) => void }) {
-  const [flickerOpacity, setFlickerOpacity] = useState(0);
-  const settled = useRef(false);
-  const idleInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+function SuperhandsTile({ progress, isSafari, onGlow }: { progress: number; isSafari: boolean; onGlow?: (opacity: number) => void }) {
   const [pressed, setPressed] = useState(false);
-  const manualOff = useRef(false);
+  const glowActive = progress >= 0.95;
+  const [isHDR, setIsHDR] = useState(false);
 
   useEffect(() => {
-    if (manualOff.current) return;
-
-    if (isSafari) {
-      setFlickerOpacity(progress >= 0.95 ? 1 : 0);
-      return;
-    }
-
-    if (progress < 0.95) {
-      if (settled.current) {
-        settled.current = false;
-        setFlickerOpacity(0);
-        if (idleInterval.current) {
-          clearInterval(idleInterval.current);
-          idleInterval.current = null;
-        }
-      }
-      return;
-    }
-    if (settled.current) return;
-    // Start gentle pulse
-    settled.current = true;
-    let tick = 0;
-    idleInterval.current = setInterval(() => {
-      tick++;
-      const v = 0.39 + Math.sin(tick * 0.3) * 0.02;
-      setFlickerOpacity(v);
-    }, 100);
-  }, [progress, isSafari]);
-
-  // Easter egg: click to toggle lights
-  const handleClick = useCallback(() => {
-    if (!manualOff.current) {
-      manualOff.current = true;
-      onToggle?.(true);
-      if (idleInterval.current) {
-        clearInterval(idleInterval.current);
-        idleInterval.current = null;
-      }
-      settled.current = false;
-      setFlickerOpacity(0);
-    } else {
-      manualOff.current = false;
-      onToggle?.(false);
-      if (isSafari) {
-        setFlickerOpacity(1);
-      } else {
-        settled.current = true;
-        let tick = 0;
-        idleInterval.current = setInterval(() => {
-          tick++;
-          const v = 0.39 + Math.sin(tick * 0.3) * 0.02;
-          setFlickerOpacity(v);
-        }, 100);
-      }
-    }
-  }, [isSafari, onToggle]);
-
-  // Notify parent of opacity changes
-  useEffect(() => {
-    onGlow?.(flickerOpacity);
-  }, [flickerOpacity, onGlow]);
-
-  // Cleanup interval on unmount
-  useEffect(() => {
-    return () => {
-      if (idleInterval.current) clearInterval(idleInterval.current);
-    };
+    const mq = window.matchMedia("(dynamic-range: high)");
+    setIsHDR(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsHDR(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
   }, []);
+
+  // Notify parent when glow state changes
+  useEffect(() => {
+    onGlow?.(glowActive ? 0.4 : 0);
+  }, [glowActive, onGlow]);
 
   return (
     <div
@@ -146,7 +87,6 @@ function SuperhandsTile({ progress, isSafari, onGlow, onToggle }: { progress: nu
         transform: pressed ? "scale(0.94)" : "scale(1)",
         transition: "transform 0.12s cubic-bezier(0.2, 0, 0.2, 1)",
       }}
-      onClick={handleClick}
       onMouseDown={() => setPressed(true)}
       onMouseUp={() => setPressed(false)}
       onMouseLeave={() => setPressed(false)}
@@ -161,13 +101,50 @@ function SuperhandsTile({ progress, isSafari, onGlow, onToggle }: { progress: nu
         height={156}
         className="w-full h-auto"
       />
-      {/* Safari: clip-path + superwhite video */}
+      {/* SDR fallback: plain cyan masked to logo shape (visible on all screens) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundColor: "#51caeb",
+          maskImage: "url(/images/sh-logo-mask.svg)",
+          WebkitMaskImage: "url(/images/sh-logo-mask.svg)",
+          maskSize: "100% 100%",
+          WebkitMaskSize: "100% 100%",
+          maskRepeat: "no-repeat",
+          WebkitMaskRepeat: "no-repeat",
+          opacity: glowActive ? undefined : 0,
+          animation: glowActive ? `${isSafari ? "tileGlowPulse" : "tileGlowPulseSDR"} 4s ease-in-out infinite` : "none",
+        }}
+      />
+      {/* HDR boost: Chrome uses AVIF (only on HDR screens) */}
+      {isHDR && !isSafari && (
+        <div
+          className="absolute inset-0 pointer-events-none overflow-hidden"
+          style={{
+            backgroundColor: "#51caeb",
+            backgroundImage: "url(/images/hdr_pixel.avif)",
+            backgroundSize: "cover",
+            backgroundBlendMode: "multiply",
+            mixBlendMode: "lighten",
+            maskImage: "url(/images/sh-logo-mask.svg)",
+            WebkitMaskImage: "url(/images/sh-logo-mask.svg)",
+            maskSize: "100% 100%",
+            WebkitMaskSize: "100% 100%",
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
+            opacity: glowActive ? undefined : 0,
+            animation: glowActive ? "tileGlowPulseSDR 4s ease-in-out infinite" : "none",
+          }}
+        />
+      )}
+      {/* HDR boost: Safari uses superwhite video */}
       {isSafari && (
         <div
           className="absolute inset-0 pointer-events-none overflow-hidden"
           style={{
             clipPath: "url(#sh-logo-clip)",
-            opacity: flickerOpacity,
+            opacity: glowActive ? undefined : 0,
+            animation: glowActive ? "tileGlowPulse 4s ease-in-out infinite" : "none",
           }}
         >
           <svg className="absolute" width="0" height="0">
@@ -183,26 +160,6 @@ function SuperhandsTile({ progress, isSafari, onGlow, onToggle }: { progress: nu
             style={{ backgroundColor: "#51caeb", mixBlendMode: "multiply" }}
           />
         </div>
-      )}
-      {/* Non-Safari: mask-image + AVIF */}
-      {!isSafari && (
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{
-            backgroundColor: "#51caeb",
-            backgroundImage: "url(/images/hdr_pixel.avif)",
-            backgroundSize: "cover",
-            backgroundBlendMode: "multiply",
-            mixBlendMode: "lighten",
-            maskImage: "url(/images/sh-logo-mask.svg)",
-            WebkitMaskImage: "url(/images/sh-logo-mask.svg)",
-            maskSize: "100% 100%",
-            WebkitMaskSize: "100% 100%",
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-            opacity: flickerOpacity,
-          }}
-        />
       )}
     </div>
   );
@@ -421,7 +378,6 @@ function HDRText({ children, isSafari, opacity }: { children: React.ReactNode; i
             WebkitBackgroundClip: "text",
             backgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            mixBlendMode: "lighten",
             opacity: opacity,
           }}
         >
@@ -442,26 +398,9 @@ export function SetupFlowSection() {
     setIsSafari(/Safari/.test(ua) && !/Chrome/.test(ua));
   }, []);
 
-  // Easter egg toggle
-  const [lightsOff, setLightsOff] = useState(false);
-  const handleToggle = useCallback((off: boolean) => setLightsOff(off), []);
-
   // Both dots travel toward center
   const dotProgress = Math.min(1, progress / 0.75);
-  const scrollActive = dotProgress >= 0.95;
-
-  // Reset manual override when user scrolls away and back
-  const wasActive = useRef(false);
-  useEffect(() => {
-    if (!scrollActive) {
-      wasActive.current = false;
-    } else if (!wasActive.current) {
-      wasActive.current = true;
-      if (lightsOff) setLightsOff(false);
-    }
-  }, [scrollActive, lightsOff]);
-
-  const tileProgress = lightsOff ? 0 : (scrollActive ? 1 : 0);
+  const tileProgress = dotProgress >= 0.95 ? 1 : 0;
   const [glowOpacity, setGlowOpacity] = useState(0);
   const handleGlow = useCallback((opacity: number) => setGlowOpacity(opacity), []);
 
@@ -475,7 +414,7 @@ export function SetupFlowSection() {
           </p>
           <h2 className="mt-2 text-[24px] font-semibold leading-[1.1] font-heading">
             <span className="text-[var(--landing-fg)]">Connect Superhands to </span>
-            <HDRText isSafari={isSafari} opacity={glowOpacity}>GitHub</HDRText>
+            <span className="text-[#51caeb]">GitHub</span>
           </h2>
         </div>
 
@@ -483,7 +422,7 @@ export function SetupFlowSection() {
         <ConnectorVertical className="w-6 h-20" progress={dotProgress} id="cv-top" glow={glowOpacity} />
 
         <div className="relative z-10 w-[130px]">
-          <SuperhandsTile progress={tileProgress} isSafari={isSafari} onGlow={handleGlow} onToggle={handleToggle} />
+          <SuperhandsTile progress={tileProgress} isSafari={isSafari} onGlow={handleGlow} />
         </div>
 
         {/* Bottom vertical connector: dot travels up toward tile */}
@@ -496,7 +435,7 @@ export function SetupFlowSection() {
             and bring
           </p>
           <h2 className="mt-2 text-[24px] font-semibold leading-[1.1] font-heading">
-            <HDRText isSafari={isSafari} opacity={glowOpacity}>designers</HDRText>
+            <span className="text-[#51caeb]">designers</span>
             <span className="text-[var(--landing-fg)]"> into the pull request flow.</span>
           </h2>
         </div>
@@ -514,7 +453,7 @@ export function SetupFlowSection() {
           </p>
           <h2 className="mt-2 text-[28px] font-semibold leading-[1.1] font-heading">
             <span className="text-[var(--landing-fg)]">Connect Superhands to </span>
-            <HDRText isSafari={isSafari} opacity={glowOpacity}>GitHub</HDRText>
+            <span className="text-[#51caeb]">GitHub</span>
           </h2>
         </div>
 
@@ -524,26 +463,6 @@ export function SetupFlowSection() {
           style={{ left: "10.8%", top: "22.1%", width: "39.2%", height: "27.2%" }}
         >
           <ConnectorLeft className="size-full" progress={dotProgress} glow={glowOpacity} />
-          {/* HDR line overlay (Chrome only) */}
-          {glowOpacity > 0 && !isSafari && (
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                backgroundImage: "url(/images/hdr_pixel.avif)",
-                backgroundSize: "cover",
-                backgroundColor: "#51caeb",
-                backgroundBlendMode: "multiply",
-                mixBlendMode: "lighten",
-                maskImage: `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='-8 -8 283 153'><path d='${CL_PATH}' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/></svg>`)}")`,
-                WebkitMaskImage: `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='-8 -8 283 153'><path d='${CL_PATH}' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/></svg>`)}")`,
-                maskSize: "100% 100%",
-                WebkitMaskSize: "100% 100%",
-                maskRepeat: "no-repeat",
-                WebkitMaskRepeat: "no-repeat",
-                opacity: glowOpacity,
-              }}
-            />
-          )}
         </div>
 
         {/* Center tile */}
@@ -551,7 +470,7 @@ export function SetupFlowSection() {
           className="absolute z-10 flex items-center justify-center"
           style={{ left: "39.7%", right: `${100 - 60.3}%`, top: "50%", transform: "translateY(-50%)" }}
         >
-          <SuperhandsTile progress={tileProgress} isSafari={isSafari} onGlow={handleGlow} onToggle={handleToggle} />
+          <SuperhandsTile progress={tileProgress} isSafari={isSafari} onGlow={handleGlow} />
         </div>
 
         {/* Right connector */}
@@ -560,26 +479,6 @@ export function SetupFlowSection() {
           style={{ left: "50%", top: "49.4%", width: "39.7%", height: "27.3%" }}
         >
           <ConnectorRight className="size-full" progress={dotProgress} glow={glowOpacity} />
-          {/* HDR line overlay (Chrome only) */}
-          {glowOpacity > 0 && !isSafari && (
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                backgroundImage: "url(/images/hdr_pixel.avif)",
-                backgroundSize: "cover",
-                backgroundColor: "#51caeb",
-                backgroundBlendMode: "multiply",
-                mixBlendMode: "lighten",
-                maskImage: `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='-8 -8 283 154'><path d='${CR_PATH}' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/></svg>`)}")`,
-                WebkitMaskImage: `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='-8 -8 283 154'><path d='${CR_PATH}' stroke='white' stroke-width='2' fill='none' stroke-linecap='round'/></svg>`)}")`,
-                maskSize: "100% 100%",
-                WebkitMaskSize: "100% 100%",
-                maskRepeat: "no-repeat",
-                WebkitMaskRepeat: "no-repeat",
-                opacity: glowOpacity,
-              }}
-            />
-          )}
         </div>
 
         {/* Bottom-right text */}
@@ -588,7 +487,7 @@ export function SetupFlowSection() {
             and&nbsp;&nbsp;bring
           </p>
           <h2 className="mt-2 text-[28px] font-semibold leading-[1.1] font-heading">
-            <HDRText isSafari={isSafari} opacity={glowOpacity}>designers</HDRText>
+            <span className="text-[#51caeb]">designers</span>
             <span className="text-[var(--landing-fg)]"> into the pull request flow.</span>
           </h2>
         </div>
