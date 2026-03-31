@@ -3,6 +3,13 @@ import { LandingShell } from "@/components/landing/landing-shell";
 import { HeroMockup } from "@/components/landing/hero-mockup";
 import { ProblemSection } from "@/components/landing/problem-section";
 import { SetupFlowSection } from "@/components/landing/setup-flow-section";
+import {
+  SeeSection,
+  ReviewSection,
+  FixSection,
+} from "@/components/landing/feature-sections";
+import { GitHubSection } from "@/components/landing/github-section";
+import { LandingFooter } from "@/components/landing/landing-footer";
 
 export default function HomePage() {
   return (
@@ -12,6 +19,11 @@ export default function HomePage() {
       </section>
       <ProblemSection />
       <SetupFlowSection />
+      <SeeSection />
+      <ReviewSection />
+      <FixSection />
+      <GitHubSection />
+      <LandingFooter />
     </LandingShell>
   );
 }
