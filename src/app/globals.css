@@ -224,13 +224,23 @@ input.input-no-spinner[type="number"]::-webkit-inner-spin-button {
   }
 }
 
-/* Tile HDR glow: soft opacity pulse (Chrome / non-Safari) */
+/* Tile HDR glow: soft opacity pulse (Chrome / non-Safari SDR) */
 @keyframes tileGlowPulseSDR {
+  0%, 100% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Tile HDR glow: soft opacity pulse (Chrome HDR) */
+@keyframes tileGlowPulseHDR {
   0%, 100% {
     opacity: 0.45;
   }
   50% {
-    opacity: 0.3;
+    opacity: 0.35;
   }
 }
 

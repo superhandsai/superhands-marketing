@@ -67,7 +67,19 @@ const SafariHDRVideo = memo(function SafariHDRVideo() {
 
 function SuperhandsTile({ progress, isSafari, onGlow }: { progress: number; isSafari: boolean; onGlow?: (opacity: number) => void }) {
   const [pressed, setPressed] = useState(false);
-  const glowActive = progress >= 0.95;
+  const [clickOverride, setClickOverride] = useState<boolean | null>(null);
+  const prevScrollActive = useRef(false);
+  const scrollActive = progress >= 0.95;
+
+  // When scroll state changes, clear the click override
+  useEffect(() => {
+    if (scrollActive !== prevScrollActive.current) {
+      prevScrollActive.current = scrollActive;
+      setClickOverride(null);
+    }
+  }, [scrollActive]);
+
+  const glowActive = clickOverride !== null ? clickOverride : scrollActive;
   const [isHDR, setIsHDR] = useState(false);
 
   useEffect(() => {
@@ -80,7 +92,7 @@ function SuperhandsTile({ progress, isSafari, onGlow }: { progress: number; isSa
 
   // Notify parent when glow state changes
   useEffect(() => {
-    onGlow?.(glowActive ? 0.4 : 0);
+    onGlow?.(glowActive ? 0.45 : 0);
   }, [glowActive, onGlow]);
 
   return (
@@ -96,6 +108,7 @@ function SuperhandsTile({ progress, isSafari, onGlow }: { progress: number; isSa
       onMouseLeave={() => setPressed(false)}
       onTouchStart={() => setPressed(true)}
       onTouchEnd={() => setPressed(false)}
+      onClick={() => setClickOverride(prev => prev !== null ? !prev : !scrollActive)}
     >
       <div
         className="w-full h-full flex items-center justify-center"
@@ -121,23 +134,25 @@ function SuperhandsTile({ progress, isSafari, onGlow }: { progress: number; isSa
           />
         </svg>
       </div>
-      {/* SDR fallback: cyan glow when active */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundColor: "#1ab4e0",
-          maskImage: `url("${SH_LOGO_MASK_URI}")`,
-          WebkitMaskImage: `url("${SH_LOGO_MASK_URI}")`,
-          maskSize: "44% auto",
-          WebkitMaskSize: "44% auto",
-          maskPosition: "center",
-          WebkitMaskPosition: "center",
-          maskRepeat: "no-repeat",
-          WebkitMaskRepeat: "no-repeat",
-          opacity: glowActive ? undefined : 0,
-          animation: glowActive ? `${isSafari ? "tileGlowPulse" : "tileGlowPulseSDR"} 4s ease-in-out infinite` : "none",
-        }}
-      />
+      {/* SDR fallback: cyan glow when active (hidden on Chrome HDR where the AVIF layer takes over) */}
+      {!(isHDR && !isSafari) && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundColor: "#1ab4e0",
+            maskImage: `url("${SH_LOGO_MASK_URI}")`,
+            WebkitMaskImage: `url("${SH_LOGO_MASK_URI}")`,
+            maskSize: "44% auto",
+            WebkitMaskSize: "44% auto",
+            maskPosition: "center",
+            WebkitMaskPosition: "center",
+            maskRepeat: "no-repeat",
+            WebkitMaskRepeat: "no-repeat",
+            opacity: glowActive ? undefined : 0,
+            animation: glowActive ? `${isSafari ? "tileGlowPulse" : "tileGlowPulseSDR"} 4s ease-in-out infinite` : "none",
+          }}
+        />
+      )}
       {/* HDR boost: Chrome uses AVIF (only on HDR screens) */}
       {isHDR && !isSafari && (
         <div
@@ -147,7 +162,7 @@ function SuperhandsTile({ progress, isSafari, onGlow }: { progress: number; isSa
             backgroundImage: "url(/images/hdr_pixel.avif)",
             backgroundSize: "cover",
             backgroundBlendMode: "multiply",
-            mixBlendMode: "lighten",
+            mixBlendMode: "normal",
             maskImage: `url("${SH_LOGO_MASK_URI}")`,
             WebkitMaskImage: `url("${SH_LOGO_MASK_URI}")`,
             maskSize: "44% auto",
@@ -445,7 +460,7 @@ export function SetupFlowSection() {
         {/* Top vertical connector: dot travels down toward tile */}
         <ConnectorVertical className="w-6 h-20" progress={dotProgress} id="cv-top" glow={glowOpacity} />
 
-        <div className="relative z-10 w-[130px]">
+        <div className="relative z-10 w-[110px]">
           <SuperhandsTile progress={tileProgress} isSafari={isSafari} onGlow={handleGlow} />
         </div>
 
@@ -492,7 +507,7 @@ export function SetupFlowSection() {
         {/* Center tile */}
         <div
           className="absolute z-10 flex items-center justify-center"
-          style={{ left: "39.7%", right: `${100 - 60.3}%`, top: "50%", transform: "translateY(-50%)" }}
+          style={{ left: "41.25%", right: `${100 - 58.75}%`, top: "50%", transform: "translateY(-50%)" }}
         >
           <SuperhandsTile progress={tileProgress} isSafari={isSafari} onGlow={handleGlow} />
         </div>
