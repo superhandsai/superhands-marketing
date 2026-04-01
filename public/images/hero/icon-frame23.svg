@@ -1,9 +1,0 @@
-<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 20.7322 20.7322" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Frame">
-<mask id="path-1-inside-1_0_20" fill="white">
-<path d="M0 0H20.7322V20.7322H0V0Z"/>
-</mask>
-<path d="M0 20.7322H0.545585V0H0H-0.545585V20.7322H0Z" fill="var(--stroke-0, #525254)" fill-opacity="0.05" mask="url(#path-1-inside-1_0_20)"/>
-<path id="Vector" d="M12.003 7.0926H8.72953M12.003 13.6396H8.72953M13.6398 12.0029V8.72936M7.09277 12.0029L7.09277 8.72936" stroke="var(--stroke-0, #909091)" stroke-width="0.818377" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-</svg>

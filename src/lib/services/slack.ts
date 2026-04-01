@@ -18,7 +18,7 @@ interface SlackBlock {
   }[];
 }
 
-export async function sendSlackNotification(message: SlackMessage): Promise<boolean> {
+async function sendSlackNotification(message: SlackMessage): Promise<boolean> {
   if (!SLACK_WEBHOOK_URL) {
     console.warn("Slack webhook URL not configured");
     return false;

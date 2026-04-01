@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
 import "./globals.css";
 import { PostHogProvider } from "@/providers/posthog-provider";
-import { Footer } from "@/components/footer";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space-grotesk",
   display: "swap",
 });
 
@@ -39,6 +32,7 @@ const roobertMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://superhands.ai"),
   title: "Superhands — Pull requests for designers",
   description: "Review and refine product changes before they ship. Superhands brings designers into your GitHub pull request workflow — see what's changing, review the UI in your browser, and fix it without writing code.",
   openGraph: {
@@ -66,7 +60,7 @@ export const metadata: Metadata = {
       { url: "/favicon.ico?v=3", sizes: "any" },
     ],
     shortcut: "/favicon.svg?v=3",
-    apple: "/favicon.svg?v=3",
+    apple: "/favicon.ico?v=3",
   },
 };
 
@@ -78,13 +72,12 @@ export default function RootLayout({
   const intercomAppId = process.env.NEXT_PUBLIC_INTERCOM_APP_ID;
 
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${plusJakartaSans.variable} ${roobert.variable} ${roobertMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${plusJakartaSans.variable} ${roobert.variable} ${roobertMono.variable}`}>
       <body className={`font-sans antialiased flex flex-col min-h-screen`}>
         <PostHogProvider>
           <main className="flex-1">
             {children}
           </main>
-          <Footer />
         </PostHogProvider>
         {intercomAppId && (
           <>

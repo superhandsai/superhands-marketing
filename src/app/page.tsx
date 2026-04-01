@@ -10,7 +10,6 @@ import {
 import { GitHubSection } from "@/components/landing/github-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { LandingFooter } from "@/components/landing/landing-footer";
-import { LANDING_URLS } from "@/components/landing/constants";
 
 export default function HomePage() {
   return (
@@ -23,12 +22,6 @@ export default function HomePage() {
         <p className="mt-2 text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[320px]">
           Review and refine product changes before they ship.
         </p>
-        <a
-          href={LANDING_URLS.waitlist}
-          className="mt-5 hidden items-center justify-center rounded-[14px] border border-[var(--landing-cta-border)] bg-gradient-to-b from-[var(--landing-cta-from)] to-[var(--landing-cta-to)] px-4 py-3 text-base font-semibold leading-[1.44] text-[var(--landing-cta-text)] font-body transition-all hover:opacity-90 hover:shadow-[0_4px_12px_rgba(3,22,28,0.04)]"
-        >
-          Join Waitlist
-        </a>
         <div className="mt-6 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img

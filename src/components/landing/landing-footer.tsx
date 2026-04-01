@@ -26,19 +26,19 @@ export function LandingFooter() {
 
       <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-6">
         <div className="flex items-center gap-6">
-          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
+          <a href="https://www.linkedin.com/company/superhandsai/" target="_blank" rel="noopener noreferrer" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             LinkedIn
           </a>
-          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
+          <a href="https://app.superhands.ai/privacy" target="_blank" rel="noopener noreferrer" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             Privacy Policy
           </a>
-          <a href="#" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
+          <a href="https://app.superhands.ai/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             Terms of Service
           </a>
         </div>
 
         <div className="flex items-center gap-2 text-[14px] font-medium font-body text-[var(--landing-fg-secondary)]">
-          <span>&copy; 2026</span>
+          <span>&copy; {new Date().getFullYear()}</span>
           <span className="text-[10px]">|</span>
           <span>Shipped with Superhands</span>
         </div>

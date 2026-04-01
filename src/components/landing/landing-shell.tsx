@@ -15,11 +15,11 @@ export function LandingShell({ children }: LandingShellProps) {
       <LandingMobileHeader />
       <LandingSidebar />
 
-      <main
+      <div
         className="min-h-screen md:ml-[var(--sidebar-w)]"
       >
         {children}
-      </main>
+      </div>
     </div>
   );
 }
