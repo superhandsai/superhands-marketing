@@ -74,7 +74,7 @@ export function ProblemSection() {
   return (
     <section className="relative flex flex-col md:flex-row md:items-start gap-10 md:gap-20 px-6 md:px-10 pt-10 pb-8 md:pt-10 md:pb-20 max-w-[960px] mx-auto">
       {/* Heading */}
-      <h2 className="flex flex-col text-[28px] font-semibold leading-[1.1] font-heading md:flex-1">
+      <h2 className="flex flex-col text-[28px] md:text-[22px] lg:text-[28px] font-semibold leading-[1.1] font-heading md:flex-1">
         <span className="text-[var(--landing-fg)]">
           Design review is broken.{" "}
         </span>

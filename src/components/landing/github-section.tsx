@@ -34,7 +34,7 @@ export function GitHubSection() {
           <p className="text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             For engineers
           </p>
-          <h2 className="mt-2 text-[28px] font-semibold leading-[1.1] font-heading text-[var(--landing-fg)] max-w-[316px]">
+          <h2 className="mt-2 text-[28px] md:text-[22px] lg:text-[28px] font-semibold leading-[1.1] font-heading text-[var(--landing-fg)] max-w-[316px]">
             Superhands lives in your GitHub workflow
           </h2>
         </div>

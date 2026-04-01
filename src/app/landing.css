@@ -42,3 +42,7 @@
 @keyframes border-march {
   to { stroke-dashoffset: -3; }
 }
+
+@keyframes dot-march {
+  to { background-position-x: 8px; }
+}

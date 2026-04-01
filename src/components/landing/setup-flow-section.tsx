@@ -383,15 +383,14 @@ export function SetupFlowSection() {
 
       {/* Desktop: positioned illustration */}
       <div
-        className="relative hidden md:block w-full"
-        style={{ aspectRatio: "816 / 430" }}
+        className="relative hidden md:block w-full aspect-[816/430] md:aspect-[816/500] lg:aspect-[816/430] 2xl:aspect-[816/390]"
       >
         {/* Top-left text */}
-        <div className="absolute left-0 top-0 w-[300px]">
+        <div className="absolute left-0 top-0 w-[300px] md:w-[220px] lg:w-[300px]">
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             To set up
           </p>
-          <h2 className="mt-2 text-[28px] font-semibold leading-[1.1] font-heading">
+          <h2 className="mt-2 text-[28px] md:text-[22px] lg:text-[28px] font-semibold leading-[1.1] font-heading">
             <span className="text-[var(--landing-fg)]">Connect Superhands to </span>
             <span className="text-[#51caeb]">GitHub</span>
           </h2>
@@ -400,15 +399,15 @@ export function SetupFlowSection() {
         {/* Left connector */}
         <div
           className="absolute"
-          style={{ left: "10%", top: "26%", width: "44%", height: "27.2%" }}
+          style={{ left: "10%", top: "30%", width: "44%", height: "27.2%" }}
         >
           <ConnectorLeft className="size-full" progress={dotProgress} glow={glowOpacity} />
         </div>
 
         {/* Center tile */}
         <div
-          className="absolute z-10 flex items-center justify-center"
-          style={{ left: "50%", top: "52%", transform: "translate(-50%, -50%)", width: "124px", height: "124px" }}
+          className="absolute z-10 flex items-center justify-center w-[124px] h-[124px] md:w-[80px] md:h-[80px] lg:w-[100px] lg:h-[100px]"
+          style={{ left: "50%", top: "56%", transform: "translate(-50%, -50%)" }}
         >
           <SuperhandsTile progress={tileProgress} isSafari={isSafari} onGlow={handleGlow} />
         </div>
@@ -416,17 +415,17 @@ export function SetupFlowSection() {
         {/* Right connector */}
         <div
           className="absolute"
-          style={{ left: "46%", top: "50%", width: "44%", height: "27.3%" }}
+          style={{ left: "46%", top: "54%", width: "44%", height: "27.3%" }}
         >
           <ConnectorRight className="size-full" progress={dotProgress} glow={glowOpacity} />
         </div>
 
         {/* Bottom-right text */}
-        <div className="absolute right-0 text-right" style={{ top: "78%", width: "320px" }}>
+        <div className="absolute right-0 text-right md:w-[240px] lg:w-[320px]" style={{ top: "78%" }}>
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             and&nbsp;&nbsp;bring
           </p>
-          <h2 className="mt-2 text-[28px] font-semibold leading-[1.1] font-heading">
+          <h2 className="mt-2 text-[28px] md:text-[22px] lg:text-[28px] font-semibold leading-[1.1] font-heading">
             <span className="text-[#51caeb]">designers</span>
             <span className="text-[var(--landing-fg)]"> into the pull request flow.</span>
           </h2>

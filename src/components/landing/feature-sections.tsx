@@ -14,19 +14,19 @@ function FeatureLayout({
   return (
     <section className="relative px-6 md:px-10 pt-10 pb-8 md:pt-20 md:pb-20 max-w-[960px] mx-auto">
       <div
-        className={`flex flex-col items-center gap-10 md:gap-16 lg:gap-24 md:items-start ${
+        className={`flex flex-col items-center gap-10 md:gap-16 lg:gap-[60px] md:items-start ${
           reversed ? "md:flex-row-reverse" : "md:flex-row"
         }`}
       >
         <div className="order-2 md:order-none flex-1 shrink-0">
-          <h2 className="text-[28px] font-semibold leading-[1.1] font-heading text-[var(--landing-fg)] max-w-[313px]">
+          <h2 className="text-[28px] md:text-[22px] lg:text-[28px] font-semibold leading-[1.1] font-heading text-[var(--landing-fg)] max-w-[313px] md:-mt-1">
             {heading}
           </h2>
           <p className="mt-4 text-base font-medium leading-[1.44] font-body text-[var(--landing-fg-secondary)] max-w-[313px]">
             {subtext}
           </p>
         </div>
-        <div className="order-1 md:order-none shrink-0 overflow-hidden">{mockup}</div>
+        <div className="order-1 md:order-none shrink-0 overflow-hidden lg:w-[50%] lg:shrink 2xl:flex-1 2xl:basis-0">{mockup}</div>
       </div>
     </section>
   );
@@ -46,7 +46,7 @@ function SeeMockup() {
       alt="Superhands PR list showing open design changes"
       width={410}
       height={410}
-      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-[410px] lg:h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
+      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-full lg:h-auto lg:max-w-none 2xl:w-full 2xl:h-auto transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />
@@ -77,7 +77,7 @@ function ReviewMockup() {
       alt="Superhands browser inspection interface reviewing a live UI"
       width={410}
       height={410}
-      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-[410px] lg:h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
+      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-full lg:h-auto lg:max-w-none 2xl:w-full 2xl:h-auto transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />
@@ -109,7 +109,7 @@ function FixMockup() {
       alt="Superhands style editor panel for refining UI without code"
       width={410}
       height={410}
-      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-[410px] lg:h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
+      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-full lg:h-auto lg:max-w-none 2xl:w-full 2xl:h-auto transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />

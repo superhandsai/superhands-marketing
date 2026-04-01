@@ -23,7 +23,7 @@ export function LandingSidebar() {
 
         {/* Headline */}
         <h1
-          className="mt-4 text-[40px] font-semibold leading-[1.1] text-[var(--landing-fg)] font-heading"
+          className="mt-4 text-[32px] lg:text-[40px] font-semibold leading-[1.1] text-[var(--landing-fg)] font-heading"
         >
           Pull requests
           <br />
@@ -47,9 +47,9 @@ export function LandingSidebar() {
       </div>
 
       {/* Footer links */}
-      <div className="px-10 pb-10">
+      <div className="group/footer px-10 pb-10">
         <div
-          className="mb-5 w-full"
+          className="mb-5 w-full group-has-[a:hover]/footer:animate-[dot-march_0.7s_linear_infinite]"
           style={{
             backgroundImage:
               "radial-gradient(circle, var(--landing-divider) 1px, transparent 1px)",
