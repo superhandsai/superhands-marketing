@@ -72,7 +72,7 @@ const PAIN_POINTS = [
 
 export function ProblemSection() {
   return (
-    <section className="relative flex flex-col md:flex-row md:items-start gap-10 md:gap-20 px-6 md:px-10 pt-10 pb-8 md:pt-10 md:pb-20 max-w-[960px] mx-auto">
+    <section className="relative flex flex-col md:flex-row md:items-start gap-6 md:gap-20 px-6 md:px-10 pt-20 pb-20 md:pt-10 max-w-[960px] mx-auto">
       {/* Heading */}
       <h2 className="flex flex-col text-[28px] md:text-[22px] lg:text-[28px] font-semibold leading-[1.1] font-heading md:flex-1">
         <span className="text-[var(--landing-fg)]">
@@ -84,7 +84,7 @@ export function ProblemSection() {
       </h2>
 
       {/* Pain points */}
-      <div className="flex flex-col gap-8 md:flex-1 pt-2">
+      <div className="flex flex-col gap-6 md:flex-1 pt-2">
         {PAIN_POINTS.map(({ icon: Icon, text }) => (
           <div key={text} className="group flex items-start gap-4">
             <Icon className="size-[22px] shrink-0 text-[var(--landing-fg)] transition-transform duration-300 ease-out group-hover:scale-110 group-hover:-rotate-6" />

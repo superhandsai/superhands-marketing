@@ -1,7 +1,8 @@
 export function LandingFooter() {
   return (
-    <footer className="px-6 md:px-10 pb-10 pt-0 max-w-[960px] mx-auto relative overflow-visible">
+    <footer className="group/footer px-6 md:px-10 pb-10 pt-0 max-w-[960px] mx-auto relative overflow-visible">
       <div
+        className="group-has-[a:hover]/footer:animate-[dot-march_0.7s_linear_infinite]"
         style={{
           backgroundImage:
             "radial-gradient(circle, var(--landing-divider) 1px, transparent 1px)",

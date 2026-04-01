@@ -3,8 +3,8 @@ import { LANDING_URLS } from "./constants";
 
 export function CtaSection() {
   return (
-    <section className="px-6 md:px-10 pt-0 pb-10 md:pb-[258px] max-w-[960px] mx-auto">
-      <div className="group/cta relative rounded-[32px] px-10 py-10 md:py-12">
+    <section className="px-6 md:px-10 pt-0 pb-[120px] md:pb-[258px] max-w-[960px] mx-auto">
+      <div className="group/cta relative rounded-[32px] px-5 py-8 sm:px-10 sm:py-10 md:py-12">
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
           aria-hidden="true"
@@ -26,7 +26,7 @@ export function CtaSection() {
           />
         </svg>
         <div className="relative flex items-stretch justify-between">
-          <h2 className="flex flex-col text-[28px] md:text-[22px] lg:text-[28px] leading-[1.1] font-heading">
+          <h2 className="flex flex-col text-[22px] sm:text-[28px] md:text-[22px] lg:text-[28px] leading-[1.1] font-heading">
             <span className="font-semibold text-[var(--landing-fg)]/50">
               Give your team
             </span>
@@ -35,7 +35,7 @@ export function CtaSection() {
             </span>
           </h2>
 
-          <div className="hidden md:flex items-center justify-center w-[125px]">
+          <div className="flex items-center justify-center w-[60px] sm:w-[125px]">
             <LogoMark
               className="w-[41px] h-[43px] opacity-50 transition-opacity duration-700 ease-in-out group-has-[a:hover]/cta:animate-[logo-pulse_2s_ease-in-out_infinite]"
               decorative
@@ -45,8 +45,8 @@ export function CtaSection() {
 
         <div className="relative flex items-end justify-between mt-1.5 gap-2">
           <div className="flex-1 mb-[24px] flex">
-            <div className="w-[81px] shrink-0" />
-            <div className="flex-1 h-[120px] border-l-2 border-b-2 border-[rgba(41,41,43,0.10)] rounded-bl-[24px]" />
+            <div className="w-[40px] sm:w-[81px] shrink-0" />
+            <div className="flex-1 h-[80px] sm:h-[120px] border-l-2 border-b-2 border-[rgba(41,41,43,0.10)] rounded-bl-[24px]" />
           </div>
 
           <a

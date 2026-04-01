@@ -17,7 +17,7 @@ function GitHubMockup() {
 
 export function GitHubSection() {
   return (
-    <section className="relative px-6 md:px-10 pt-10 pb-8 md:pt-20 md:pb-20 max-w-[960px] mx-auto">
+    <section className="relative px-6 md:px-10 pt-20 pb-20 md:pt-20 md:pb-20 max-w-[960px] mx-auto">
       <div
         className="absolute top-0 left-6 right-6 md:left-10 md:right-10"
         style={{
@@ -30,7 +30,7 @@ export function GitHubSection() {
         }}
       />
       <div className="flex flex-col">
-        <div>
+        <div className="mb-1">
           <p className="text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             For engineers
           </p>
@@ -43,7 +43,7 @@ export function GitHubSection() {
           <GitHubMockup />
         </div>
 
-        <p className="mt-12 text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[291px] self-end text-left">
+        <p className="mt-6 text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[291px] self-end text-left">
           Design review happens in the PR, so your team doesn&rsquo;t need to change how they work.
         </p>
       </div>

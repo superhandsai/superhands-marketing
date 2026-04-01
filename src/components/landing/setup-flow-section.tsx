@@ -345,14 +345,14 @@ export function SetupFlowSection() {
   const handleGlow = useCallback((opacity: number) => setGlowOpacity(opacity), []);
 
   return (
-    <section ref={sectionRef} className="relative px-6 md:px-10 pt-10 pb-8 md:pt-20 md:pb-20 max-w-[960px] mx-auto">
+    <section ref={sectionRef} className="relative px-6 md:px-10 pt-20 pb-20 md:pt-20 md:pb-20 max-w-[960px] mx-auto">
       {/* Mobile: stacked layout with vertical connectors */}
       <div className="flex flex-col items-center md:hidden">
         <div className="self-start">
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             To set up
           </p>
-          <h2 className="mt-2 text-[24px] font-semibold leading-[1.1] font-heading">
+          <h2 className="mt-2 w-[220px] text-[24px] font-semibold leading-[1.1] font-heading">
             <span className="text-[var(--landing-fg)]">Connect Superhands to </span>
             <span className="text-[#51caeb]">GitHub</span>
           </h2>
@@ -370,7 +370,7 @@ export function SetupFlowSection() {
           <ConnectorVertical className="w-6 h-20" progress={dotProgress} id="cv-bottom" glow={glowOpacity} />
         </div>
 
-        <div className="self-end text-right">
+        <div className="self-end text-right w-[220px]">
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             and bring
           </p>

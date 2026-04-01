@@ -1,28 +1,31 @@
 import type { ReactNode } from "react";
+import { cn } from "@/lib/utils";
 
 function FeatureLayout({
   heading,
   subtext,
   mockup,
   reversed,
+  className,
 }: {
   heading: string;
   subtext: string;
   mockup: ReactNode;
   reversed?: boolean;
+  className?: string;
 }) {
   return (
-    <section className="relative px-6 md:px-10 pt-10 pb-8 md:pt-20 md:pb-20 max-w-[960px] mx-auto">
+    <section className={cn("relative px-6 md:px-10 pt-20 pb-20 max-w-[960px] mx-auto", className)}>
       <div
-        className={`flex flex-col items-center gap-10 md:gap-16 lg:gap-[60px] md:items-start ${
+        className={`flex flex-col items-center gap-8 md:gap-16 lg:gap-[60px] md:items-start ${
           reversed ? "md:flex-row-reverse" : "md:flex-row"
         }`}
       >
-        <div className="order-2 md:order-none flex-1 shrink-0">
+        <div className="order-2 md:order-none flex-1 shrink-0 w-full max-w-[410px]">
           <h2 className="text-[28px] md:text-[22px] lg:text-[28px] font-semibold leading-[1.1] font-heading text-[var(--landing-fg)] max-w-[313px] md:-mt-1">
             {heading}
           </h2>
-          <p className="mt-4 text-base font-medium leading-[1.44] font-body text-[var(--landing-fg-secondary)] max-w-[313px]">
+          <p className="mt-2 text-base font-medium leading-[1.44] font-body text-[var(--landing-fg-secondary)] max-w-[313px]">
             {subtext}
           </p>
         </div>
@@ -91,6 +94,7 @@ export function ReviewSection() {
       subtext="Compare against the live product. No engineer needed."
       mockup={<ReviewMockup />}
       reversed
+      className="pt-0 pb-20"
     />
   );
 }
@@ -122,6 +126,7 @@ export function FixSection() {
       heading="Fix the UI without touching the code"
       subtext="Refine in Superhands. No back-and-forth with engineers."
       mockup={<FixMockup />}
+      className="pt-0"
     />
   );
 }

@@ -32,7 +32,7 @@ export function LandingSidebar() {
 
         {/* Subline */}
         <p
-          className="mt-2.5 text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[266px]"
+          className="mt-2.5 text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[320px]"
         >
           Review and refine product changes before they ship.
         </p>
