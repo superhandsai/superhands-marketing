@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og.png",
+        url: "/images/og.png",
         width: 1200,
         height: 630,
         alt: "Superhands — Pull requests for designers",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Superhands — Pull requests for designers",
     description: "Review and refine product changes before they ship. Superhands brings designers into your GitHub pull request workflow — see what's changing, review the UI in your browser, and fix it without writing code.",
-    images: ["/og.png"],
+    images: ["/images/og.png"],
   },
   icons: {
     icon: [

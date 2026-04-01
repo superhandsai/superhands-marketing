@@ -4,7 +4,7 @@ import { LANDING_URLS } from "./constants";
 export function CtaSection() {
   return (
     <section className="px-6 md:px-10 pt-0 pb-[120px] md:pb-[258px] max-w-[960px] mx-auto">
-      <div className="group/cta relative rounded-[32px] px-5 py-8 sm:px-10 sm:py-10 md:py-12">
+      <div className="group/cta relative rounded-[32px] px-5 py-5 sm:px-10 sm:py-10 md:py-12">
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
           aria-hidden="true"
