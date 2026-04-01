@@ -42,7 +42,7 @@ export function LandingSidebar() {
           href={LANDING_URLS.waitlist}
           className="mt-5 inline-flex items-center justify-center self-start rounded-[14px] border border-[var(--landing-cta-border)] bg-gradient-to-b from-[var(--landing-cta-from)] to-[var(--landing-cta-to)] px-4 py-3 text-base font-semibold leading-[1.44] text-[var(--landing-cta-text)] font-body transition-all hover:opacity-90 hover:shadow-[0_4px_12px_rgba(3,22,28,0.04)]"
         >
-          Join the Waitlist
+          Join Waitlist
         </a>
       </div>
 
@@ -64,7 +64,7 @@ export function LandingSidebar() {
             href={LANDING_URLS.bookDemo}
             className="transition-opacity hover:opacity-70"
           >
-            Book a Demo
+            Book Demo
           </a>
           <a
             href={LANDING_URLS.login}

@@ -24,8 +24,8 @@ export default function HomePage() {
             alt="Superhands product interface showing design review workflow"
             width={1524}
             height={978}
-            className="w-full h-auto transition-transform duration-300 ease-out hover:scale-[1.01]"
-            fetchPriority="high"
+          className="w-full h-auto transition-transform duration-300 ease-out hover:scale-[1.04]"
+          fetchPriority="high"
             decoding="async"
           />
         </div>

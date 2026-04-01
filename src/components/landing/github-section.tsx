@@ -8,7 +8,7 @@ function GitHubMockup() {
       alt="GitHub PR review showing Superhands bot approval with design changes"
       width={820}
       height={410}
-      className="w-full h-auto transition-transform duration-300 ease-out hover:scale-[1.01]"
+      className="w-full h-auto transition-transform duration-300 ease-out hover:scale-[1.005]"
       loading="lazy"
       decoding="async"
     />

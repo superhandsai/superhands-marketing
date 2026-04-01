@@ -42,11 +42,11 @@ function SeeMockup() {
     <img
       src="/images/See.png"
       srcSet="/images/See.png 410w, /images/See@2x.png 820w"
-      sizes="410px"
+      sizes="(min-width: 1024px) 410px, (min-width: 768px) 200px, 410px"
       alt="Superhands PR list showing open design changes"
       width={410}
       height={410}
-      className="w-[410px] h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
+      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-[410px] lg:h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />
@@ -73,11 +73,11 @@ function ReviewMockup() {
     <img
       src="/images/Review.png"
       srcSet="/images/Review.png 410w, /images/Review@2x.png 820w"
-      sizes="410px"
+      sizes="(min-width: 1024px) 410px, (min-width: 768px) 200px, 410px"
       alt="Superhands browser inspection interface reviewing a live UI"
       width={410}
       height={410}
-      className="w-[410px] h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
+      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-[410px] lg:h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />
@@ -105,11 +105,11 @@ function FixMockup() {
     <img
       src="/images/Fix.png"
       srcSet="/images/Fix.png 410w, /images/Fix@2x.png 820w"
-      sizes="410px"
+      sizes="(min-width: 1024px) 410px, (min-width: 768px) 200px, 410px"
       alt="Superhands style editor panel for refining UI without code"
       width={410}
       height={410}
-      className="w-[410px] h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
+      className="w-full max-w-[410px] aspect-square md:w-[200px] md:h-[200px] md:max-w-none lg:w-[410px] lg:h-[410px] transition-transform duration-300 ease-out hover:scale-[1.01]"
       loading="lazy"
       decoding="async"
     />

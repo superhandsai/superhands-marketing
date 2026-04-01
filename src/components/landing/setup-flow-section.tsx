@@ -14,7 +14,7 @@ function useScrollProgress(ref: React.RefObject<HTMLElement | null>) {
       const vh = window.innerHeight;
       const sectionCenter = rect.top + rect.height / 2;
       const start = vh;
-      const end = vh * 0.6;
+      const end = 0;
       const scrollP = Math.min(1, Math.max(0, (start - sectionCenter) / (start - end)));
 
       // Also check if user is near the bottom of the page (mobile fallback)
@@ -114,6 +114,8 @@ function SuperhandsTile({ progress, isSafari, onGlow }: { progress: number; isSa
         className="w-full h-full flex items-center justify-center"
         style={{
           borderRadius: "20.5%",
+          outline: "1px solid rgba(82, 82, 84, 0.05)",
+          outlineOffset: "-0.5px",
           background: "linear-gradient(to top, #E4E4E4, #FCFCFC)",
           boxShadow: glowActive
             ? "0 0 30px rgba(81, 202, 235, 0.4), 0 0 60px rgba(81, 202, 235, 0.2)"
@@ -125,81 +127,20 @@ function SuperhandsTile({ progress, isSafari, onGlow }: { progress: number; isSa
           viewBox="14 6 53 55"
           xmlns="http://www.w3.org/2000/svg"
           className="w-[44%] h-auto"
+          style={{
+            opacity: glowActive ? 1 : 0.5,
+            animation: glowActive ? "logo-pulse 2s ease-in-out infinite" : "none",
+          }}
         >
           <path
             d={SH_LOGO_MARK_D}
-            fill={glowActive ? (isHDR ? "transparent" : "#51caeb") : "#3F3E41"}
-            stroke={glowActive ? (isHDR ? "transparent" : "#51caeb") : "#323234"}
+            fill="#3F3E41"
+            stroke="#323234"
             strokeWidth="0.191658"
           />
         </svg>
       </div>
-      {/* SDR fallback: cyan glow when active (hidden on Chrome HDR where the AVIF layer takes over) */}
-      {!(isHDR && !isSafari) && (
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundColor: "#1ab4e0",
-            maskImage: `url("${SH_LOGO_MASK_URI}")`,
-            WebkitMaskImage: `url("${SH_LOGO_MASK_URI}")`,
-            maskSize: "44% auto",
-            WebkitMaskSize: "44% auto",
-            maskPosition: "center",
-            WebkitMaskPosition: "center",
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-            opacity: glowActive ? undefined : 0,
-            animation: glowActive ? `${isSafari ? "tileGlowPulse" : "tileGlowPulseSDR"} 4s ease-in-out infinite` : "none",
-          }}
-        />
-      )}
-      {/* HDR boost: Chrome uses AVIF (only on HDR screens) */}
-      {isHDR && !isSafari && (
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{
-            backgroundColor: "#51caeb",
-            backgroundImage: "url(/images/hdr_pixel.avif)",
-            backgroundSize: "cover",
-            backgroundBlendMode: "multiply",
-            mixBlendMode: "normal",
-            maskImage: `url("${SH_LOGO_MASK_URI}")`,
-            WebkitMaskImage: `url("${SH_LOGO_MASK_URI}")`,
-            maskSize: "44% auto",
-            WebkitMaskSize: "44% auto",
-            maskPosition: "center",
-            WebkitMaskPosition: "center",
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-            opacity: glowActive ? undefined : 0,
-            animation: glowActive ? "tileGlowPulseSDR 4s ease-in-out infinite" : "none",
-          }}
-        />
-      )}
-      {/* HDR boost: Safari uses superwhite video */}
-      {isSafari && (
-        <div
-          className="absolute inset-0 pointer-events-none overflow-hidden"
-          style={{
-            maskImage: `url("${SH_LOGO_MASK_URI}")`,
-            WebkitMaskImage: `url("${SH_LOGO_MASK_URI}")`,
-            maskSize: "44% auto",
-            WebkitMaskSize: "44% auto",
-            maskPosition: "center",
-            WebkitMaskPosition: "center",
-            maskRepeat: "no-repeat",
-            WebkitMaskRepeat: "no-repeat",
-            opacity: glowActive ? undefined : 0,
-            animation: glowActive ? "tileGlowPulse 4s ease-in-out infinite" : "none",
-          }}
-        >
-          <SafariHDRVideo />
-          <div
-            className="absolute inset-0"
-            style={{ backgroundColor: "#51caeb", mixBlendMode: "multiply" }}
-          />
-        </div>
-      )}
+      
     </div>
   );
 }
@@ -241,7 +182,7 @@ function ConnectorVertical({ className, progress, id, glow = 0 }: { className?: 
           <feBlend mode="normal" in2="bg" result="shadow" />
           <feBlend mode="normal" in="SourceGraphic" in2="shadow" result="shape" />
         </filter>
-        <radialGradient id={`${id}-dot`} cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) rotate(90) scale(4)">
+        <radialGradient id={`${id}-dot`} cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) rotate(90) scale(6)">
           <stop stopColor="#7AD7F0" />
           <stop offset="1" stopColor="#31C1E8" />
         </radialGradient>
@@ -264,13 +205,13 @@ function ConnectorVertical({ className, progress, id, glow = 0 }: { className?: 
         />
       )}
       <g filter={`url(#${id}-glow)`} transform={`translate(${pos.x}, ${pos.y})`} opacity={progress > 0.9 ? Math.max(0, (1 - progress) / 0.1) : 1}>
-        <circle cx="0" cy="0" r="4" fill={`url(#${id}-dot)`} />
+        <circle cx="0" cy="0" r="6" fill={`url(#${id}-dot)`} />
       </g>
     </svg>
   );
 }
 
-const CL_PATH = "M12 13V104C12 121.673 26.327 136 44 136H266";
+const CL_PATH = "M12 13V104C12 121.673 26.327 136 44 136H420";
 
 function ConnectorLeft({ className, progress, glow = 0 }: { className?: string; progress: number; glow?: number }) {
   const pathRef = useRef<SVGPathElement>(null);
@@ -291,22 +232,12 @@ function ConnectorLeft({ className, progress, glow = 0 }: { className?: string; 
   return (
     <svg
       className={className}
-      viewBox="-8 -8 283 153"
+      viewBox="-8 -8 437 153"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <filter id="cl-glow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="bg" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="a" />
-          <feOffset />
-          <feGaussianBlur stdDeviation="4" />
-          <feComposite in2="a" operator="out" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0.749 0 0 0 0 0.933 0 0 0 0 0.988 0 0 0 1 0" />
-          <feBlend mode="normal" in2="bg" result="shadow" />
-          <feBlend mode="normal" in="SourceGraphic" in2="shadow" result="shape" />
-        </filter>
-        <radialGradient id="cl-dot" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) rotate(90) scale(4)">
+        <radialGradient id="cl-dot" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) rotate(90) scale(6)">
           <stop stopColor="#7AD7F0" />
           <stop offset="1" stopColor="#31C1E8" />
         </radialGradient>
@@ -319,28 +250,18 @@ function ConnectorLeft({ className, progress, glow = 0 }: { className?: string; 
         strokeWidth="2"
         strokeLinecap="round"
       />
-      {glow > 0 && (
-        <path
-          d={CL_PATH}
-          stroke="#51caeb"
-          strokeOpacity={glow}
-          strokeWidth="2"
-          strokeLinecap="round"
-          filter="url(#cl-glow)"
-        />
-      )}
-      <g filter="url(#cl-glow)" transform={`translate(${pos.x}, ${pos.y})`} opacity={progress > 0.9 ? Math.max(0, (1 - progress) / 0.1) : 1}>
-        <circle cx="0" cy="0" r="4" fill="url(#cl-dot)" />
+      <g transform={`translate(${pos.x}, ${pos.y})`} opacity={progress > 0.9 ? Math.max(0, (1 - progress) / 0.1) : 1}>
+        <circle cx="0" cy="0" r="6" fill="url(#cl-dot)" />
       </g>
     </svg>
   );
 }
 
-const CR_PATH = "M255 124V33C255 15.327 240.673 1 223 1H1";
+const CR_PATH = "M410 124V33C410 15.327 395.673 1 378 1H1";
 
 function ConnectorRight({ className, progress, glow = 0 }: { className?: string; progress: number; glow?: number }) {
   const pathRef = useRef<SVGPathElement>(null);
-  const [pos, setPos] = useState({ x: 255, y: 125 });
+  const [pos, setPos] = useState({ x: 410, y: 125 });
 
   const updatePos = useCallback(() => {
     const path = pathRef.current;
@@ -357,22 +278,12 @@ function ConnectorRight({ className, progress, glow = 0 }: { className?: string;
   return (
     <svg
       className={className}
-      viewBox="-8 -8 283 154"
+      viewBox="-8 -8 437 154"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <filter id="cr-glow" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox" colorInterpolationFilters="sRGB">
-          <feFlood floodOpacity="0" result="bg" />
-          <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="a" />
-          <feOffset />
-          <feGaussianBlur stdDeviation="4" />
-          <feComposite in2="a" operator="out" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0.749 0 0 0 0 0.933 0 0 0 0 0.988 0 0 0 1 0" />
-          <feBlend mode="normal" in2="bg" result="shadow" />
-          <feBlend mode="normal" in="SourceGraphic" in2="shadow" result="shape" />
-        </filter>
-        <radialGradient id="cr-dot" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) rotate(90) scale(4)">
+        <radialGradient id="cr-dot" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(0 0) rotate(90) scale(6)">
           <stop stopColor="#7AD7F0" />
           <stop offset="1" stopColor="#31C1E8" />
         </radialGradient>
@@ -385,18 +296,8 @@ function ConnectorRight({ className, progress, glow = 0 }: { className?: string;
         strokeWidth="2"
         strokeLinecap="round"
       />
-      {glow > 0 && (
-        <path
-          d={CR_PATH}
-          stroke="#51caeb"
-          strokeOpacity={glow}
-          strokeWidth="2"
-          strokeLinecap="round"
-          filter="url(#cr-glow)"
-        />
-      )}
-      <g filter="url(#cr-glow)" transform={`translate(${pos.x}, ${pos.y})`} opacity={progress > 0.9 ? Math.max(0, (1 - progress) / 0.1) : 1}>
-        <circle cx="0" cy="0" r="4" fill="url(#cr-dot)" />
+      <g transform={`translate(${pos.x}, ${pos.y})`} opacity={progress > 0.9 ? Math.max(0, (1 - progress) / 0.1) : 1}>
+        <circle cx="0" cy="0" r="6" fill="url(#cr-dot)" />
       </g>
     </svg>
   );
@@ -437,8 +338,8 @@ export function SetupFlowSection() {
     setIsSafari(/Safari/.test(ua) && !/Chrome/.test(ua));
   }, []);
 
-  // Both dots travel toward center
-  const dotProgress = Math.min(1, progress / 0.75);
+  // Both dots travel toward center (delayed start)
+  const dotProgress = Math.min(1, Math.max(0, (progress - 0.15)) / 0.45);
   const tileProgress = dotProgress >= 0.95 ? 1 : 0;
   const [glowOpacity, setGlowOpacity] = useState(0);
   const handleGlow = useCallback((opacity: number) => setGlowOpacity(opacity), []);
@@ -486,7 +387,7 @@ export function SetupFlowSection() {
         style={{ aspectRatio: "816 / 430" }}
       >
         {/* Top-left text */}
-        <div className="absolute left-0 top-0 w-[34.3%]">
+        <div className="absolute left-0 top-0 w-[300px]">
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             To set up
           </p>
@@ -499,7 +400,7 @@ export function SetupFlowSection() {
         {/* Left connector */}
         <div
           className="absolute"
-          style={{ left: "10.8%", top: "24.4%", width: "39.2%", height: "27.2%" }}
+          style={{ left: "10%", top: "26%", width: "44%", height: "27.2%" }}
         >
           <ConnectorLeft className="size-full" progress={dotProgress} glow={glowOpacity} />
         </div>
@@ -507,7 +408,7 @@ export function SetupFlowSection() {
         {/* Center tile */}
         <div
           className="absolute z-10 flex items-center justify-center"
-          style={{ left: "41.25%", right: `${100 - 58.75}%`, top: "50%", transform: "translateY(-50%)" }}
+          style={{ left: "50%", top: "52%", transform: "translate(-50%, -50%)", width: "124px", height: "124px" }}
         >
           <SuperhandsTile progress={tileProgress} isSafari={isSafari} onGlow={handleGlow} />
         </div>
@@ -515,13 +416,13 @@ export function SetupFlowSection() {
         {/* Right connector */}
         <div
           className="absolute"
-          style={{ left: "50%", top: "48.4%", width: "39.7%", height: "27.3%" }}
+          style={{ left: "46%", top: "50%", width: "44%", height: "27.3%" }}
         >
           <ConnectorRight className="size-full" progress={dotProgress} glow={glowOpacity} />
         </div>
 
         {/* Bottom-right text */}
-        <div className="absolute right-0 text-right" style={{ top: "73%", width: "34.8%" }}>
+        <div className="absolute right-0 text-right" style={{ top: "78%", width: "320px" }}>
           <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             and&nbsp;&nbsp;bring
           </p>
