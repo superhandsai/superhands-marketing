@@ -94,7 +94,7 @@ export function ReviewSection() {
       subtext="Compare against the live product. No engineer needed."
       mockup={<ReviewMockup />}
       reversed
-      className="pt-0 pb-20"
+      className="pt-0 lg:pt-20 pb-20"
     />
   );
 }
@@ -126,7 +126,7 @@ export function FixSection() {
       heading="Fix the UI without touching the code"
       subtext="Refine in Superhands. No back-and-forth with engineers."
       mockup={<FixMockup />}
-      className="pt-0"
+      className="pt-0 lg:pt-20"
     />
   );
 }

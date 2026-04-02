@@ -1,0 +1,101 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+
+interface FocusArea {
+  scale: number;
+  fx: number;
+  fy: number;
+  label: string;
+}
+
+const FOCUS_AREAS: FocusArea[] = [
+  { scale: 1.0, fx: 0.50, fy: 0.50, label: "Product overview" },
+  { scale: 3.0, fx: 0.19, fy: 0.22, label: "Review toolbar" },
+  { scale: 2.1, fx: 0.51, fy: 0.40, label: "Style inspector" },
+  { scale: 1.9, fx: 0.29, fy: 0.69, label: "Search interaction" },
+];
+
+function getTransform({ scale, fx, fy }: FocusArea) {
+  const tx = (0.5 - fx) * scale * 100;
+  const ty = (0.5 - fy) * scale * 100;
+  return `translate(${tx}%, ${ty}%) scale(${scale})`;
+}
+
+const CYCLE_MS = 5000;
+
+export function MobileHeroImage({ sizes = "calc(100vw - 48px)" }: { sizes?: string } = {}) {
+  const [index, setIndex] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startTimer = useCallback(() => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    timerRef.current = setInterval(() => {
+      setIndex((i) => (i + 1) % FOCUS_AREAS.length);
+    }, CYCLE_MS);
+  }, []);
+
+  const goTo = useCallback(
+    (i: number) => {
+      setIndex(i);
+      startTimer();
+    },
+    [startTimer],
+  );
+
+  const advance = useCallback(() => {
+    setIndex((i) => (i + 1) % FOCUS_AREAS.length);
+    startTimer();
+  }, [startTimer]);
+
+  useEffect(() => {
+    startTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [startTimer]);
+
+  return (
+    <div>
+      <div
+        className="relative overflow-hidden aspect-[1524/978] cursor-pointer"
+        onClick={advance}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/Header.png"
+          srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
+          sizes={sizes}
+          alt="Superhands product interface showing design review workflow"
+          width={1524}
+          height={978}
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2500ms] ease-in-out will-change-transform motion-reduce:transition-none"
+          style={{ transform: getTransform(FOCUS_AREAS[index]) }}
+          fetchPriority="high"
+          decoding="async"
+          draggable={false}
+        />
+      </div>
+      <div className="flex justify-center gap-4 md:gap-3 pt-4">
+        {FOCUS_AREAS.map((a, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => goTo(i)}
+            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer hover:scale-300 active:scale-200 ${
+              i === index
+                ? "bg-[var(--landing-fg)]"
+                : "bg-[var(--landing-fg)]/30"
+            }`}
+            aria-label={`View ${a.label}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

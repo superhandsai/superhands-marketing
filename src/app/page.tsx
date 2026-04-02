@@ -11,6 +11,7 @@ import { GitHubSection } from "@/components/landing/github-section";
 import { CtaSection } from "@/components/landing/cta-section";
 import { LandingFooter } from "@/components/landing/landing-footer";
 import { MobileHeaderSentinel } from "@/components/landing/landing-mobile-header";
+import { MobileHeroImage } from "@/components/landing/mobile-hero-image";
 import { LANDING_URLS } from "@/components/landing/constants";
 import { LogoMark } from "@/components/logo-mark";
 
@@ -49,38 +50,14 @@ export default function HomePage() {
           </a>
         </div>
         <MobileHeaderSentinel />
-        <div className="mt-6 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/Header.png"
-            srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
-            sizes="calc(100vw - 48px)"
-            alt="Superhands product interface showing design review workflow"
-            width={1524}
-            height={978}
-            className="w-full h-auto"
-            fetchPriority="high"
-            decoding="async"
-          />
+        <div className="mt-6">
+          <MobileHeroImage />
         </div>
       </section>
 
       {/* Desktop header image — hidden below md */}
       <section className="hidden md:block px-6 pt-8 pb-8 md:px-10 md:pt-10 md:pb-10 max-w-[960px] mx-auto">
-        <div className="overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/Header.png"
-            srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
-            sizes="calc(100vw - var(--sidebar-w) - 80px)"
-            alt="Superhands product interface showing design review workflow"
-            width={1524}
-            height={978}
-            className="w-full h-auto transition-transform duration-300 ease-out hover:scale-[1.04]"
-            fetchPriority="high"
-            decoding="async"
-          />
-        </div>
+        <MobileHeroImage sizes="calc(100vw - var(--sidebar-w) - 80px)" />
       </section>
       {/* Mobile divider between hero and problem section */}
       <div
