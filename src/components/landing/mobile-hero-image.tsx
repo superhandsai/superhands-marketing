@@ -19,7 +19,7 @@ const FOCUS_AREAS: FocusArea[] = [
 function getTransform({ scale, fx, fy }: FocusArea) {
   const tx = (0.5 - fx) * scale * 100;
   const ty = (0.5 - fy) * scale * 100;
-  return `translate3d(${tx}%, ${ty}%, 0) scale(${scale})`;
+  return `translate(${tx}%, ${ty}%) scale(${scale})`;
 }
 
 const CYCLE_MS = 3800;
@@ -71,20 +71,27 @@ export function MobileHeroImage() {
         className="relative overflow-hidden aspect-[1524/978] cursor-pointer"
         onClick={advance}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/Header.png"
-          srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
-          sizes="(min-width: 768px) 880px, calc(100vw - 48px)"
-          alt="Superhands product interface showing design review workflow"
-          width={1524}
-          height={978}
-          className="absolute -inset-px w-[calc(100%+2px)] h-[calc(100%+2px)] object-cover transition-transform duration-[2000ms] ease-out motion-reduce:transition-none"
-          style={{ transform: getTransform(FOCUS_AREAS[index]) }}
-          fetchPriority="high"
-          decoding="async"
-          draggable={false}
-        />
+        {FOCUS_AREAS.map((area, i) => (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            key={area.label}
+            src="/images/Header.png"
+            srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
+            sizes="(min-width: 768px) 880px, calc(100vw - 48px)"
+            alt={i === 0 ? "Superhands product interface showing design review workflow" : ""}
+            width={1524}
+            height={978}
+            className="absolute -inset-px w-[calc(100%+2px)] h-[calc(100%+2px)] object-cover transition-opacity duration-[2000ms] ease-in-out motion-reduce:transition-none"
+            style={{
+              transform: getTransform(area),
+              opacity: i === index ? 1 : 0,
+            }}
+            fetchPriority={i === 0 ? "high" : "low"}
+            decoding="async"
+            draggable={false}
+            aria-hidden={i !== 0}
+          />
+        ))}
       </div>
       <div className="flex justify-center gap-4 md:gap-3 pt-4">
         {FOCUS_AREAS.map((a, i) => (
