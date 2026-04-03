@@ -22,19 +22,20 @@ function getTransform({ scale, fx, fy }: FocusArea) {
   return `translate(${tx}%, ${ty}%) scale(${scale})`;
 }
 
-const CYCLE_MS = 5000;
+const CYCLE_MS = 3000;
+const INITIAL_DELAY_MS = 1500;
 
-export function MobileHeroImage({ sizes = "calc(100vw - 48px)" }: { sizes?: string } = {}) {
+export function MobileHeroImage({ sizes = "calc((100vw - 48px) * 3)" }: { sizes?: string } = {}) {
   const [index, setIndex] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout | typeof setInterval> | null>(null);
+
+  const prefersReducedMotion = () =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const startTimer = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    )
-      return;
+    if (prefersReducedMotion()) return;
     timerRef.current = setInterval(() => {
       setIndex((i) => (i + 1) % FOCUS_AREAS.length);
     }, CYCLE_MS);
@@ -54,7 +55,11 @@ export function MobileHeroImage({ sizes = "calc(100vw - 48px)" }: { sizes?: stri
   }, [startTimer]);
 
   useEffect(() => {
-    startTimer();
+    if (prefersReducedMotion()) return;
+    timerRef.current = setTimeout(() => {
+      setIndex((i) => (i + 1) % FOCUS_AREAS.length);
+      startTimer();
+    }, INITIAL_DELAY_MS);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
@@ -74,7 +79,7 @@ export function MobileHeroImage({ sizes = "calc(100vw - 48px)" }: { sizes?: stri
           alt="Superhands product interface showing design review workflow"
           width={1524}
           height={978}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2500ms] ease-in-out will-change-transform motion-reduce:transition-none"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out will-change-transform motion-reduce:transition-none"
           style={{ transform: getTransform(FOCUS_AREAS[index]) }}
           fetchPriority="high"
           decoding="async"
@@ -86,6 +91,7 @@ export function MobileHeroImage({ sizes = "calc(100vw - 48px)" }: { sizes?: stri
           <button
             key={i}
             type="button"
+            onTouchStart={() => {}}
             onClick={() => goTo(i)}
             className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer hover:scale-300 active:scale-200 ${
               i === index

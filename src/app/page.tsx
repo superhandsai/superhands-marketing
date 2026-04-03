@@ -57,7 +57,7 @@ export default function HomePage() {
 
       {/* Desktop header image — hidden below md */}
       <section className="hidden md:block px-6 pt-8 pb-8 md:px-10 md:pt-10 md:pb-10 max-w-[960px] mx-auto">
-        <MobileHeroImage sizes="calc(100vw - var(--sidebar-w) - 80px)" />
+        <MobileHeroImage sizes="calc((100vw - var(--sidebar-w) - 80px) * 3)" />
       </section>
       {/* Mobile divider between hero and problem section */}
       <div
