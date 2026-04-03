@@ -79,7 +79,7 @@ export function MobileHeroImage() {
           alt="Superhands product interface showing design review workflow"
           width={1524}
           height={978}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none"
+          className="absolute -inset-px w-[calc(100%+2px)] h-[calc(100%+2px)] object-cover transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none"
           style={{ transform: getTransform(FOCUS_AREAS[index]) }}
           fetchPriority="high"
           decoding="async"
