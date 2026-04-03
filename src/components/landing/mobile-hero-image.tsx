@@ -19,7 +19,7 @@ const FOCUS_AREAS: FocusArea[] = [
 function getTransform({ scale, fx, fy }: FocusArea) {
   const tx = (0.5 - fx) * scale * 100;
   const ty = (0.5 - fy) * scale * 100;
-  return `translate(${tx}%, ${ty}%) scale(${scale})`;
+  return `translate3d(${tx}%, ${ty}%, 0) scale(${scale})`;
 }
 
 const CYCLE_MS = 3800;
@@ -79,7 +79,7 @@ export function MobileHeroImage() {
           alt="Superhands product interface showing design review workflow"
           width={1524}
           height={978}
-          className="absolute -inset-px w-[calc(100%+2px)] h-[calc(100%+2px)] object-cover transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none"
+          className="absolute -inset-px w-[calc(100%+2px)] h-[calc(100%+2px)] object-cover transition-transform duration-[2000ms] ease-out motion-reduce:transition-none"
           style={{ transform: getTransform(FOCUS_AREAS[index]) }}
           fetchPriority="high"
           decoding="async"
