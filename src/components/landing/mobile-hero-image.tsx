@@ -22,7 +22,7 @@ function getTransform({ scale, fx, fy }: FocusArea) {
   return `translate(${tx}%, ${ty}%) scale(${scale})`;
 }
 
-const CYCLE_MS = 3000;
+const CYCLE_MS = 3800;
 const INITIAL_DELAY_MS = 1500;
 
 export function MobileHeroImage() {
