@@ -73,11 +73,13 @@ export function MobileHeroImage() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/Header@2x.png"
+          src="/images/Header.png"
+          srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
+          sizes="(min-width: 768px) 880px, calc(100vw - 48px)"
           alt="Superhands product interface showing design review workflow"
           width={1524}
           height={978}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out will-change-transform motion-reduce:transition-none"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none"
           style={{ transform: getTransform(FOCUS_AREAS[index]) }}
           fetchPriority="high"
           decoding="async"
