@@ -25,7 +25,7 @@ function getTransform({ scale, fx, fy }: FocusArea) {
 const CYCLE_MS = 3000;
 const INITIAL_DELAY_MS = 1500;
 
-export function MobileHeroImage({ sizes = "calc((100vw - 48px) * 3)" }: { sizes?: string } = {}) {
+export function MobileHeroImage() {
   const [index, setIndex] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout | typeof setInterval> | null>(null);
 
@@ -73,9 +73,7 @@ export function MobileHeroImage({ sizes = "calc((100vw - 48px) * 3)" }: { sizes?
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/images/Header.png"
-          srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
-          sizes={sizes}
+          src="/images/Header@2x.png"
           alt="Superhands product interface showing design review workflow"
           width={1524}
           height={978}
