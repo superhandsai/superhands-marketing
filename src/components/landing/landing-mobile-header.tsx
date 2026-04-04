@@ -33,7 +33,7 @@ export function LandingMobileHeader() {
 
   return (
     <header
-      className="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-3 bg-[var(--background)] border-b border-[var(--landing-divider)]/10 transition-transform duration-300 ease-out"
+      className="md:hidden fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-3 max-[350px]:px-3 bg-[var(--background)] border-b border-[var(--landing-divider)]/10 transition-transform duration-300 ease-out"
       style={{ transform: visible ? "translateY(0)" : "translateY(-100%)" }}
     >
       <div className="flex items-center gap-2">
@@ -47,22 +47,22 @@ export function LandingMobileHeader() {
           Superhands
         </span>
       </div>
-      <div className="flex items-center gap-3.5">
-        <a
-          href={LANDING_URLS.bookDemo}
-          className="text-sm font-medium text-[var(--landing-fg)] font-body transition-opacity hover:opacity-70"
-        >
-          Book Demo
-        </a>
+      <div className="flex min-w-0 shrink items-center gap-3.5 max-[350px]:gap-2">
         <a
           href={LANDING_URLS.login}
-          className="text-sm font-medium text-[var(--landing-fg)] font-body transition-opacity hover:opacity-70"
+          className="shrink-0 text-sm max-[350px]:text-[13px] font-medium text-[var(--landing-fg)] font-body transition-opacity hover:opacity-70"
         >
           Log in
         </a>
         <a
+          href={LANDING_URLS.bookDemo}
+          className="shrink-0 text-sm max-[350px]:text-[13px] font-medium text-[var(--landing-fg)] font-body transition-opacity hover:opacity-70"
+        >
+          Book Demo
+        </a>
+        <a
           href={LANDING_URLS.waitlist}
-          className="inline-flex items-center justify-center rounded-[14px] border border-[var(--landing-cta-border)] bg-gradient-to-b from-[var(--landing-cta-from)] to-[var(--landing-cta-to)] px-4 py-2 text-sm font-semibold leading-[1.44] text-[var(--landing-cta-text)] font-body transition-opacity hover:opacity-90"
+          className="inline-flex shrink-0 items-center justify-center rounded-[14px] border border-[var(--landing-cta-border)] bg-gradient-to-b from-[var(--landing-cta-from)] to-[var(--landing-cta-to)] px-4 max-[350px]:px-3 py-2 text-sm max-[350px]:text-[13px] font-semibold leading-[1.44] text-[var(--landing-cta-text)] font-body transition-opacity hover:opacity-90"
         >
           Join Waitlist
         </a>

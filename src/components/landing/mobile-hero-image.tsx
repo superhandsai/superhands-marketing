@@ -68,30 +68,23 @@ export function MobileHeroImage() {
   return (
     <div>
       <div
-        className="relative overflow-hidden aspect-[1524/978] cursor-pointer"
+        className="relative overflow-hidden aspect-[1524/978] cursor-pointer bg-[var(--landing-bg)]"
         onClick={advance}
       >
-        {FOCUS_AREAS.map((area, i) => (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
-            key={area.label}
-            src="/images/Header.png"
-            srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
-            sizes="(min-width: 768px) 880px, calc(100vw - 48px)"
-            alt={i === 0 ? "Superhands product interface showing design review workflow" : ""}
-            width={1524}
-            height={978}
-            className="absolute -inset-px w-[calc(100%+2px)] h-[calc(100%+2px)] object-cover transition-opacity duration-[2000ms] ease-in-out motion-reduce:transition-none"
-            style={{
-              transform: getTransform(area),
-              opacity: i === index ? 1 : 0,
-            }}
-            fetchPriority={i === 0 ? "high" : "low"}
-            decoding="async"
-            draggable={false}
-            aria-hidden={i !== 0}
-          />
-        ))}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/Header.png"
+          srcSet="/images/Header.png 1524w, /images/Header@2x.png 3048w"
+          sizes="(min-width: 768px) 880px, calc(100vw - 48px)"
+          alt="Superhands product interface showing design review workflow"
+          width={1524}
+          height={978}
+          className="absolute -inset-px w-[calc(100%+2px)] h-[calc(100%+2px)] object-cover transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none"
+          style={{ transform: getTransform(FOCUS_AREAS[index]) }}
+          fetchPriority="high"
+          decoding="async"
+          draggable={false}
+        />
       </div>
       <div className="flex justify-center gap-4 md:gap-3 pt-4">
         {FOCUS_AREAS.map((a, i) => (

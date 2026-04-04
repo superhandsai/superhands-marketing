@@ -1,16 +1,40 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { LogoMark } from "@/components/logo-mark";
 import { LANDING_URLS } from "./constants";
+import { cn } from "@/lib/utils";
 
 export function CtaSection() {
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ctaRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { threshold: 0.35, rootMargin: "0px 0px -5% 0px" },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <section className="px-6 md:px-10 pt-0 pb-[120px] md:pb-[258px] max-w-[960px] mx-auto">
-      <div className="group/cta relative rounded-[32px] px-5 py-5 sm:px-10 sm:py-10 md:py-12">
+      <div
+        ref={ctaRef}
+        className="group/cta relative rounded-[32px] px-5 py-5 sm:px-10 sm:py-10 md:py-12"
+      >
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
           aria-hidden="true"
         >
           <rect
-            className="group-has-[a:hover]/cta:animate-[border-march_0.7s_linear_infinite]"
+            className={cn(
+              "md:group-has-[a:hover]/cta:animate-[border-march_0.7s_linear_infinite]",
+              inView && "max-md:animate-[border-march_0.7s_linear_infinite]",
+            )}
             x="0.75"
             y="0.75"
             rx={32}
@@ -37,7 +61,10 @@ export function CtaSection() {
 
           <div className="flex items-center justify-center w-[60px] sm:w-[125px]">
             <LogoMark
-              className="w-[41px] h-[43px] opacity-50 transition-opacity duration-700 ease-in-out group-has-[a:hover]/cta:animate-[logo-pulse_2s_ease-in-out_infinite]"
+              className={cn(
+                "w-[41px] h-[43px] opacity-50 transition-opacity duration-700 ease-in-out md:group-has-[a:hover]/cta:animate-[logo-pulse_2s_ease-in-out_infinite]",
+                inView && "max-md:animate-[logo-pulse_2s_ease-in-out_infinite]",
+              )}
               decorative
             />
           </div>
@@ -50,10 +77,10 @@ export function CtaSection() {
           </div>
 
           <a
-            href={LANDING_URLS.waitlist}
+            href={LANDING_URLS.bookDemo}
             className="shrink-0 inline-flex items-center justify-center rounded-[14px] border border-[rgba(82,82,84,0.05)] bg-gradient-to-t from-[#03161c] to-[#05242e] px-4 py-3 text-base font-semibold leading-[1.44] text-[#fcfcfc] font-body transition-all hover:opacity-90 hover:shadow-[0_4px_12px_rgba(3,22,28,0.04)]"
           >
-            Get Started
+            Book Demo
           </a>
         </div>
       </div>
