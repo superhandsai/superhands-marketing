@@ -68,7 +68,7 @@ export function MobileHeroImage() {
   return (
     <div>
       <div
-        className="relative overflow-hidden aspect-[1524/978] cursor-pointer bg-[var(--landing-bg)]"
+        className="relative isolate overflow-hidden aspect-[1524/978] cursor-pointer bg-[var(--landing-bg)] [transform:translateZ(0)]"
         onClick={advance}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -79,7 +79,7 @@ export function MobileHeroImage() {
           alt="Superhands product interface showing design review workflow"
           width={1524}
           height={978}
-          className="absolute -inset-px w-[calc(100%+2px)] h-[calc(100%+2px)] object-cover transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none"
+          className="absolute -inset-[3px] h-[calc(100%+6px)] w-[calc(100%+6px)] object-cover transition-transform duration-[2000ms] ease-in-out motion-reduce:transition-none md:-inset-px md:h-[calc(100%+2px)] md:w-[calc(100%+2px)]"
           style={{ transform: getTransform(FOCUS_AREAS[index]) }}
           fetchPriority="high"
           decoding="async"

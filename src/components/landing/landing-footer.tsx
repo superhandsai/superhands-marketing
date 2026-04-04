@@ -25,19 +25,19 @@ export function LandingFooter() {
       />
 
       <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-4 pt-6">
-        <div className="flex items-center gap-6">
-          <a href="https://www.linkedin.com/company/superhandsai/" target="_blank" rel="noopener noreferrer" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
+        <div className="flex max-[355px]:flex-wrap max-[355px]:items-baseline max-[355px]:gap-x-3 max-[355px]:gap-y-1.5 items-center gap-6">
+          <a href="https://www.linkedin.com/company/superhandsai/" target="_blank" rel="noopener noreferrer" className="text-[14px] max-[355px]:text-[13px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             LinkedIn
           </a>
-          <a href="https://app.superhands.ai/privacy" target="_blank" rel="noopener noreferrer" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
+          <a href="https://app.superhands.ai/privacy" target="_blank" rel="noopener noreferrer" className="text-[14px] max-[355px]:text-[13px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             Privacy Policy
           </a>
-          <a href="https://app.superhands.ai/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="text-[14px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
+          <a href="https://app.superhands.ai/terms-and-conditions" target="_blank" rel="noopener noreferrer" className="text-[14px] max-[355px]:text-[13px] font-medium font-body text-[var(--landing-fg)] opacity-80 transition-opacity hover:opacity-60">
             Terms of Service
           </a>
         </div>
 
-        <div className="flex items-center gap-2 text-[14px] font-medium font-body text-[var(--landing-fg-secondary)]">
+        <div className="flex items-center gap-2 text-[14px] max-[355px]:text-[13px] font-medium font-body text-[var(--landing-fg-secondary)]">
           <span>&copy; {new Date().getFullYear()}</span>
           <span className="text-[10px]">|</span>
           <span>Shipped with Superhands</span>
