@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import Script from "next/script";
@@ -30,6 +30,10 @@ const roobertMono = localFont({
   variable: "--font-roobert-mono",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://superhands.ai"),

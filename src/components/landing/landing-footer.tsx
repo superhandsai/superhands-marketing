@@ -1,6 +1,9 @@
 export function LandingFooter() {
   return (
-    <footer className="group/footer px-6 md:px-10 pb-10 pt-0 max-w-[960px] mx-auto relative overflow-visible">
+    <footer
+      className="group/footer px-6 md:px-10 pt-0 max-w-[960px] mx-auto relative overflow-visible"
+      style={{ paddingBottom: "calc(2.5rem + env(safe-area-inset-bottom, 0px))" }}
+    >
       <div
         className="group-has-[a:hover]/footer:animate-[dot-march_0.7s_linear_infinite]"
         style={{

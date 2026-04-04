@@ -29,8 +29,8 @@ export function GitHubSection() {
           opacity: 0.5,
         }}
       />
-      <div className="flex flex-col">
-        <div className="mb-1">
+      <div className="flex flex-col gap-6">
+        <div>
           <p className="text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body">
             For engineers
           </p>
@@ -43,7 +43,7 @@ export function GitHubSection() {
           <GitHubMockup />
         </div>
 
-        <p className="mt-8 md:mt-6 text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[291px] self-end text-left">
+        <p className="text-[16px] font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[291px] self-end text-left">
           Design review happens in the PR, so your team doesn&rsquo;t need to change how they work.
         </p>
       </div>
