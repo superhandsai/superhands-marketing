@@ -47,7 +47,7 @@ export function LandingMobileHeader() {
           Superhands
         </span>
       </div>
-      <div className="flex min-w-0 shrink items-center gap-3.5 max-[350px]:gap-2">
+      <div className="flex min-w-0 shrink items-center gap-3.5">
         <a
           href={LANDING_URLS.login}
           className="shrink-0 text-sm max-[350px]:text-[13px] font-medium text-[var(--landing-fg)] font-body transition-opacity hover:opacity-70"
