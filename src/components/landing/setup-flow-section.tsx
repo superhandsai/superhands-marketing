@@ -271,20 +271,21 @@ function connectSuperhandsMinContentPx(headlinePx: 20 | 24 | 28): number {
 function wideFlowDims(contentInlinePx: number, headlinePx: 20 | 24 | 28): WideFlowDims {
   const w = Math.max(FLOW_MIN_SCALE_WIDTH_PX, Math.floor(contentInlinePx));
   const q = (n: number) => Math.round((n * w) / FLOW_LAYOUT_BASE);
-  const padPl = q(80);
-  const padPrTl = q(39);
+  const narrow = w < 400;
+  const padPl = narrow ? Math.min(q(80), 24) : q(80);
+  const padPrTl = narrow ? Math.min(q(39), 12) : q(39);
   const tlColFigma = q(359);
   const tlColForConnect = padPl + padPrTl + connectSuperhandsMinContentPx(headlinePx);
-  const tlColPx = Math.min(w, Math.max(tlColFigma, tlColForConnect));
+  const tlColPx = Math.min(Math.round(w * 0.65), Math.max(tlColFigma, tlColForConnect));
   const brIdealLeft = q(372);
   /** Nudge BR left only if needed so the block stays wide enough; never left of TL column. */
   const brLeftPx = Math.max(tlColPx, Math.min(brIdealLeft, w - FLOW_BR_MIN_WIDTH_PX));
   const brWidthPx = Math.max(0, w - brLeftPx);
   return {
     rowMinH: q(286),
-    padY: q(80),
+    padY: narrow ? Math.min(q(80), 32) : q(80),
     padPl,
-    padPlBr: q(80),
+    padPlBr: narrow ? Math.min(q(80), 16) : q(80),
     padPrTl,
     spacerGap: q(62),
     cornerMain: q(32),
