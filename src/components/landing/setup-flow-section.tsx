@@ -328,18 +328,16 @@ function LayoutWideBorderGrid({
     ? Math.min(layoutW, Math.max(d.brWidthPx, Math.round(layoutW * FLOW_BR_WIDE_MIN_FRAC)))
     : d.brWidthPx;
   const brL = brWideRow ? Math.max(0, layoutW - brW) : d.brLeftPx;
+  /** Match TL left padding so both text blocks are equally inset from the outer border. */
+  const brPadR = d.padPl;
   /** Cap BR inner-left (seam-side) padding from actual box width. */
   const brPadMax = Math.max(12, Math.floor(brW * 0.18));
   const brPadL = Math.min(d.padPlBr, brPadMax);
-  /** Match TL column left inset (`padPl`) on the outer (right) edge at all breakpoints. */
-  const brPadR = d.padPl;
   const rowH = d.rowMinH + seamBoost;
   const gridMinH = rowH * 2;
   const midGapPx = Math.max(0, brL - d.tlColPx);
   /** Align with TL bottom bar; rowH−bw/2 straddled the seam and stacked on BR’s top stroke. */
   const seamTopPx = rowH - bw;
-  const brHeadlineMerged = brWideRow;
-
   return (
     <div className="w-full min-w-0 overflow-x-visible overflow-y-visible">
       <div className="relative w-full min-w-0 shrink-0" style={{ minHeight: gridMinH }}>
@@ -390,17 +388,17 @@ function LayoutWideBorderGrid({
                   backgroundColor: FLOW_LINE,
                 }}
               />
-              <p className="relative z-[1] w-max max-w-full text-left font-body text-base font-medium leading-none text-[var(--landing-fg-secondary)]">
-                To set up
-              </p>
-              <div className={`relative z-[1] w-max max-w-full text-left font-heading font-semibold leading-[1.1] text-[#03161c] ${hx}`}>
-                <p className="mb-0">
-                  <span className="whitespace-nowrap">Connect Superhands</span>
+              <div className="relative z-[1] flex flex-col items-start gap-1 text-left">
+                <p className="m-0 font-body text-base font-medium leading-none text-[var(--landing-fg-secondary)]">
+                  To set up
                 </p>
-                <p>
-                  <span>to </span>
+                <p className={`m-0 w-max whitespace-nowrap font-heading font-semibold leading-[1.1] text-[#03161c] ${hx}`}>
+                  Connect Superhands
+                </p>
+                <div className={`flex w-max items-baseline gap-[0.25em] whitespace-nowrap font-heading font-semibold leading-[1.1] text-[#03161c] ${hx}`}>
+                  <span>to</span>
                   <AccentWord lit={visualHighlight}>GitHub</AccentWord>
-                </p>
+                </div>
               </div>
             </div>
             <div
@@ -443,8 +441,7 @@ function LayoutWideBorderGrid({
             <div
               className="absolute top-0 right-0 z-[1] flex min-w-0 max-w-full flex-col justify-center gap-2 overflow-visible text-right"
               style={{
-                left: brL,
-                width: "auto",
+                width: brW,
                 height: rowH,
                 boxSizing: "border-box",
                 padding: `${d.padY + seamBoost}px ${brPadR}px ${d.padY}px ${brPadL}px`,
@@ -483,28 +480,17 @@ function LayoutWideBorderGrid({
                   }}
                 />
               </div>
-              <p className="relative z-[1] m-0 w-full min-w-0 text-right font-body text-base font-medium leading-none text-[var(--landing-fg-secondary)]">
-                and bring
-              </p>
-              <div
-                className={`relative z-[1] w-full min-w-0 text-right font-heading font-semibold leading-[1.1] text-[#03161c] ${hx}`}
-              >
-                {brHeadlineMerged ? (
-                  <p className="m-0 w-full min-w-0 text-right leading-[1.1] break-normal [hyphens:none] [text-wrap:balance]">
-                    <AccentWord lit={visualHighlight}>designers</AccentWord>
-                    <span> into the pull request flow</span>
-                  </p>
-                ) : (
-                  <>
-                    <p className="m-0 mb-0 w-full min-w-0 whitespace-nowrap text-right leading-[1.1]">
-                      <AccentWord lit={visualHighlight}>designers</AccentWord>
-                      <span> into the</span>
-                    </p>
-                    <p className="m-0 w-full min-w-0 whitespace-nowrap text-right leading-[1.1]">
-                      pull request flow
-                    </p>
-                  </>
-                )}
+              <div className="relative z-[1] flex flex-col items-end gap-1 text-right">
+                <p className="m-0 font-body text-base font-medium leading-none text-[var(--landing-fg-secondary)]">
+                  and bring
+                </p>
+                <div className={`flex w-max items-baseline gap-[0.25em] whitespace-nowrap font-heading font-semibold leading-[1.1] text-[#03161c] ${hx}`}>
+                  <AccentWord lit={visualHighlight}>designers</AccentWord>
+                  <span>into the</span>
+                </div>
+                <p className={`m-0 w-max whitespace-nowrap font-heading font-semibold leading-[1.1] text-[#03161c] ${hx}`}>
+                  pull request flow
+                </p>
               </div>
             </div>
           </div>
