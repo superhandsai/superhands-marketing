@@ -88,9 +88,14 @@ const SuperhandsTile = forwardRef<
     onToggleHighlight?: () => void;
     /** When suppressed, parent uses this to mirror active visuals on hover/focus. */
     onPeekHighlightChange?: (active: boolean) => void;
+    /**
+     * When true, peek only tracks the pointer (not focus). While highlight is user-suppressed,
+     * this avoids focus-from-click immediately re-lighting the tile; hover preview still works after pointer leave + enter.
+     */
+    peekRequiresPointer?: boolean;
   }
 >(function SuperhandsTile(
-  { pressed, visualHighlight, size, onToggleHighlight, onPeekHighlightChange },
+  { pressed, visualHighlight, size, onToggleHighlight, onPeekHighlightChange, peekRequiresPointer },
   tileRef,
 ) {
   const sm = size === "sm";
@@ -104,8 +109,11 @@ const SuperhandsTile = forwardRef<
       onPeekHighlightChange(false);
       return;
     }
-    onPeekHighlightChange(pointerInsideRef.current || focusInsideRef.current);
-  }, [onPeekHighlightChange, pressed]);
+    const wantPeek = peekRequiresPointer
+      ? pointerInsideRef.current
+      : pointerInsideRef.current || focusInsideRef.current;
+    onPeekHighlightChange(wantPeek);
+  }, [onPeekHighlightChange, peekRequiresPointer, pressed]);
 
   useLayoutEffect(() => {
     emitPeek();
@@ -133,12 +141,41 @@ const SuperhandsTile = forwardRef<
         }
       : {};
 
+  /** Imperative squash — avoids CSS animation being cancelled by Tailwind motion-reduce / React paint. */
+  const faceInnerRef = useRef<HTMLDivElement>(null);
+
+  const playSquash = useCallback(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = faceInnerRef.current;
+    if (!el) return;
+    el.animate(
+      [
+        { transform: "scale(1)" },
+        { transform: "scale(0.9)", offset: 0.45 },
+        { transform: "scale(1)" },
+      ],
+      { duration: 380, easing: "ease-out", fill: "none" },
+    );
+  }, []);
+
+  const scheduleSquashAfterCommit = useCallback(() => {
+    setTimeout(() => playSquash(), 0);
+  }, [playSquash]);
+
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (!onToggleHighlight) return;
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       onToggleHighlight();
+      scheduleSquashAfterCommit();
     }
+  };
+
+  const onTileClick = () => {
+    if (!onToggleHighlight) return;
+    onToggleHighlight();
+    scheduleSquashAfterCommit();
   };
 
   return (
@@ -148,23 +185,18 @@ const SuperhandsTile = forwardRef<
       tabIndex={interactive ? 0 : undefined}
       aria-label={interactive ? "Toggle highlight on tile and keywords" : undefined}
       aria-pressed={interactive ? pressed : undefined}
-      onClick={interactive ? onToggleHighlight : undefined}
+      onClick={interactive ? onTileClick : undefined}
       onKeyDown={interactive ? onKeyDown : undefined}
       {...peekHandlers}
-      className={`shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#51CAEB]/50 focus-visible:ring-offset-2 ${sm ? "size-20" : "size-[124px]"} ${interactive ? "group cursor-pointer" : ""}`}
+      className={`shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#51CAEB]/50 focus-visible:ring-offset-2 ${sm ? "size-20" : "size-[124px]"} ${interactive ? "cursor-pointer" : ""}`}
     >
       <div
-        className={`relative flex size-full items-center justify-center overflow-hidden transition-[transform,box-shadow] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
-          interactive
-            ? "group-hover:-translate-y-0.5 group-hover:scale-[1.005] motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-100 group-focus-visible:-translate-y-0.5 group-focus-visible:scale-[1.005] motion-reduce:group-focus-visible:translate-y-0 motion-reduce:group-focus-visible:scale-100"
-            : ""
-        }`}
+        className="relative flex size-full overflow-hidden transition-[box-shadow] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none"
         style={{
           isolation: "isolate",
           borderRadius: sm ? 20 : 32,
           border: "1px solid rgba(82, 82, 84, 0.8)",
-          background:
-            "linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 45%, #000000 100%)",
+          backgroundColor: "#000000",
           boxShadow: visualHighlight
             ? "0 0 52px rgba(81, 202, 235, 0.5), 0 0 104px rgba(81, 202, 235, 0.3), 0 0 160px rgba(81, 202, 235, 0.17)"
             : sm
@@ -174,30 +206,39 @@ const SuperhandsTile = forwardRef<
         }}
       >
         <div
-          aria-hidden
-          className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
+          ref={faceInnerRef}
+          className="relative flex size-full origin-center items-center justify-center"
           style={{
-            backgroundImage: `url("${SUPERHANDS_TILE_NOISE_TILE}")`,
-            backgroundRepeat: "repeat",
-            backgroundSize: "128px 128px",
-            /* No mix-blend — avoids grain compositing with the backdrop and reading into the cyan glow. */
-            opacity: 0.07,
+            background:
+              "linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 45%, #000000 100%)",
           }}
-        />
-        {/* eslint-disable-next-line @next/next/no-img-element -- small fixed asset; avoids layout shift from Image fill */}
-        <img
-          src={SUPERHANDS_TILE_MARK_SRC}
-          alt=""
-          width={512}
-          height={512}
-          decoding="async"
-          draggable={false}
-          className="pointer-events-none relative z-10 h-full w-full select-none object-contain p-[26%]"
-          style={{
-            opacity: visualHighlight ? 1 : 0.5,
-            animation: visualHighlight ? "logo-pulse 2s ease-in-out infinite" : "none",
-          }}
-        />
+        >
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
+            style={{
+              backgroundImage: `url("${SUPERHANDS_TILE_NOISE_TILE}")`,
+              backgroundRepeat: "repeat",
+              backgroundSize: "128px 128px",
+              /* No mix-blend — avoids grain compositing with the backdrop and reading into the cyan glow. */
+              opacity: 0.07,
+            }}
+          />
+          {/* eslint-disable-next-line @next/next/no-img-element -- small fixed asset; avoids layout shift from Image fill */}
+          <img
+            src={SUPERHANDS_TILE_MARK_SRC}
+            alt=""
+            width={512}
+            height={512}
+            decoding="async"
+            draggable={false}
+            className="pointer-events-none relative z-10 h-full w-full select-none object-contain p-[26%]"
+            style={{
+              opacity: visualHighlight ? 1 : 0.5,
+              animation: visualHighlight ? "logo-pulse 2s ease-in-out infinite" : "none",
+            }}
+          />
+        </div>
       </div>
     </div>
   );
@@ -319,6 +360,7 @@ function LayoutWideBorderGrid({
   tileRef,
   onToggleHighlight,
   onPeekHighlightChange,
+  highlightSuppressed,
   tileSize,
   headlinePx,
 }: {
@@ -329,6 +371,7 @@ function LayoutWideBorderGrid({
   tileRef: React.RefObject<HTMLDivElement | null>;
   onToggleHighlight: () => void;
   onPeekHighlightChange: (active: boolean) => void;
+  highlightSuppressed: boolean;
   tileSize: "sm" | "lg";
   headlinePx: 20 | 24 | 28;
 }) {
@@ -536,6 +579,7 @@ function LayoutWideBorderGrid({
               size={tileSize}
               onToggleHighlight={onToggleHighlight}
               onPeekHighlightChange={onPeekHighlightChange}
+              peekRequiresPointer={highlightSuppressed}
             />
           </div>
         </div>
@@ -566,7 +610,8 @@ export function SetupFlowSection() {
   /** After turning off while pointer/focus stays on the tile, ignore peek until leave (otherwise emitPeek immediately re-lights). */
   const peekBlockedUntilLeaveRef = useRef(false);
 
-  const visualHighlight = pressed || (highlightSuppressed && peekHighlight);
+  /** Hover/focus on tile previews full highlight when not logically "on" (accent words + glow). */
+  const visualHighlight = pressed || peekHighlight;
 
   const onToggleHighlight = useCallback(() => {
     setHighlightSuppressed((s) => {
@@ -600,6 +645,7 @@ export function SetupFlowSection() {
         tileRef={tileRef}
         onToggleHighlight={onToggleHighlight}
         onPeekHighlightChange={onPeekHighlightChange}
+        highlightSuppressed={highlightSuppressed}
         tileSize={tileSize}
         headlinePx={headlinePx}
       />
