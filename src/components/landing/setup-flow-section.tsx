@@ -70,8 +70,12 @@ function useTileViewportCenterLit(tileRef: React.RefObject<HTMLElement | null>) 
   return lit;
 }
 
-const SH_LOGO_MARK_D =
-  "M49.6144 15.1622C51.1204 15.3739 52.4932 15.8016 53.7306 16.4483C55.4572 17.3116 56.841 18.5435 57.8829 20.1426L58.087 20.4668L58.088 20.4678C59.1162 22.2273 59.628 24.2989 59.628 26.6778C59.628 29.0542 59.1692 31.0224 58.2452 32.5762C57.3239 34.0836 56.0651 35.3196 54.4727 36.2813L54.4708 36.2823C52.884 37.1989 51.087 37.9688 49.0802 38.5928L46.131 39.4776C44.4497 39.9742 42.9798 40.533 41.7218 41.1524L41.7208 41.1514C40.5055 41.7671 39.5534 42.5873 38.8614 43.6094C38.2085 44.6257 37.8781 45.9947 37.878 47.7247C37.878 50.1548 38.5959 52.0314 40.0235 53.3663L40.3185 53.626C41.9837 55.0197 44.0855 55.7188 46.63 55.7188C46.7591 55.7188 46.8877 55.7164 47.0157 55.7129L47.1065 55.711L47.1134 55.8018C47.21 57.0386 47.4618 58.1793 47.8653 59.2256L47.9122 59.3467L47.7823 59.3555C47.4048 59.3812 47.0207 59.3965 46.63 59.3965C44.1951 59.3965 42.0554 58.9163 40.214 57.9542C38.3723 57.0333 36.9192 55.6935 35.8565 53.9356L35.8556 53.9346C34.8274 52.1751 34.3155 50.1035 34.3155 47.7247C34.3156 45.3482 34.7743 43.3801 35.6983 41.8262C36.6197 40.3189 37.8784 39.0828 39.4708 38.1211L39.4718 38.1202C41.0587 37.2035 42.8564 36.4337 44.8634 35.8096L47.8116 34.9249L48.4337 34.7354L48.9601 34.5655C50.171 34.1633 51.2578 33.7251 52.2208 33.251C53.4359 32.6357 54.3881 31.8165 55.0802 30.795C55.7339 29.7785 56.0655 28.4089 56.0655 26.6778C56.0655 24.0857 55.2486 22.1233 53.6251 20.7764C52.66 19.9687 51.5479 19.3949 50.2901 19.0547L50.2227 19.0372L50.2198 18.9668C50.1556 17.6342 49.9189 16.409 49.5108 15.2901L49.4561 15.1397L49.6144 15.1622ZM65.2875 36.3516V39.3721C65.2875 42.2878 64.7035 44.7117 63.5345 46.6387L63.5365 46.6397C62.4037 48.6051 60.8442 50.0895 58.8614 51.0938L58.8624 51.0948C57.2284 51.9373 55.4204 52.4237 53.4405 52.5586L53.3702 52.5635L53.3448 52.4971C52.9341 51.4319 52.679 50.273 52.5811 49.0196L52.5733 48.919L52.6739 48.9161C54.2986 48.8715 55.7716 48.5449 57.0929 47.9356C58.5139 47.2802 59.6407 46.2567 60.4737 44.8624C61.3047 43.4713 61.7247 41.643 61.7247 39.3721V36.3516H65.2875ZM34.753 8.09583C37.1876 8.09583 39.3268 8.57533 41.1681 9.53723L41.5089 9.71493C43.0781 10.5665 44.3498 11.7389 45.3224 13.2315L45.5265 13.5557V13.5577C46.5546 15.3172 47.0675 17.3878 47.0675 19.7667C47.0675 22.1433 46.6088 24.1121 45.6847 25.6661L45.6837 25.667C44.7624 27.1742 43.5044 28.4086 41.9122 29.3702L41.9103 29.3711C40.3235 30.2877 38.5264 31.0576 36.5196 31.6817L36.5186 31.6827L33.5704 32.5665C31.8892 33.0631 30.4183 33.6219 29.1603 34.2413L29.1593 34.2403C27.9443 34.8558 26.9928 35.6765 26.3009 36.6983C25.6478 37.7147 25.3165 39.0842 25.3165 40.8145C25.3166 43.4065 26.1344 45.368 27.7579 46.7149L28.1251 47.0059C28.8735 47.5659 29.7035 47.9951 30.6153 48.294L31.0772 48.4327L31.1446 48.4502L31.1476 48.5196C31.2206 49.856 31.4711 51.0831 31.8927 52.2032L31.9493 52.3545L31.7892 52.3321C30.2751 52.1215 28.8963 51.6924 27.6534 51.043C25.8117 50.1222 24.3586 48.7823 23.296 47.0245L23.295 47.0235C22.2669 45.264 21.754 43.1933 21.754 40.8145C21.754 38.4379 22.2127 36.469 23.1368 34.9151L23.1378 34.9141L23.3145 34.6348C24.2177 33.2538 25.4166 32.1125 26.9093 31.211L26.9112 31.21C28.4981 30.2933 30.2958 29.5226 32.3028 28.8985L35.252 28.0137L35.8731 27.8243C37.2975 27.3763 38.5598 26.8816 39.6603 26.3399L40.1036 26.0997C41.11 25.5163 41.9149 24.7765 42.5206 23.8819C43.1735 22.8655 43.505 21.4968 43.505 19.7667C43.505 17.1748 42.6878 15.2132 41.0645 13.8663L41.0636 13.8653C39.3984 12.4718 37.2972 11.7726 34.753 11.7725C34.2742 11.7725 33.8078 11.797 33.3546 11.8448L33.2589 11.8545L33.2491 11.7588C33.1289 10.5369 32.8557 9.41052 32.4288 8.37902L32.381 8.26472L32.504 8.24713C33.229 8.14593 33.9789 8.09583 34.753 8.09583ZM26.9474 15.1006C27.3822 16.151 27.6603 17.2957 27.7823 18.5342L27.7921 18.629L27.6974 18.6387C26.4676 18.7683 25.3318 19.0735 24.2901 19.5538C22.8691 20.2091 21.7423 21.2328 20.9093 22.627C20.0783 24.018 19.6583 25.8464 19.6583 28.1172V31.1377H16.0958V28.1172C16.0958 25.2009 16.6778 22.7759 17.8477 20.8487C18.9802 18.8841 20.5383 17.3986 22.5206 16.3946L23.0235 16.1495C24.21 15.6019 25.4843 15.2332 26.8458 15.043L26.919 15.0323L26.9474 15.1006Z";
+/** Raster mark: white #fff on #000; path `/images/superhands-tile-mark.png`. */
+const SUPERHANDS_TILE_MARK_SRC = "/images/superhands-tile-mark.png";
+
+/** Tileable fractal noise (SVG), very subtle grain on the tile background. */
+const SUPERHANDS_TILE_NOISE_TILE =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
 
 const SuperhandsTile = forwardRef<
   HTMLDivElement,
@@ -150,40 +154,50 @@ const SuperhandsTile = forwardRef<
       className={`shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#51CAEB]/50 focus-visible:ring-offset-2 ${sm ? "size-20" : "size-[124px]"} ${interactive ? "group cursor-pointer" : ""}`}
     >
       <div
-        className={`flex size-full items-center justify-center transition-[transform,filter] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
+        className={`relative flex size-full items-center justify-center overflow-hidden transition-[transform,box-shadow] duration-[600ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
           interactive
-            ? "group-hover:-translate-y-0.5 group-hover:scale-[1.005] group-hover:brightness-[1.04] motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-100 group-focus-visible:-translate-y-0.5 group-focus-visible:scale-[1.005] group-focus-visible:brightness-[1.04] motion-reduce:group-focus-visible:translate-y-0 motion-reduce:group-focus-visible:scale-100"
+            ? "group-hover:-translate-y-0.5 group-hover:scale-[1.005] motion-reduce:group-hover:translate-y-0 motion-reduce:group-hover:scale-100 group-focus-visible:-translate-y-0.5 group-focus-visible:scale-[1.005] motion-reduce:group-focus-visible:translate-y-0 motion-reduce:group-focus-visible:scale-100"
             : ""
         }`}
         style={{
+          isolation: "isolate",
           borderRadius: sm ? 20 : 32,
-          outline: "1px solid rgba(82, 82, 84, 0.05)",
-          outlineOffset: "-0.5px",
-          background: "linear-gradient(to top, #E4E4E4, #FCFCFC)",
+          border: "1px solid rgba(82, 82, 84, 0.8)",
+          background:
+            "linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 45%, #000000 100%)",
           boxShadow: visualHighlight
-            ? "0 0 30px rgba(81, 202, 235, 0.4), 0 0 60px rgba(81, 202, 235, 0.2)"
+            ? "0 0 52px rgba(81, 202, 235, 0.5), 0 0 104px rgba(81, 202, 235, 0.3), 0 0 160px rgba(81, 202, 235, 0.17)"
             : sm
-              ? "0 5.161px 10.323px rgba(0, 0, 0, 0.08)"
-              : "0 8px 16px rgba(0, 0, 0, 0.08)",
-          animation: visualHighlight ? "tileBoxGlowPulse 4s ease-in-out infinite" : "none",
+              ? "0 3px 8px rgba(0, 0, 0, 0.12)"
+              : "0 5px 12px rgba(0, 0, 0, 0.12)",
+          animation: visualHighlight ? "tileBoxGlowPulse 6s ease-in-out infinite" : "none",
         }}
       >
-        <svg
-          viewBox="14 6 53 55"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-auto w-[44%]"
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-0 overflow-hidden rounded-[inherit]"
+          style={{
+            backgroundImage: `url("${SUPERHANDS_TILE_NOISE_TILE}")`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "128px 128px",
+            /* No mix-blend — avoids grain compositing with the backdrop and reading into the cyan glow. */
+            opacity: 0.07,
+          }}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element -- small fixed asset; avoids layout shift from Image fill */}
+        <img
+          src={SUPERHANDS_TILE_MARK_SRC}
+          alt=""
+          width={512}
+          height={512}
+          decoding="async"
+          draggable={false}
+          className="pointer-events-none relative z-10 h-full w-full select-none object-contain p-[26%]"
           style={{
             opacity: visualHighlight ? 1 : 0.5,
             animation: visualHighlight ? "logo-pulse 2s ease-in-out infinite" : "none",
           }}
-        >
-          <path
-            d={SH_LOGO_MARK_D}
-            fill="#3F3E41"
-            stroke="#323234"
-            strokeWidth="0.191658"
-          />
-        </svg>
+        />
       </div>
     </div>
   );
