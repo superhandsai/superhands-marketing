@@ -43,10 +43,10 @@ export default function HomePage() {
             Join Waitlist
           </a>
           <a
-            href={LANDING_URLS.bookDemo}
+            href={LANDING_URLS.viewDemo}
             className="text-sm font-medium text-[var(--landing-fg)] font-body transition-opacity hover:opacity-70"
           >
-            Book Demo
+            View Demo
           </a>
         </div>
         <MobileHeaderSentinel />

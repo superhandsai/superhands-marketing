@@ -61,10 +61,10 @@ export function LandingSidebar() {
         />
         <div className="flex items-center gap-[30px] text-base font-medium leading-[1.44] text-[var(--landing-fg)] font-body">
           <a
-            href={LANDING_URLS.bookDemo}
+            href={LANDING_URLS.viewDemo}
             className="transition-opacity hover:opacity-70"
           >
-            Book Demo
+            View Demo
           </a>
           <a
             href={LANDING_URLS.login}
