@@ -55,10 +55,10 @@ export function LandingMobileHeader() {
           Log in
         </a>
         <a
-          href={LANDING_URLS.bookDemo}
+          href={LANDING_URLS.viewDemo}
           className="shrink-0 text-sm max-[350px]:text-[13px] font-medium text-[var(--landing-fg)] font-body transition-opacity hover:opacity-70"
         >
-          Book Demo
+          View Demo
         </a>
         <a
           href={LANDING_URLS.waitlist}

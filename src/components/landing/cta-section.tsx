@@ -77,10 +77,10 @@ export function CtaSection() {
           </div>
 
           <a
-            href={LANDING_URLS.bookDemo}
+            href={LANDING_URLS.viewDemo}
             className="shrink-0 inline-flex items-center justify-center rounded-[14px] border border-[rgba(82,82,84,0.05)] bg-gradient-to-t from-[#03161c] to-[#05242e] px-4 py-3 text-base font-semibold leading-[1.44] text-[#fcfcfc] font-body transition-all hover:opacity-90 hover:shadow-[0_4px_12px_rgba(3,22,28,0.04)]"
           >
-            Book Demo
+            View Demo
           </a>
         </div>
       </div>
