@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   skipProxyUrlNormalize: true,
+  skipTrailingSlashRedirect: true,
   async headers() {
     return [
       {

@@ -21,6 +21,20 @@ function isHttpUrl(value: string) {
   }
 }
 
+function asHttpsUrlForBareDomain(value: string) {
+  try {
+    const url = new URL(`https://${value}`);
+
+    if (!url.hostname.includes(".")) {
+      return null;
+    }
+
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
 function appendSearch(value: string, search: string) {
   if (!search) {
     return value;
@@ -51,6 +65,11 @@ function getUrlToProxy(request: NextRequest) {
 
   if (isHttpUrl(pathValue)) {
     return appendSearch(pathValue, nextUrl.search);
+  }
+
+  const bareDomainUrl = asHttpsUrlForBareDomain(pathValue);
+  if (bareDomainUrl) {
+    return appendSearch(bareDomainUrl, nextUrl.search);
   }
 
   return new URL(`${nextUrl.pathname}${nextUrl.search}`, nextUrl.origin).toString();
