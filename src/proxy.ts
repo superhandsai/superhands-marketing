@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 const URL_PROXY_BASE = "https://app.superhands.ai/url-proxy";
 const PUBLIC_PATH_PREFIXES = ["/fonts/", "/images/"];
 const PUBLIC_PATHS = new Set(["/favicon.ico", "/favicon.svg"]);
+// Marketing pages served by this app (in addition to "/"). Anything not listed
+// here is treated as a URL to hand off to the external url-proxy.
+const MARKETING_PATHS = new Set(["/new-prop-1"]);
 
 function safelyDecodePath(path: string) {
   try {
@@ -50,6 +53,7 @@ function restoreCollapsedProtocol(value: string) {
 function isApplicationPath(pathname: string) {
   return (
     pathname === "/" ||
+    MARKETING_PATHS.has(pathname.replace(/\/$/, "")) ||
     pathname.startsWith("/api/") ||
     pathname.startsWith("/_next/") ||
     PUBLIC_PATHS.has(pathname) ||
