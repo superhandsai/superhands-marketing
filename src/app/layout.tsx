@@ -47,11 +47,11 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://superhands.ai"),
-  title: "Superhands — AI builds faster than design can direct it",
+  title: "Superhands — Design can't keep pace with AI-speed shipping",
   description:
     "Superhands directs design at build time, catches issues early and feeds decisions back into future work so quality can scale.",
   openGraph: {
-    title: "Superhands — AI builds faster than design can direct it",
+    title: "Superhands — Design can't keep pace with AI-speed shipping",
     description:
       "Superhands directs design at build time, catches issues early and feeds decisions back into future work so quality can scale.",
     type: "website",
@@ -60,13 +60,13 @@ export const metadata: Metadata = {
         url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: "Superhands — AI builds faster than design can direct it",
+        alt: "Superhands — Design can't keep pace with AI-speed shipping",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Superhands — AI builds faster than design can direct it",
+    title: "Superhands — Design can't keep pace with AI-speed shipping",
     description:
       "Superhands directs design at build time, catches issues early and feeds decisions back into future work so quality can scale.",
     images: ["/images/og.png"],
