@@ -36,20 +36,28 @@ export function HomeHeroHeader() {
 
           <div className="flex flex-col items-center gap-2.5">
             <h1 className="max-w-[400px] text-[32px] lg:text-[40px] font-semibold leading-[1.1] text-[var(--landing-fg)] font-heading">
-              AI is shipping work your design team never approved. Let&rsquo;s fix it.
+              AI builds faster than design can direct it
             </h1>
 
             <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[420px]">
-              Superhands catches design issues early and feeds decisions back into future work so design quality can scale.
+              Superhands directs design at build time, catches issues early and feeds decisions back into future work so quality can scale.
             </p>
           </div>
 
-          <a
-            href={LANDING_URLS.waitlist}
-            className="inline-flex items-center justify-center self-center rounded-[14px] border border-[var(--landing-cta-border)] bg-gradient-to-b from-[var(--landing-cta-from)] to-[var(--landing-cta-to)] px-4 py-3 text-base font-semibold leading-[1.44] text-[var(--landing-cta-text)] font-body tracking-[0.01em] [word-spacing:0.08em] transition-all hover:opacity-90 hover:shadow-[0_4px_12px_rgba(3,22,28,0.04)]"
-          >
-            Become a Design Partner
-          </a>
+          <div className="flex flex-col items-center gap-4">
+            <p className="text-base font-semibold leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[420px]">
+              Want to learn more?
+            </p>
+
+            <a
+              href={LANDING_URLS.bookDemo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center self-center rounded-[14px] border border-[var(--landing-cta-border)] bg-gradient-to-b from-[var(--landing-cta-from)] to-[var(--landing-cta-to)] px-4 py-3 text-base font-semibold leading-[1.44] text-[var(--landing-cta-text)] font-body tracking-[0.01em] [word-spacing:0.08em] transition-all hover:opacity-90 hover:shadow-[0_4px_12px_rgba(3,22,28,0.04)]"
+            >
+              Talk to us
+            </a>
+          </div>
         </div>
       </div>
     </header>
