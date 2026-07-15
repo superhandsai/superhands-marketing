@@ -36,7 +36,7 @@ export function HomeHeroHeader() {
 
           <div className="flex flex-col items-center gap-2.5">
             <h1 className="max-w-[400px] text-[32px] lg:text-[40px] font-semibold leading-[1.1] text-[var(--landing-fg)] font-heading">
-              Design can&rsquo;t keep pace with AI-speed shipping.
+              Design can&rsquo;t keep up with AI-speed shipping
             </h1>
 
             <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[420px]">
