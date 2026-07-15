@@ -77,7 +77,7 @@ const SUPERHANDS_TILE_MARK_SRC = "/images/superhands-tile-mark.png";
 const SUPERHANDS_TILE_NOISE_TILE =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
 
-const SuperhandsTile = forwardRef<
+export const SuperhandsTile = forwardRef<
   HTMLDivElement,
   {
     /** Logical toggle state (accessibility). */
@@ -93,9 +93,10 @@ const SuperhandsTile = forwardRef<
      * this avoids focus-from-click immediately re-lighting the tile; hover preview still works after pointer leave + enter.
      */
     peekRequiresPointer?: boolean;
+    ariaLabel?: string;
   }
 >(function SuperhandsTile(
-  { pressed, visualHighlight, size, onToggleHighlight, onPeekHighlightChange, peekRequiresPointer },
+  { pressed, visualHighlight, size, onToggleHighlight, onPeekHighlightChange, peekRequiresPointer, ariaLabel },
   tileRef,
 ) {
   const sm = size === "sm";
@@ -183,7 +184,11 @@ const SuperhandsTile = forwardRef<
       ref={tileRef}
       role={interactive ? "button" : undefined}
       tabIndex={interactive ? 0 : undefined}
-      aria-label={interactive ? "Toggle highlight on tile and keywords" : undefined}
+      aria-label={
+        interactive
+          ? ariaLabel ?? "Toggle highlight on tile and keywords"
+          : undefined
+      }
       aria-pressed={interactive ? pressed : undefined}
       onClick={interactive ? onTileClick : undefined}
       onKeyDown={interactive ? onKeyDown : undefined}
@@ -245,6 +250,43 @@ const SuperhandsTile = forwardRef<
 });
 
 SuperhandsTile.displayName = "SuperhandsTile";
+
+/** Self-contained glowing tile for use outside the setup-flow diagram (e.g. homepage hero). */
+export function HeroSuperhandsTile({ size = "lg" }: { size?: "sm" | "lg" }) {
+  const [pressed, setPressed] = useState(true);
+  const [peekHighlight, setPeekHighlight] = useState(false);
+  const peekBlockedUntilLeaveRef = useRef(false);
+
+  const onToggleHighlight = useCallback(() => {
+    setPressed((on) => {
+      const next = !on;
+      if (!next) {
+        peekBlockedUntilLeaveRef.current = true;
+        setPeekHighlight(false);
+      } else {
+        peekBlockedUntilLeaveRef.current = false;
+      }
+      return next;
+    });
+  }, []);
+
+  const onPeekHighlightChange = useCallback((active: boolean) => {
+    if (active && peekBlockedUntilLeaveRef.current) return;
+    setPeekHighlight(active);
+    if (!active) peekBlockedUntilLeaveRef.current = false;
+  }, []);
+
+  return (
+    <SuperhandsTile
+      pressed={pressed}
+      visualHighlight={pressed || peekHighlight}
+      size={size}
+      onToggleHighlight={onToggleHighlight}
+      onPeekHighlightChange={onPeekHighlightChange}
+      peekRequiresPointer={!pressed}
+    />
+  );
+}
 
 function AccentWord({ lit, children }: { lit: boolean; children: React.ReactNode }) {
   return (
@@ -363,6 +405,7 @@ function LayoutWideBorderGrid({
   highlightSuppressed,
   tileSize,
   headlinePx,
+  showTile = true,
 }: {
   dims: WideFlowDims;
   contentInlineW: number;
@@ -374,6 +417,7 @@ function LayoutWideBorderGrid({
   highlightSuppressed: boolean;
   tileSize: "sm" | "lg";
   headlinePx: 20 | 24 | 28;
+  showTile?: boolean;
 }) {
   const hx =
     headlinePx === 20 ? "text-[20px]" : headlinePx === 24 ? "text-[24px]" : "text-[28px]";
@@ -570,25 +614,27 @@ function LayoutWideBorderGrid({
           />
         ) : null}
 
-        <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-          <div className="pointer-events-auto">
-            <SuperhandsTile
-              ref={tileRef}
-              pressed={pressed}
-              visualHighlight={visualHighlight}
-              size={tileSize}
-              onToggleHighlight={onToggleHighlight}
-              onPeekHighlightChange={onPeekHighlightChange}
-              peekRequiresPointer={highlightSuppressed}
-            />
+        {showTile ? (
+          <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
+            <div className="pointer-events-auto">
+              <SuperhandsTile
+                ref={tileRef}
+                pressed={pressed}
+                visualHighlight={visualHighlight}
+                size={tileSize}
+                onToggleHighlight={onToggleHighlight}
+                onPeekHighlightChange={onPeekHighlightChange}
+                peekRequiresPointer={highlightSuppressed}
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );
 }
 
-export function SetupFlowSection() {
+export function SetupFlowSection({ showTile = true }: { showTile?: boolean }) {
   const sectionRef = useRef<HTMLElement>(null);
   const tileRef = useRef<HTMLDivElement>(null);
   const contentInlineW = useSectionContentInlineSize(sectionRef);
@@ -599,7 +645,7 @@ export function SetupFlowSection() {
   const viewportLit = useTileViewportCenterLit(tileRef);
   const [highlightSuppressed, setHighlightSuppressed] = useState(false);
   /** After the tile hits the viewport center once, stay highlighted for the rest of the visit unless toggled off. */
-  const [highlightEngaged, setHighlightEngaged] = useState(false);
+  const [highlightEngaged, setHighlightEngaged] = useState(!showTile);
 
   useLayoutEffect(() => {
     if (viewportLit) setHighlightEngaged(true);
@@ -611,7 +657,7 @@ export function SetupFlowSection() {
   const peekBlockedUntilLeaveRef = useRef(false);
 
   /** Hover/focus on tile previews full highlight when not logically "on" (accent words + glow). */
-  const visualHighlight = pressed || peekHighlight;
+  const visualHighlight = !showTile || pressed || peekHighlight;
 
   const onToggleHighlight = useCallback(() => {
     setHighlightSuppressed((s) => {
@@ -648,6 +694,7 @@ export function SetupFlowSection() {
         highlightSuppressed={highlightSuppressed}
         tileSize={tileSize}
         headlinePx={headlinePx}
+        showTile={showTile}
       />
 
       <div

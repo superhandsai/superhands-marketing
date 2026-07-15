@@ -45,7 +45,7 @@ export function CtaSection() {
             strokeDasharray="0.25 2.75"
             strokeLinecap="round"
             opacity={0.5}
-            pathLength={700}
+            pathLength={699}
             style={{ width: "calc(100% - 1.5px)", height: "calc(100% - 1.5px)" }}
           />
         </svg>

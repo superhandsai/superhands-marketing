@@ -47,25 +47,28 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://superhands.ai"),
-  title: "Superhands — Pull requests for designers",
-  description: "Review and refine product changes before they ship. Superhands brings designers into your GitHub pull request workflow — see what's changing, review the UI in your browser, and fix it without writing code.",
+  title: "Superhands — AI is shipping work your design team never approved. Let's fix it.",
+  description:
+    "AI is shipping work your design team never approved. Let's fix it. Superhands catches design issues early and feeds decisions back into future work so design quality can scale.",
   openGraph: {
-    title: "Superhands — Pull requests for designers",
-    description: "Review and refine product changes before they ship. Superhands brings designers into your GitHub pull request workflow — see what's changing, review the UI in your browser, and fix it without writing code.",
+    title: "Superhands — AI is shipping work your design team never approved. Let's fix it.",
+    description:
+      "AI is shipping work your design team never approved. Let's fix it. Superhands catches design issues early and feeds decisions back into future work so design quality can scale.",
     type: "website",
     images: [
       {
         url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: "Superhands — Pull requests for designers",
+        alt: "Superhands — AI is shipping work your design team never approved. Let's fix it.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Superhands — Pull requests for designers",
-    description: "Review and refine product changes before they ship. Superhands brings designers into your GitHub pull request workflow — see what's changing, review the UI in your browser, and fix it without writing code.",
+    title: "Superhands — AI is shipping work your design team never approved. Let's fix it.",
+    description:
+      "AI is shipping work your design team never approved. Let's fix it. Superhands catches design issues early and feeds decisions back into future work so design quality can scale.",
     images: ["/images/og.png"],
   },
   icons: {
