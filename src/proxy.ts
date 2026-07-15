@@ -5,7 +5,12 @@ const PUBLIC_PATH_PREFIXES = ["/fonts/", "/images/"];
 const PUBLIC_PATHS = new Set(["/favicon.ico", "/favicon.svg"]);
 // Marketing pages served by this app (in addition to "/"). Anything not listed
 // here is treated as a URL to hand off to the external url-proxy.
-const MARKETING_PATHS = new Set(["/new-prop-1", "/new-prop-2", "/new-prop-3"]);
+const MARKETING_PATHS = new Set([
+  "/new-prop-1",
+  "/new-prop-2",
+  "/new-prop-3",
+  "/may-2026",
+]);
 
 function safelyDecodePath(path: string) {
   try {
