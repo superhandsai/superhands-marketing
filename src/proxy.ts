@@ -5,7 +5,11 @@ const PUBLIC_PATH_PREFIXES = ["/fonts/", "/images/"];
 const PUBLIC_PATHS = new Set(["/favicon.ico", "/favicon.svg"]);
 // Marketing pages served by this app (in addition to "/"). Anything not listed
 // here is treated as a URL to hand off to the external url-proxy.
-const MARKETING_PATHS = new Set([
+const MARKETING_PATHS = new Set<string>([]);
+// Retired landing-page variants. Their source is archived under
+// backup/landing-variants. We return 410 Gone so search engines drop them from
+// the index instead of proxying the path off to the external url-proxy.
+const RETIRED_PATHS = new Set([
   "/new-prop-1",
   "/new-prop-2",
   "/new-prop-3",
@@ -85,6 +89,14 @@ function getUrlToProxy(request: NextRequest) {
 }
 
 export function proxy(request: NextRequest) {
+  const normalizedPath = request.nextUrl.pathname.replace(/\/$/, "");
+  if (RETIRED_PATHS.has(normalizedPath)) {
+    return new NextResponse("Gone", {
+      status: 410,
+      headers: { "X-Robots-Tag": "noindex" },
+    });
+  }
+
   if (isApplicationPath(request.nextUrl.pathname)) {
     return NextResponse.next();
   }
