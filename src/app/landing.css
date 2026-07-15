@@ -39,6 +39,11 @@
   50% { opacity: 0.3; }
 }
 
+@keyframes logo-pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
 @keyframes border-march {
   to { stroke-dashoffset: -3; }
 }
