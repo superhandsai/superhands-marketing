@@ -47,28 +47,28 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://superhands.ai"),
-  title: "Superhands — Design can't keep up with AI-speed shipping",
+  title: "Superhands — The design harness for coding agents",
   description:
-    "Superhands directs design at build time, catches issues early and feeds decisions back into future work so quality can scale.",
+    "Superhands guides design decisions at build time and learns from expert corrections, so your team can ship faster with less design rework.",
   openGraph: {
-    title: "Superhands — Design can't keep up with AI-speed shipping",
+    title: "Superhands — The design harness for coding agents",
     description:
-      "Superhands directs design at build time, catches issues early and feeds decisions back into future work so quality can scale.",
+      "Superhands guides design decisions at build time and learns from expert corrections, so your team can ship faster with less design rework.",
     type: "website",
     images: [
       {
         url: "/images/og.png",
         width: 1200,
         height: 630,
-        alt: "Superhands — Design can't keep up with AI-speed shipping",
+        alt: "Superhands — The design harness for coding agents",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Superhands — Design can't keep up with AI-speed shipping",
+    title: "Superhands — The design harness for coding agents",
     description:
-      "Superhands directs design at build time, catches issues early and feeds decisions back into future work so quality can scale.",
+      "Superhands guides design decisions at build time and learns from expert corrections, so your team can ship faster with less design rework.",
     images: ["/images/og.png"],
   },
   icons: {
