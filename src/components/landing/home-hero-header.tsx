@@ -36,11 +36,11 @@ export function HomeHeroHeader() {
 
           <div className="flex flex-col items-center gap-2.5">
             <h1 className="w-full text-[32px] lg:text-[40px] font-semibold leading-[1.1] text-[var(--landing-fg)] font-heading">
-              Design can&rsquo;t keep up with AI-speed shipping
+              The design harness for coding agents
             </h1>
 
             <p className="text-base font-medium leading-[1.44] text-[var(--landing-fg-secondary)] font-body max-w-[420px]">
-              Superhands directs design at build time, catches issues early and feeds decisions back into future work so quality can scale.
+              Superhands guides design decisions at build time and learns from expert corrections, so your team can ship faster with less design rework.
             </p>
           </div>
 
